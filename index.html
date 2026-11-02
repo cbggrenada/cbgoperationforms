@@ -306,8 +306,8 @@ window.CBG_FORMS = [
     "note": "Recipe standard: Pilsen 575 kg · Viking Munich 0 kg · Caramel 150: 125 kg · Chocolate 20 kg · Caramel 203: 26 kg · Sugar 400 kg"
    },
    {
-    "name": "Brew No.",
-    "label": "Brew No.",
+    "name": "Brew No",
+    "label": "Brew No",
     "type": "text",
     "unit": "SM",
     "col": "A",
@@ -328,8 +328,8 @@ window.CBG_FORMS = [
     "span": 1
    },
    {
-    "name": "Batch Ticket #",
-    "label": "Batch Ticket #",
+    "name": "Batch Ticket No",
+    "label": "Batch Ticket No",
     "type": "text",
     "unit": "",
     "col": "",
@@ -358,7 +358,7 @@ window.CBG_FORMS = [
     "span": 1,
     "sub": [
      {
-      "name": "Pilsen Silo #",
+      "name": "Pilsen Silo No",
       "label": "Silo #",
       "type": "text",
       "unit": ""
@@ -598,7 +598,7 @@ window.CBG_FORMS = [
     ]
    },
    {
-    "name": "Kettle Vol. at Boil End (HLs)",
+    "name": "Kettle Vol at Boil End (HLs)",
     "label": "Kettle Vol. at boil end",
     "type": "number",
     "unit": "HLs",
@@ -765,8 +765,8 @@ window.CBG_FORMS = [
     "span": 1
    },
    {
-    "name": "FV/DPV #",
-    "label": "FV/DPV #",
+    "name": "FV/DPV No",
+    "label": "FV/DPV No",
     "type": "text",
     "unit": "",
     "col": "",
@@ -934,7 +934,7 @@ window.CBG_FORMS = [
     "span": 1
    },
    {
-    "name": "1st Sacch. Rest Init",
+    "name": "1st Sacch Rest Init",
     "label": "1st sacch. rest: Init",
     "type": "number",
     "unit": "",
@@ -945,7 +945,7 @@ window.CBG_FORMS = [
     "span": 1
    },
    {
-    "name": "1st Sacch. Rest Final",
+    "name": "1st Sacch Rest Final",
     "label": "1st sacch. rest: Final",
     "type": "number",
     "unit": "",
@@ -1097,7 +1097,7 @@ window.CBG_FORMS = [
     "span": 1
    },
    {
-    "name": "Sparge Vol. at Run Off (HLs)",
+    "name": "Sparge Vol at Run Off (HLs)",
     "label": "Sparge Vol. at Run Off",
     "type": "number",
     "unit": "HLs",
@@ -1305,7 +1305,7 @@ window.CBG_FORMS = [
     "span": 1
    },
    {
-    "name": "Boil Evap. Rate (%)",
+    "name": "Boil Evap Rate (%)",
     "label": "Boil Evap. Rate",
     "type": "number",
     "unit": "%",
@@ -1724,8 +1724,8 @@ window.CBG_FORMS = [
     "span": 1
    },
    {
-    "name": "Pitched from YSV #",
-    "label": "Pitched from YSV #",
+    "name": "Pitched from YSV No",
+    "label": "Pitched from YSV No",
     "type": "text",
     "unit": "",
     "col": "",
@@ -1815,11 +1815,11 @@ window.CBG_FORMS = [
       "type": "text"
      },
      {
-      "name": "Non-conformance #",
+      "name": "Non-conformance No",
       "type": "text"
      },
      {
-      "name": "Action #",
+      "name": "Action No",
       "type": "text"
      },
      {
@@ -2209,7 +2209,7 @@ window.CBG_FORMS = [
     "hint": ""
    },
    {
-    "name": "Invoice / Order No.",
+    "name": "Invoice / Order No",
     "type": "text",
     "options": null,
     "req": true,
@@ -2237,7 +2237,7 @@ window.CBG_FORMS = [
     "hint": ""
    },
    {
-    "name": "Vehicle / Container No.",
+    "name": "Vehicle / Container No",
     "type": "text",
     "options": null,
     "req": true,
@@ -2378,7 +2378,7 @@ window.CBG_FORMS = [
     "hint": ""
    },
    {
-    "name": "Batch / Brew No.",
+    "name": "Batch / Brew No",
     "type": "text",
     "options": null,
     "req": true,
@@ -2409,7 +2409,7 @@ window.CBG_FORMS = [
     "hint": "Leave blank for complaints"
    },
    {
-    "name": "Within Spec?",
+    "name": "Within Spec",
     "type": "choice",
     "options": [
      "Yes",
@@ -2542,8 +2542,8 @@ function rules(key, v) {
   }
   if (key === "qa") {
     if (v["Record Type"] === "Customer Complaint") {
-      ["Parameter Tested", "Result Value", "Within Spec?"].forEach(n => r.hide.add(n));
-      r.force["Parameter Tested"] = "Other"; r.force["Within Spec?"] = "No"; r.force["Result Value"] = "";
+      ["Parameter Tested", "Result Value", "Within Spec"].forEach(n => r.hide.add(n));
+      r.force["Parameter Tested"] = "Other"; r.force["Within Spec"] = "No"; r.force["Result Value"] = "";
       r.exclude["Complaint Category"] = ["Not a complaint"];
     } else { r.hide.add("Complaint Category"); r.force["Complaint Category"] = "Not a complaint"; }
   }
