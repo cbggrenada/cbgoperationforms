@@ -1,0 +1,3043 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CBG Data Entry</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: the CBG Operations Dashboard skin (Profit Isle style): white app bar, icon rail of departments, black page band with breadcrumb, tabs and controls, flat 4px cards and dense zebra tables */
+:root{
+  --pi-bg:#f4f4f5;--pi-surface:#fff;--pi-ink:#111;--pi-muted:#6b6b72;--pi-line:#e4e4e7;--pi-z1:#fafafa;--pi-z2:#efeff1;--pi-band:#0b0b0c;--pi-band-2:#2a2a2e;--pi-accent:#22c55e;
+  --navy:#01427A;--navy-2:#0B5CA8;--good:#1E8449;--bad:#C0392B;--amber:#E0A21B;--good-t:#1E8449;--bad-t:#C0392B;
+  --btn-bg:#0b0b0c;--btn-ink:#fff;--hover:#e6f7ec;
+  --sans:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;--rail:52px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --pi-bg:#0d0d0f;--pi-surface:#17171a;--pi-ink:#ececf0;--pi-muted:#9a9aa3;--pi-line:#2a2a30;--pi-z1:#17171a;--pi-z2:#1e1e22;--pi-band:#000;--pi-band-2:#26262b;
+  --navy:#5B9BE0;--navy-2:#8DBDF0;--good:#58C98A;--bad:#EF7A6B;--amber:#F2B83A;--good-t:#58C98A;--bad-t:#EF7A6B;--btn-bg:#fff;--btn-ink:#000;--hover:#123321;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --pi-bg:#0d0d0f;--pi-surface:#17171a;--pi-ink:#ececf0;--pi-muted:#9a9aa3;--pi-line:#2a2a30;--pi-z1:#17171a;--pi-z2:#1e1e22;--pi-band:#000;--pi-band-2:#26262b;
+  --navy:#5B9BE0;--navy-2:#8DBDF0;--good:#58C98A;--bad:#EF7A6B;--amber:#F2B83A;--good-t:#58C98A;--bad-t:#EF7A6B;--btn-bg:#fff;--btn-ink:#000;--hover:#123321;color-scheme:dark}
+*,*::before,*::after{box-sizing:border-box}
+html,body{background:var(--pi-bg);color:var(--pi-ink)}
+body{margin:0;font-family:var(--sans);font-size:14px;line-height:1.45;letter-spacing:-.01em;-webkit-font-smoothing:antialiased;padding-left:var(--rail);overflow-x:clip}
+button,select,input,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
+[hidden]{display:none!important}
+a{color:inherit}
+
+/* app bar */
+.hdr{position:sticky;top:0;z-index:30;background:var(--pi-surface);border-bottom:1px solid var(--pi-line);padding-top:env(safe-area-inset-top,0px)}
+.nav{height:48px;padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px));display:flex;align-items:center;gap:14px}
+.brand{display:flex;align-items:center;gap:10px;margin-right:auto;min-width:0;text-decoration:none}
+.logo{height:26px;width:auto;flex:none}
+:root[data-theme="dark"] .logo{background:#fff;border-radius:5px;padding:2px 4px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .logo{background:#fff;border-radius:5px;padding:2px 4px}}
+.nt{font:600 11px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--pi-ink);white-space:nowrap}
+.nt b{font-weight:600;color:var(--pi-muted);margin-left:8px;letter-spacing:.06em}
+.navb{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.thbtn{width:30px;height:30px;border-radius:6px;border:0;background:transparent;color:var(--pi-ink);display:grid;place-items:center;cursor:pointer}
+.thbtn:hover{background:var(--pi-z2)}
+.thbtn svg{width:17px;height:17px}
+.thbtn .i-sun{display:none}
+:root[data-theme="dark"] .thbtn .i-sun{display:block}:root[data-theme="dark"] .thbtn .i-moon{display:none}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .thbtn .i-sun{display:block}:root:not([data-theme="light"]) .thbtn .i-moon{display:none}}
+.obtn{display:inline-flex;align-items:center;gap:7px;padding:7px 12px;border-radius:6px;border:0;background:transparent;box-shadow:inset 0 0 0 1px var(--pi-line);font:600 12.5px/1 var(--sans);color:var(--pi-ink);cursor:pointer;text-decoration:none;white-space:nowrap}
+.obtn:hover{background:var(--pi-z2)}
+.pbtn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:7px 12px;border-radius:6px;border:0;background:var(--btn-bg);color:var(--btn-ink);font:600 12.5px/1 var(--sans);cursor:pointer;text-decoration:none;white-space:nowrap}
+.pbtn:hover{opacity:.88}
+.pbtn[disabled]{opacity:.55;cursor:progress}
+.qn{background:var(--amber);color:#2b1d00;font-size:10px;letter-spacing:.04em;padding:3px 6px;border-radius:4px}
+.pi-me{width:30px;height:30px;border-radius:50%;background:var(--pi-z2);display:grid;place-items:center;font:600 11px/1 var(--sans);color:var(--pi-ink);margin-left:4px;flex:none}
+
+/* icon rail: one button per department form */
+#rail{position:fixed;left:0;top:0;bottom:0;width:var(--rail);z-index:40;display:flex;flex-direction:column;align-items:stretch;gap:6px;padding:58px 8px 52px;background:var(--pi-surface);border-right:1px solid var(--pi-line);transition:width .2s;overflow:hidden}
+#rail a{display:flex;align-items:center;gap:10px;height:36px;padding:0 9px;border-radius:6px;color:var(--pi-ink);font:600 12.5px/1 var(--sans);white-space:nowrap;overflow:hidden;text-decoration:none}
+#rail a svg{flex:none;width:18px;height:18px}
+#rail a .lbl{opacity:0;transition:opacity .15s}
+#rail a:hover{background:var(--pi-z2)}
+#rail a[aria-current="page"]{background:var(--pi-accent);color:#fff}
+#rail .div{height:1px;background:var(--pi-line);margin:4px 2px}
+.rail-tog{position:fixed;left:0;bottom:0;width:var(--rail);height:44px;z-index:41;border:0;border-right:1px solid var(--pi-line);border-top:1px solid var(--pi-line);background:var(--pi-surface);color:var(--pi-ink);cursor:pointer;display:grid;place-items:center;transition:width .2s}
+.rail-tog svg{width:16px;height:16px;transition:transform .2s}
+body.rail-open #rail,body.rail-open .rail-tog{width:236px}
+body.rail-open #rail a .lbl{opacity:1}
+body.rail-open .rail-tog svg{transform:rotate(180deg)}
+body.rail-open #rail{box-shadow:12px 0 30px rgba(0,0,0,.12)}
+
+/* black page band */
+.hero{background:var(--pi-band);color:#fff;padding-block:14px 12px;padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px))}
+.eyebrow{margin:0;font:700 15px/1.3 var(--sans);color:#fff}
+.eyebrow a{color:#fff;text-decoration:underline;text-underline-offset:3px}
+.eyebrow .sep{display:inline-block;margin:0 7px;color:#9a9aa3;font-weight:400}
+.pmeta{margin:2px 0 0;font:400 12.5px/1.4 var(--sans);color:#c9c9cf}
+.dot{display:inline-block;width:3px;height:3px;border-radius:50%;background:#6b6b72;vertical-align:middle;margin:0 9px}
+.upd{margin:2px 0 0;font-size:11.5px;color:#8d8d95}
+.fresh{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
+.fb{display:inline-flex;align-items:center;gap:6px;background:var(--pi-band-2);color:#d9d9de;border-radius:4px;font-size:11px;font-weight:500;padding:3px 7px;white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis}
+.fb i{flex:none;width:7px;height:7px;border-radius:50%;background:#22c55e}
+.fb.demo i{background:var(--amber)}
+.fb em{font-style:normal;color:#9a9aa3}
+#tabs{display:flex;gap:2px;flex-wrap:wrap;padding:10px 0 0}
+#tabs a{color:#c9c9cf;border-radius:4px;padding:6px 10px;font:500 12.5px/1 var(--sans);text-decoration:none;white-space:nowrap}
+#tabs a:hover{background:var(--pi-band-2);color:#fff}
+#tabs a[aria-current="page"]{background:#fff;color:#000;font-weight:600}
+.bar{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:10px}
+.bar .note{color:#9a9aa3;font-size:11.5px;flex-basis:100%}
+.msb{display:inline-flex;align-items:center;gap:8px;height:30px;padding:0 4px 0 12px;border-radius:4px;background:#fff;color:#111;font:600 12.5px/30px var(--sans)}
+.msb .msk{color:#6b6b72;font-weight:500}
+.msb input{border:0;background:transparent;color:#111;font:600 12.5px/1 var(--sans);height:28px;width:170px;padding:0 6px;outline:none}
+.msb input::placeholder{color:#9a9aa3;font-weight:500}
+.msb select{border:0;background:transparent;color:#111;font:600 12.5px/1 var(--sans);height:28px;max-width:260px;cursor:pointer}
+.hseg{display:inline-flex;background:var(--pi-band-2);border-radius:5px;padding:2px}
+.hseg span{color:#e4e4e7;border-radius:4px;font:600 12px/1 var(--sans);padding:7px 10px}
+.hseg span.on{background:#fff;color:#000}
+
+/* content */
+main{padding-block:14px 110px;padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px))}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:12px;align-items:start}
+.s12{grid-column:span 12}.s8{grid-column:span 8}.s4{grid-column:span 4}
+.sec{font:700 12px/1 var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--pi-muted);display:flex;align-items:center;gap:14px;margin:12px 0 8px}
+.sec::after{content:"";flex:1;height:1px;background:var(--pi-line)}
+.sec:first-child{margin-top:4px}
+.trow{display:flex;flex-wrap:wrap;gap:10px}
+.trow>.tile{flex:1 1 calc(25% - 10px);min-width:0}
+.tile,.panel{background:var(--pi-surface);border:1px solid var(--pi-line);border-radius:4px;min-width:0}
+.tile{position:relative;padding:12px 14px}
+.tile.good::after,.tile.warn::after,.tile.bad::after{display:grid;place-items:center;position:absolute;top:12px;right:12px;width:22px;height:22px;border-radius:50%;font:700 12px/1 var(--sans);color:#fff}
+.tile.good::after{content:"✓";background:#16a34a}
+.tile.warn::after{content:"!";background:#d97706}
+.tile.bad::after{content:"✕";background:#dc2626;font-size:11px}
+.tile.good,.tile.warn,.tile.bad{padding-right:42px}
+.tl{font:600 12.5px/1.3 var(--sans);color:var(--pi-ink)}
+.tf{font-size:11.5px;color:var(--pi-muted);line-height:1.35;margin-top:1px}
+.tv{font:700 26px/1.1 var(--sans);letter-spacing:-.01em;margin:8px 0 6px;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tv small{font-size:14px;color:var(--pi-muted);font-weight:500;margin-left:3px}
+.ts{font-size:11.5px;color:var(--pi-muted);line-height:1.4}
+.ts.good{color:var(--good-t)}.ts.bad{color:var(--bad-t)}
+.panel{padding:12px 14px}
+.panel h2{font:700 13px/1.3 var(--sans);margin:0;color:var(--pi-ink)}
+.panel .hint{font-size:11.5px;color:var(--pi-muted);margin:2px 0 10px}
+.pill{display:inline-block;border-radius:4px;padding:2px 8px;font-size:12px;font-weight:600}
+.pill.g{background:color-mix(in srgb,var(--good) 14%,transparent);color:var(--good-t)}
+.pill.b{background:color-mix(in srgb,var(--bad) 14%,transparent);color:var(--bad-t)}
+.pill.a{background:color-mix(in srgb,var(--amber) 20%,transparent);color:var(--pi-ink)}
+.pill.n{background:color-mix(in srgb,var(--navy) 14%,transparent);color:var(--navy)}
+
+/* forms list (home) */
+.btbl{overflow:auto}
+.btbl table{width:100%;border-collapse:collapse;font:400 12.5px/1.3 var(--sans);font-variant-numeric:tabular-nums}
+.btbl th{position:sticky;top:0;background:var(--pi-surface);color:var(--pi-ink);font-weight:700;font-size:12px;text-align:left;padding:9px 10px;border-bottom:1px solid var(--pi-line);white-space:nowrap}
+.btbl th.r,.btbl td.r{text-align:right}
+.btbl td{padding:8px 10px;white-space:nowrap;vertical-align:top}
+.btbl td.wrap{white-space:normal;min-width:220px;color:var(--pi-muted)}
+.btbl tbody tr:nth-child(odd) td{background:var(--pi-z1)}
+.btbl tbody tr:nth-child(even) td{background:var(--pi-z2)}
+.btbl tbody tr.link{cursor:pointer}
+.btbl tbody tr.link:hover td{background:var(--hover)}
+.btbl tr.grp td{background:var(--pi-surface);font-weight:700;border-top:1px solid var(--pi-line);padding:10px}
+.btbl tr.grp td::before{content:"›";display:inline-block;margin-right:8px;font-weight:700}
+.btbl a{font-weight:600;text-decoration:none}
+.btbl a:hover{text-decoration:underline}
+.ico{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:5px;background:var(--pi-z2);vertical-align:middle;margin-right:8px}
+.ico svg{width:15px;height:15px}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:2px 12px;font-size:12.5px;margin-top:6px;white-space:normal}
+.kv dt{color:var(--pi-muted)} .kv dd{margin:0}
+details summary{cursor:pointer;font-weight:600}
+
+/* form fields */
+form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 16px}
+.fld{display:flex;flex-direction:column;gap:5px;min-width:0}
+.fld.wide{grid-column:1/-1}
+.fld label,.fld legend{font:600 12.5px/1.3 var(--sans);color:var(--pi-ink);padding:0}
+.req{color:var(--bad-t);margin-left:2px}
+.fhint{font-size:11.5px;color:var(--pi-muted)}
+.fld input,.fld select,.fld textarea{width:100%;min-height:40px;background:var(--pi-surface);border:1px solid var(--pi-line);border-radius:4px;padding:8px 11px;font:400 15px/1.3 var(--sans);color:var(--pi-ink)}
+.fld textarea{min-height:80px;resize:vertical}
+.fld input:focus,.fld select:focus,.fld textarea:focus{border-color:var(--pi-ink);outline:none;box-shadow:0 0 0 1px var(--pi-ink)}
+.fld.bad input,.fld.bad select,.fld.bad textarea{border-color:var(--bad-t);box-shadow:0 0 0 1px var(--bad-t)}
+.fld .msg{font-size:11.5px;color:var(--bad-t);font-weight:600}
+fieldset.fld{border:0;margin:0;padding:0}
+.seg{display:flex;flex-wrap:wrap;gap:2px;background:var(--pi-z2);border-radius:5px;padding:2px}
+.seg label{flex:1 1 auto;position:relative;min-width:64px}
+.seg input{position:absolute;opacity:0;width:1px;height:1px}
+.seg span{display:flex;align-items:center;justify-content:center;min-height:36px;padding:6px 12px;border-radius:4px;font:600 12.5px/1.2 var(--sans);color:var(--pi-ink);cursor:pointer;text-align:center}
+.seg span:hover{background:var(--pi-line)}
+.seg input:checked+span{background:var(--btn-bg);color:var(--btn-ink)}
+.seg input:focus-visible+span{outline:2px solid var(--navy);outline-offset:1px}
+.fld.bad .seg{box-shadow:0 0 0 1px var(--bad-t)}
+.sev-High input:checked+span,.sev-Critical input:checked+span{background:#dc2626;color:#fff}
+.rule{grid-column:1/-1;border:1px solid var(--pi-line);border-left:4px solid #dc2626;border-radius:4px;padding:10px 12px;font-weight:600;color:var(--bad-t);background:color-mix(in srgb,var(--bad) 8%,var(--pi-surface))}
+.err{border:1px solid var(--pi-line);border-left:4px solid #dc2626;border-radius:4px;padding:10px 12px;margin-bottom:12px;background:var(--pi-surface);font-weight:600}
+.kpis{display:flex;flex-direction:column;gap:10px}
+.side-list{margin:0;padding:0;list-style:none;font-size:12.5px;color:var(--pi-muted);display:flex;flex-direction:column;gap:7px}
+.side-list b{color:var(--pi-ink);font-weight:600}
+.stick{position:sticky;top:62px}
+
+/* sections and table-style questions (brew sheet) */
+.fsec{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;border-bottom:2px solid var(--pi-ink);padding:14px 0 5px;scroll-margin-top:70px}
+.fsec:first-child{padding-top:2px}
+.fsec h3{margin:0;font:700 12.5px/1.3 var(--sans);letter-spacing:.05em;text-transform:uppercase}
+.fsec span{font-size:11.5px;color:var(--pi-muted)}
+.glbl{font:600 12.5px/1.3 var(--sans)}
+.gwrap{overflow-x:auto;border:1px solid var(--pi-line);border-radius:4px}
+table.gt{border-collapse:collapse;width:100%;font:400 12.5px/1.3 var(--sans)}
+table.gt thead th{background:var(--pi-surface);font-weight:700;font-size:12px;text-align:left;padding:8px;border-bottom:1px solid var(--pi-line);white-space:nowrap}
+table.gt tbody th{text-align:left;font-weight:600;padding:6px 8px;white-space:nowrap;vertical-align:middle}
+table.gt tbody th small{display:block;font-weight:400;color:var(--pi-muted);font-size:11px}
+table.gt td{padding:4px 6px;vertical-align:middle}
+table.gt tbody tr:nth-child(odd)>*{background:var(--pi-z1)}
+table.gt tbody tr:nth-child(even)>*{background:var(--pi-z2)}
+table.gt input,table.gt select{width:100%;min-width:76px;height:34px;border:1px solid var(--pi-line);border-radius:3px;background:var(--pi-surface);color:var(--pi-ink);padding:4px 7px;font:400 14px/1 var(--sans)}
+table.gt td.t-time input{min-width:104px}
+table.gt td.t-text input{min-width:110px}
+table.gt td.t-check{text-align:center}
+table.gt input[type="checkbox"]{width:20px;height:20px;min-width:0;accent-color:var(--pi-ink);vertical-align:middle}
+table.gt input:focus,table.gt select:focus{outline:none;border-color:var(--pi-ink);box-shadow:0 0 0 1px var(--pi-ink)}
+
+/* brew sheet layout: boxes in rows like the paper sheet */
+.sheetform{display:block}
+.fsec .sn{font:700 12.5px/1.3 var(--sans);color:var(--pi-muted)}
+.fsec .sr{margin-left:auto}
+.snl{font-size:12px;color:var(--pi-muted);margin:6px 0 0}
+.sgrid{display:grid;grid-template-columns:repeat(var(--c,4),minmax(0,1fr));gap:12px 12px;margin:10px 0 4px;align-items:start}
+.sgrid>.gridf{grid-column:1/-1}
+.sf{gap:4px}
+.sfh{display:flex;align-items:center;gap:6px;min-height:18px}
+.sfh label{font:600 12.5px/1.2 var(--sans);color:var(--pi-ink)}
+.cchip{flex:none;font:600 10.5px/1 ui-monospace,Menlo,Consolas,monospace;background:var(--pi-ink);color:var(--pi-surface);padding:3px 5px;border-radius:3px}
+.sstd{margin-left:auto;font-size:11.5px;color:var(--pi-muted);white-space:nowrap}
+.ub{position:relative;display:block}
+.ub em{position:absolute;right:10px;top:50%;transform:translateY(-50%);font-style:normal;font-size:12px;color:var(--pi-muted);pointer-events:none}
+.ub input{padding-right:54px}
+.ub input::-webkit-inner-spin-button{display:none}
+.ssub{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center;font-size:12px;color:var(--pi-muted)}
+.sbx{display:inline-flex;align-items:center;gap:5px}
+.sbx em{font-style:normal}
+.fld .sbx input{width:70px;min-height:0;height:30px;font-size:13px;padding:3px 6px}
+.fld .sbx input[type="time"]{width:104px}
+.fld .sbx input[type="text"]{width:80px}
+.snote{font-size:11.5px;color:var(--pi-muted)}
+.seg.sm span{min-height:30px;padding:4px 8px;font-size:12px}
+.seg.sm label{min-width:0}
+.fld .seg input[type="radio"]{position:absolute;opacity:0;width:1px;height:1px;min-height:0;padding:0;border:0}
+.sbx .seg.sm{background:var(--pi-z2)}
+
+/* save bar */
+.savebar{position:fixed;left:var(--rail);right:0;bottom:0;z-index:25;background:var(--pi-surface);border-top:1px solid var(--pi-line);padding-top:10px;padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px));padding-bottom:calc(10px + env(safe-area-inset-bottom,0px))}
+.savebar .in{display:flex;gap:8px;align-items:center}
+.savebar .sbtxt{font-size:12px;color:var(--pi-muted);margin-right:auto}
+.savebar .pbtn,.savebar .obtn{height:40px;padding:0 18px;font-size:13.5px}
+.savebar .pbtn{min-width:200px}
+
+/* confirmation */
+.done{max-width:640px;margin:24px auto;text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px;padding:26px 22px}
+.done .tick{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:#16a34a;color:#fff;font:700 20px/1 var(--sans)}
+.done.q .tick{background:#d97706}
+.done h2{font:700 20px/1.2 var(--sans);margin:0}
+.done p{color:var(--pi-muted);margin:0}
+.rid{font:600 13px/1 ui-monospace,Menlo,Consolas,monospace;background:var(--pi-z2);border-radius:4px;padding:6px 10px}
+.btns{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:6px}
+.empty{background:var(--pi-surface);border:1px solid var(--pi-line);border-radius:4px;padding:34px 24px;text-align:center;color:var(--pi-muted)}
+
+@media (max-width:1100px){.s8,.s4{grid-column:span 12}.stick{position:static}.kpis{flex-direction:row;flex-wrap:wrap}.kpis .tile{flex:1 1 150px}.trow>.tile{flex-basis:calc(50% - 10px)}}
+@media (max-width:640px){
+  :root{--rail:0px}
+  #rail{top:auto;bottom:0;height:56px;width:100%!important;flex-direction:row;padding:8px;border-right:0;border-top:1px solid var(--pi-line);justify-content:space-around;gap:2px}
+  #rail a{flex:1;justify-content:center;padding:0}#rail a .lbl{display:none}#rail .div{display:none}.rail-tog{display:none}
+  .nav{padding-left:max(12px,env(safe-area-inset-left,0px));padding-right:max(12px,env(safe-area-inset-right,0px));gap:8px}.nt b{display:none}.obtn .lbl{display:none}
+  .savebar{bottom:56px}.savebar .sbtxt{display:none}.savebar .pbtn{flex:1;min-width:0}
+  main{padding-bottom:140px}
+  form{grid-template-columns:1fr}
+  .msb input{width:130px}
+  .sgrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .sf[data-span]{grid-column:1/-1!important}
+  .btbl td.wrap{min-width:160px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+<script>(function(){try{var t=localStorage.getItem('cbg-theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t)}catch(e){}})();</script>
+
+</head>
+<body>
+<header class="hdr">
+  <nav class="nav" aria-label="Data entry">
+    <a class="brand" href="#home"><img class="logo" alt="Carib Brewery" src="data:image/png;base64,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"><span class="nt">Grenada<b>Data entry</b></span></a>
+    <span class="navb">
+      <button class="thbtn" id="themeBtn" type="button" aria-label="Switch light or dark mode" title="Light / dark"><svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.2M12 19.8V22M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M2 12h2.2M19.8 12H22M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6"/></svg></button>
+      <span id="queueBadge" class="qn" hidden></span>
+      <button class="pbtn" id="signinTop" type="button" hidden>Sign in</button>
+      <span class="pi-me" title="Carib Brewery Grenada">CBG</span>
+    </span>
+  </nav>
+</header>
+<nav id="rail" aria-label="Departments"></nav>
+<button class="rail-tog" id="railTog" type="button" aria-label="Show department names"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
+<section class="hero">
+  <p class="eyebrow" id="eyebrow">Start</p>
+  <p class="pmeta" id="pmeta"></p>
+  <p class="upd" id="upd"></p>
+  <div class="fresh" id="fresh"></div>
+  <nav id="tabs" aria-label="Forms"></nav>
+  <div class="bar" id="bar"></div>
+</section>
+<main id="app" aria-live="polite"></main>
+<div id="savebarHost"></div>
+
+<script>/* Form definitions: question names must match the Excel table column headers exactly */
+window.CBG_FORMS = [
+ {
+  "key": "brewing",
+  "code": "BRW",
+  "dept": "Brewing & Fermentation",
+  "title": "Star Malt Brew Process Sheet",
+  "desc": "GR-BOD-R54-A, pages 1 to 3. Boxes marked with a letter go to that column of the Brewhouse log.",
+  "fields": [
+   {
+    "type": "section",
+    "n": "",
+    "name": "Brew",
+    "hint": "Page 1",
+    "cols": 3,
+    "note": "Recipe standard: Pilsen 575 kg · Viking Munich 0 kg · Caramel 150: 125 kg · Chocolate 20 kg · Caramel 203: 26 kg · Sugar 400 kg"
+   },
+   {
+    "name": "Brew No.",
+    "label": "Brew No.",
+    "type": "text",
+    "unit": "SM",
+    "col": "A",
+    "std": "",
+    "req": true,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Date",
+    "label": "Date",
+    "type": "date",
+    "unit": "",
+    "col": "B",
+    "std": "",
+    "req": true,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Batch Ticket #",
+    "label": "Batch Ticket #",
+    "type": "text",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "type": "section",
+    "n": "1",
+    "name": "Malt, sugar and mash",
+    "hint": "Columns C to J",
+    "cols": 4,
+    "note": ""
+   },
+   {
+    "name": "Pilsen Malt (kg)",
+    "label": "Pilsen Malt",
+    "type": "number",
+    "unit": "kg",
+    "col": "C",
+    "std": "std 575",
+    "req": false,
+    "hint": "",
+    "span": 1,
+    "sub": [
+     {
+      "name": "Pilsen Silo #",
+      "label": "Silo #",
+      "type": "text",
+      "unit": ""
+     }
+    ]
+   },
+   {
+    "name": "Caramel 150 (kg)",
+    "label": "Caramel 150",
+    "type": "number",
+    "unit": "kg",
+    "col": "F",
+    "std": "std 125",
+    "req": false,
+    "hint": "",
+    "span": 1,
+    "sub": [
+     {
+      "name": "Caramel 150 Bags",
+      "label": "No. of bags",
+      "type": "number",
+      "unit": ""
+     }
+    ]
+   },
+   {
+    "name": "Sugar (kg)",
+    "label": "Sugar",
+    "type": "number",
+    "unit": "kg",
+    "col": "H",
+    "std": "std 400",
+    "req": false,
+    "hint": "",
+    "span": 1,
+    "sub": [
+     {
+      "name": "Sugar Bags",
+      "label": "No. of bags",
+      "type": "number",
+      "unit": ""
+     }
+    ]
+   },
+   {
+    "name": "Mash Dip",
+    "label": "Mash Dip",
+    "type": "number",
+    "unit": "",
+    "col": "J",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1,
+    "sub": [
+     {
+      "name": "Mash Dip Level",
+      "label": "",
+      "type": "choice",
+      "unit": "",
+      "options": [
+       "Normal",
+       "Above",
+       "Below"
+      ]
+     }
+    ]
+   },
+   {
+    "name": "Viking Munich (kg)",
+    "label": "Viking Munich (not in log)",
+    "type": "number",
+    "unit": "kg",
+    "col": "",
+    "std": "std 0",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Chocolate (kg)",
+    "label": "Chocolate (not in log)",
+    "type": "number",
+    "unit": "kg",
+    "col": "",
+    "std": "std 20",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "type": "section",
+    "n": "2",
+    "name": "Run-off gravities",
+    "hint": "Columns K to O",
+    "cols": 5,
+    "note": ""
+   },
+   {
+    "name": "1st Runnings (°P)",
+    "label": "1st Runnings",
+    "type": "number",
+    "unit": "°P",
+    "col": "K",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1,
+    "sub": [
+     {
+      "name": "1st Runnings (HLs)",
+      "label": "HLs",
+      "type": "number",
+      "unit": ""
+     }
+    ]
+   },
+   {
+    "name": "60 Minutes (°P)",
+    "label": "60 Minutes",
+    "type": "number",
+    "unit": "°P",
+    "col": "L",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1,
+    "sub": [
+     {
+      "name": "60 Minutes (HLs)",
+      "label": "HLs",
+      "type": "number",
+      "unit": ""
+     }
+    ]
+   },
+   {
+    "name": "90 Minutes (°P)",
+    "label": "90 Minutes",
+    "type": "number",
+    "unit": "°P",
+    "col": "M",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1,
+    "sub": [
+     {
+      "name": "90 Minutes (HLs)",
+      "label": "HLs",
+      "type": "number",
+      "unit": ""
+     }
+    ]
+   },
+   {
+    "name": "Last Runnings (°P)",
+    "label": "Last Runnings",
+    "type": "number",
+    "unit": "°P",
+    "col": "N",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1,
+    "sub": [
+     {
+      "name": "Last Runnings (HLs)",
+      "label": "HLs",
+      "type": "number",
+      "unit": ""
+     }
+    ]
+   },
+   {
+    "name": "Run-off Time (mins)",
+    "label": "Run-off Time",
+    "type": "number",
+    "unit": "mins",
+    "col": "O",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1,
+    "sub": [
+     {
+      "name": "Run-off Start",
+      "label": "Start",
+      "type": "time",
+      "unit": ""
+     },
+     {
+      "name": "Run-off End",
+      "label": "End",
+      "type": "time",
+      "unit": ""
+     }
+    ]
+   },
+   {
+    "type": "section",
+    "n": "3",
+    "name": "Boil, cooling and brew times",
+    "hint": "Columns P to X",
+    "cols": 4,
+    "note": ""
+   },
+   {
+    "name": "Boil Time (mins)",
+    "label": "Boil Time",
+    "type": "number",
+    "unit": "mins",
+    "col": "P",
+    "std": "std 60",
+    "req": false,
+    "hint": "",
+    "span": 1,
+    "sub": [
+     {
+      "name": "Boil Init (mins)",
+      "label": "Init",
+      "type": "number",
+      "unit": ""
+     },
+     {
+      "name": "Boil Final (mins)",
+      "label": "+ Final",
+      "type": "number",
+      "unit": ""
+     },
+     {
+      "name": "Boil Extra (mins)",
+      "label": "+ Extra",
+      "type": "number",
+      "unit": ""
+     }
+    ]
+   },
+   {
+    "name": "Kettle Vol. at Boil End (HLs)",
+    "label": "Kettle Vol. at boil end",
+    "type": "number",
+    "unit": "HLs",
+    "col": "R",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1,
+    "sub": [
+     {
+      "name": "Boil Ended at (°P)",
+      "label": "Boil ended at",
+      "type": "number",
+      "unit": "°P"
+     }
+    ]
+   },
+   {
+    "name": "Kettle Stand (mins)",
+    "label": "Kettle Stand",
+    "type": "number",
+    "unit": "mins",
+    "col": "S",
+    "std": "",
+    "req": false,
+    "hint": "Stand in wort kettle",
+    "span": 1
+   },
+   {
+    "name": "Boil Start",
+    "label": "Boil Start",
+    "type": "time",
+    "unit": "",
+    "col": "T",
+    "std": "",
+    "req": false,
+    "hint": "Initial boil start",
+    "span": 1
+   },
+   {
+    "name": "Cool End",
+    "label": "Cool End",
+    "type": "time",
+    "unit": "",
+    "col": "U",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1,
+    "sub": [
+     {
+      "name": "Cooling Start",
+      "label": "Cooling start",
+      "type": "time",
+      "unit": ""
+     }
+    ]
+   },
+   {
+    "name": "Cool Time (mins)",
+    "label": "Cool Time",
+    "type": "number",
+    "unit": "mins",
+    "col": "V",
+    "std": "",
+    "req": false,
+    "hint": "End minus start",
+    "span": 1
+   },
+   {
+    "name": "Mash In Time",
+    "label": "Mash In Time",
+    "type": "time",
+    "unit": "",
+    "col": "W",
+    "std": "",
+    "req": false,
+    "hint": "Start of mash in",
+    "span": 1
+   },
+   {
+    "name": "Cast Out Time",
+    "label": "Cast Out Time",
+    "type": "time",
+    "unit": "",
+    "col": "X",
+    "std": "",
+    "req": false,
+    "hint": "End of transfer to FV",
+    "span": 1
+   },
+   {
+    "type": "section",
+    "n": "4",
+    "name": "Kettle and FV gravities and volumes",
+    "hint": "Columns Z to AG",
+    "cols": 6,
+    "note": "Target kettle out gravity 16.9 to 17.2 °P. FV volume from the diesel meter."
+   },
+   {
+    "name": "Kettle Up (°P)",
+    "label": "Kettle Up",
+    "type": "number",
+    "unit": "°P",
+    "col": "Z",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Kettle Up (HLs)",
+    "label": "Kettle Up",
+    "type": "number",
+    "unit": "HLs",
+    "col": "AB",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Kettle Out (°P)",
+    "label": "Kettle Out",
+    "type": "number",
+    "unit": "°P",
+    "col": "AC",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Kettle Out (HLs)",
+    "label": "Kettle Out",
+    "type": "number",
+    "unit": "HLs",
+    "col": "AD",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "FV Gravity (°P)",
+    "label": "FV Gravity",
+    "type": "number",
+    "unit": "°P",
+    "col": "AE",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "FV Volume (HLs)",
+    "label": "FV Volume",
+    "type": "number",
+    "unit": "HLs",
+    "col": "AG",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "FV/DPV #",
+    "label": "FV/DPV #",
+    "type": "text",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "type": "section",
+    "n": "5",
+    "name": "HLT, malt dust and operator",
+    "hint": "Columns AQ to AV",
+    "cols": 4,
+    "note": ""
+   },
+   {
+    "name": "HLT Before Mashing",
+    "label": "HLT Before Mashing",
+    "type": "number",
+    "unit": "",
+    "col": "AQ",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "HLT Before Cooling",
+    "label": "HLT Before Cooling",
+    "type": "number",
+    "unit": "",
+    "col": "AR",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Malt Dust (kg)",
+    "label": "Malt Dust",
+    "type": "number",
+    "unit": "kg",
+    "col": "AU",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Operator Initials",
+    "label": "Operator Initials",
+    "type": "text",
+    "unit": "",
+    "col": "AV",
+    "std": "",
+    "req": true,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "type": "section",
+    "n": "6",
+    "name": "Mash programme",
+    "hint": "Page 2",
+    "cols": 6,
+    "note": ""
+   },
+   {
+    "type": "grid",
+    "name": "Mash programme",
+    "hint": "",
+    "fmt": "Mash: {row} – {col}",
+    "rows": [
+     {
+      "name": "Mash in",
+      "hint": "51 °C"
+     },
+     {
+      "name": "Proteolytic rest",
+      "hint": "15 mins"
+     },
+     {
+      "name": "Heat mash to 68 °C",
+      "hint": ""
+     },
+     {
+      "name": "1st saccharification rest",
+      "hint": "45 mins"
+     },
+     {
+      "name": "Heat mash to 78 °C",
+      "hint": ""
+     },
+     {
+      "name": "Pump to lauter tun",
+      "hint": ""
+     },
+     {
+      "name": "Recirculate",
+      "hint": "10 mins"
+     },
+     {
+      "name": "Run off",
+      "hint": "to page 1, O"
+     }
+    ],
+    "cols": [
+     {
+      "name": "Start",
+      "type": "time"
+     },
+     {
+      "name": "End",
+      "type": "time"
+     },
+     {
+      "name": "Mins",
+      "type": "number"
+     }
+    ]
+   },
+   {
+    "name": "Mash In pH",
+    "label": "Mash in: pH",
+    "type": "number",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Mash In Temp (°C)",
+    "label": "Mash in: °C",
+    "type": "number",
+    "unit": "°C",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Proteolytic Rest Init",
+    "label": "Proteolytic rest: Init",
+    "type": "number",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Proteolytic Rest Final",
+    "label": "Proteolytic rest: Final",
+    "type": "number",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "1st Sacch. Rest Init",
+    "label": "1st sacch. rest: Init",
+    "type": "number",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "1st Sacch. Rest Final",
+    "label": "1st sacch. rest: Final",
+    "type": "number",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "type": "grid",
+    "name": "Mash salts",
+    "hint": "",
+    "fmt": "Mash salt {row} – {col}",
+    "rows": [
+     {
+      "name": "Acid",
+      "hint": "std 0 mls"
+     },
+     {
+      "name": "CaSO₄",
+      "hint": "std 764.6 g"
+     },
+     {
+      "name": "CaCl₂",
+      "hint": "std 1588.2 g"
+     }
+    ],
+    "cols": [
+     {
+      "name": "Actual",
+      "type": "number"
+     },
+     {
+      "name": "Time",
+      "type": "time"
+     }
+    ]
+   },
+   {
+    "name": "Iodine",
+    "label": "Iodine",
+    "type": "choice",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 2,
+    "options": [
+     "Negative",
+     "Positive",
+     "Trace"
+    ]
+   },
+   {
+    "name": "Wort",
+    "label": "Wort",
+    "type": "choice",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 2,
+    "options": [
+     "Clear",
+     "Hazy",
+     "Sediments"
+    ]
+   },
+   {
+    "name": "Odour",
+    "label": "Odour",
+    "type": "choice",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 2,
+    "options": [
+     "Normal",
+     "Mouldy",
+     "Off"
+    ]
+   },
+   {
+    "type": "section",
+    "n": "7",
+    "name": "Lauter and sparge",
+    "hint": "Page 2",
+    "cols": 4,
+    "note": ""
+   },
+   {
+    "name": "HLT Temp (°C)",
+    "label": "HLT Temp",
+    "type": "number",
+    "unit": "°C",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "HLT Volume (HLs)",
+    "label": "HLT Volume",
+    "type": "number",
+    "unit": "HLs",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Sparge Temp (°C)",
+    "label": "Sparge Temp",
+    "type": "number",
+    "unit": "°C",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Sparge pH",
+    "label": "Sparge pH",
+    "type": "number",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Sparge Flow Rate (HLs/hr)",
+    "label": "Sparge Flow Rate",
+    "type": "number",
+    "unit": "HLs/hr",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Sparge Vol. at Run Off (HLs)",
+    "label": "Sparge Vol. at Run Off",
+    "type": "number",
+    "unit": "HLs",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1,
+    "sub": [
+     {
+      "name": "Sparge Run Off at (HLs)",
+      "label": "at",
+      "type": "number",
+      "unit": "HLs"
+     }
+    ]
+   },
+   {
+    "name": "Total Sparge Used (HLs)",
+    "label": "Total Sparge Used",
+    "type": "number",
+    "unit": "HLs",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Pump to Underback (HLs)",
+    "label": "Pump to Underback",
+    "type": "number",
+    "unit": "HLs",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Sparge On/Off (mins)",
+    "label": "Sparge on/off",
+    "type": "number",
+    "unit": "mins",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Last Runnings Taken",
+    "label": "Last runnings taken",
+    "type": "choice",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1,
+    "options": [
+     "Yes",
+     "No"
+    ]
+   },
+   {
+    "name": "Last Runnings pH",
+    "label": "Last runnings pH",
+    "type": "number",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "type": "section",
+    "n": "8",
+    "name": "Kettle additions and settings",
+    "hint": "Page 2",
+    "cols": 4,
+    "note": "One (1) tin of hops in this brew"
+   },
+   {
+    "type": "grid",
+    "name": "Addition (Vitamalt hops)",
+    "hint": "",
+    "fmt": "Kettle {row} – {col}",
+    "rows": [
+     {
+      "name": "Hop extract",
+      "hint": "std 158.0 g"
+     },
+     {
+      "name": "Caramel 203",
+      "hint": "std 26.0 kg"
+     },
+     {
+      "name": "Gypsum (CaSO₄)",
+      "hint": "std 688 g"
+     },
+     {
+      "name": "CaCl₂",
+      "hint": "std 300 g"
+     },
+     {
+      "name": "Sugar",
+      "hint": "std 400 kg"
+     },
+     {
+      "name": "CO₂ hop extract",
+      "hint": "g"
+     },
+     {
+      "name": "Pelfloc G",
+      "hint": "std 200 g"
+     }
+    ],
+    "cols": [
+     {
+      "name": "Actual",
+      "type": "number"
+     },
+     {
+      "name": "Time",
+      "type": "time"
+     },
+     {
+      "name": "Check",
+      "type": "check"
+     }
+    ]
+   },
+   {
+    "type": "grid",
+    "name": "Kettle setting",
+    "hint": "",
+    "fmt": "{row}",
+    "rows": [
+     {
+      "name": "Steam on kettle at",
+      "hint": "HLs"
+     },
+     {
+      "name": "EC temp at boil",
+      "hint": "std 104.0 °C"
+     },
+     {
+      "name": "Circulation pump pressure",
+      "hint": "std 20 PSI"
+     },
+     {
+      "name": "Kettle temp, start",
+      "hint": "std 100 °C"
+     },
+     {
+      "name": "Kettle temp, end",
+      "hint": "std 100 °C"
+     },
+     {
+      "name": "EC pressure",
+      "hint": "std 50 PSI"
+     },
+     {
+      "name": "Incoming steam pressure",
+      "hint": "PSI"
+     }
+    ],
+    "cols": [
+     {
+      "name": "Actual",
+      "type": "number"
+     }
+    ]
+   },
+   {
+    "type": "section",
+    "n": "9",
+    "name": "Boil and whirlpool",
+    "hint": "Page 2",
+    "cols": 4,
+    "note": ""
+   },
+   {
+    "name": "Kettle Gravity, 45 min (°P)",
+    "label": "Kettle Gravity, 45 min",
+    "type": "number",
+    "unit": "°P",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Kettle Volume, 45 min (HLs)",
+    "label": "Kettle Volume, 45 min",
+    "type": "number",
+    "unit": "HLs",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Boil Evap. Rate (%)",
+    "label": "Boil Evap. Rate",
+    "type": "number",
+    "unit": "%",
+    "col": "",
+    "std": "4 to 6",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Cutting Liquor (HLs)",
+    "label": "Cutting Liquor",
+    "type": "number",
+    "unit": "HLs",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Wort Colour",
+    "label": "Wort Colour",
+    "type": "number",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Wort pH",
+    "label": "Wort pH",
+    "type": "number",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Pump to Whirlpool (mins)",
+    "label": "Pump to Whirlpool",
+    "type": "number",
+    "unit": "mins",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1,
+    "sub": [
+     {
+      "name": "Pump to Whirlpool Start",
+      "label": "Start",
+      "type": "time",
+      "unit": ""
+     },
+     {
+      "name": "Pump to Whirlpool End",
+      "label": "End",
+      "type": "time",
+      "unit": ""
+     }
+    ]
+   },
+   {
+    "name": "Whirlpool Rest (mins)",
+    "label": "Whirlpool Rest",
+    "type": "number",
+    "unit": "mins",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Remarks",
+    "label": "Remarks",
+    "type": "long",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 4
+   },
+   {
+    "type": "section",
+    "n": "10",
+    "name": "Wort cooling: plate heat exchanger",
+    "hint": "Page 3",
+    "cols": 6,
+    "note": ""
+   },
+   {
+    "name": "Oxygen On",
+    "label": "Oxygen on",
+    "type": "time",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Oxygen Off",
+    "label": "Oxygen off",
+    "type": "time",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Alcohol Temp Start",
+    "label": "Alcohol temp start",
+    "type": "number",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Alcohol Temp End",
+    "label": "Alcohol temp end",
+    "type": "number",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Temp (°C)",
+    "label": "Temp",
+    "type": "number",
+    "unit": "°C",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "DIP (inches)",
+    "label": "DIP",
+    "type": "number",
+    "unit": "inches",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "type": "grid",
+    "name": "Cooling",
+    "hint": "",
+    "fmt": "Cooling {row} – {col}",
+    "rows": [
+     {
+      "name": "1",
+      "hint": ""
+     },
+     {
+      "name": "2",
+      "hint": ""
+     },
+     {
+      "name": "3",
+      "hint": ""
+     },
+     {
+      "name": "4",
+      "hint": ""
+     },
+     {
+      "name": "5",
+      "hint": ""
+     },
+     {
+      "name": "6",
+      "hint": ""
+     },
+     {
+      "name": "7",
+      "hint": ""
+     },
+     {
+      "name": "8",
+      "hint": ""
+     },
+     {
+      "name": "9",
+      "hint": ""
+     }
+    ],
+    "cols": [
+     {
+      "name": "Time",
+      "type": "time"
+     },
+     {
+      "name": "O₂ cylinder pressure (psi)",
+      "type": "number"
+     },
+     {
+      "name": "O₂ flowrate (lpm)",
+      "type": "number"
+     },
+     {
+      "name": "Water in (°C)",
+      "type": "number"
+     },
+     {
+      "name": "Water out (°C)",
+      "type": "number"
+     },
+     {
+      "name": "IMS in (°C)",
+      "type": "number"
+     },
+     {
+      "name": "IMS out (°C)",
+      "type": "number"
+     },
+     {
+      "name": "Wort in (°C)",
+      "type": "number"
+     },
+     {
+      "name": "Wort out (°C)",
+      "type": "number"
+     }
+    ]
+   },
+   {
+    "type": "section",
+    "n": "11",
+    "name": "Wort into FV / DPV",
+    "hint": "Page 3",
+    "cols": 4,
+    "note": ""
+   },
+   {
+    "name": "Wort Temp in FV/DPV (°C)",
+    "label": "Wort Temp in FV/DPV",
+    "type": "number",
+    "unit": "°C",
+    "col": "",
+    "std": "4.0 to 6.0",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Wort Flowrate (l/hr)",
+    "label": "Wort Flowrate",
+    "type": "number",
+    "unit": "l/hr",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "FTR End Time, Target",
+    "label": "FTR End Time, Target",
+    "type": "time",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "FTR End Time, Actual",
+    "label": "FTR End Time, Actual",
+    "type": "time",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Trub Compaction",
+    "label": "Trub compaction",
+    "type": "choice",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1,
+    "options": [
+     "Good",
+     "Loose"
+    ]
+   },
+   {
+    "name": "Residual Wort",
+    "label": "Residual wort",
+    "type": "choice",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1,
+    "options": [
+     "Yes",
+     "No"
+    ]
+   },
+   {
+    "name": "IMS Check (Shiftman)",
+    "label": "IMS check (shiftman)",
+    "type": "choice",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1,
+    "options": [
+     "Yes",
+     "No"
+    ]
+   },
+   {
+    "name": "Wort Sample Taken",
+    "label": "Wort sample taken",
+    "type": "choice",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1,
+    "options": [
+     "Yes",
+     "No"
+    ]
+   },
+   {
+    "name": "Wort Micro Taken",
+    "label": "Wort micro taken",
+    "type": "choice",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1,
+    "options": [
+     "Yes",
+     "No"
+    ]
+   },
+   {
+    "name": "Magnet Cleaned",
+    "label": "Magnet cleaned",
+    "type": "choice",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1,
+    "options": [
+     "Yes",
+     "No"
+    ]
+   },
+   {
+    "type": "section",
+    "n": "12",
+    "name": "Yeast pitching",
+    "hint": "Page 3",
+    "cols": 4,
+    "note": ""
+   },
+   {
+    "name": "Volume Pitched (HLs)",
+    "label": "Volume Pitched",
+    "type": "number",
+    "unit": "HLs",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Time Pitched",
+    "label": "Time Pitched",
+    "type": "time",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Pitched from YSV #",
+    "label": "Pitched from YSV #",
+    "type": "text",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Packed Cell Volume (%)",
+    "label": "Packed Cell Volume",
+    "type": "number",
+    "unit": "%",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Dead Cell Count (%)",
+    "label": "Dead Cell Count",
+    "type": "number",
+    "unit": "%",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Cell Count at Pitching (x10⁶)",
+    "label": "Cell Count at Pitching",
+    "type": "number",
+    "unit": "x10⁶",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Yeast Micro Taken",
+    "label": "Yeast Micro Taken",
+    "type": "choice",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1,
+    "options": [
+     "Yes",
+     "No"
+    ]
+   },
+   {
+    "type": "section",
+    "n": "13",
+    "name": "Non-conformance / corrective action log",
+    "hint": "Page 3",
+    "cols": 4,
+    "note": ""
+   },
+   {
+    "type": "grid",
+    "name": "Non-conformance log",
+    "hint": "",
+    "fmt": "NC {row} – {col}",
+    "rows": [
+     {
+      "name": "1",
+      "hint": ""
+     },
+     {
+      "name": "2",
+      "hint": ""
+     },
+     {
+      "name": "3",
+      "hint": ""
+     }
+    ],
+    "cols": [
+     {
+      "name": "Area",
+      "type": "text"
+     },
+     {
+      "name": "Non-conformance #",
+      "type": "text"
+     },
+     {
+      "name": "Action #",
+      "type": "text"
+     },
+     {
+      "name": "Initial",
+      "type": "text"
+     },
+     {
+      "name": "Remarks",
+      "type": "text"
+     }
+    ]
+   },
+   {
+    "type": "section",
+    "n": "14",
+    "name": "Sign-off",
+    "hint": "Page 3",
+    "cols": 4,
+    "note": ""
+   },
+   {
+    "name": "Started by (Brewhouse Operator)",
+    "label": "Started by (Brewhouse Operator)",
+    "type": "text",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": true,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Completed by (Cold Stores Operator)",
+    "label": "Completed by (Cold Stores Operator)",
+    "type": "text",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Attendant",
+    "label": "Attendant",
+    "type": "text",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Operator",
+    "label": "Operator",
+    "type": "text",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   }
+  ]
+ },
+ {
+  "key": "hse",
+  "code": "HSE",
+  "dept": "HSE",
+  "title": "Unsafe Condition / Incident Report",
+  "desc": "Anyone can report. If someone is hurt or in danger, act first and report after.",
+  "fields": [
+   {
+    "name": "Report Date",
+    "type": "date",
+    "options": null,
+    "req": true,
+    "hint": ""
+   },
+   {
+    "name": "Time Observed",
+    "type": "time",
+    "options": null,
+    "req": true,
+    "hint": "Use 24-hour time, e.g. 14:30"
+   },
+   {
+    "name": "Reported By",
+    "type": "text",
+    "options": null,
+    "req": true,
+    "hint": ""
+   },
+   {
+    "name": "Area",
+    "type": "choice",
+    "options": [
+     "Brewhouse",
+     "Fermentation & Filtration",
+     "Packaging Hall",
+     "Warehouse",
+     "Utilities / Boiler House",
+     "Laboratory",
+     "Yard & Loading Bay",
+     "Offices"
+    ],
+    "req": true,
+    "hint": ""
+   },
+   {
+    "name": "Report Type",
+    "type": "choice",
+    "options": [
+     "Unsafe Condition",
+     "Unsafe Act",
+     "Near Miss",
+     "Incident / Injury"
+    ],
+    "req": true,
+    "hint": ""
+   },
+   {
+    "name": "Description",
+    "type": "long",
+    "options": null,
+    "req": true,
+    "hint": "What did you see? Be specific about the location."
+   },
+   {
+    "name": "Severity",
+    "type": "choice",
+    "options": [
+     "Low",
+     "Medium",
+     "High",
+     "Critical"
+    ],
+    "req": true,
+    "hint": ""
+   },
+   {
+    "name": "Immediate Action Taken",
+    "type": "long",
+    "options": null,
+    "req": false,
+    "hint": ""
+   }
+  ]
+ },
+ {
+  "key": "facilities",
+  "code": "FAC",
+  "dept": "Facilities",
+  "title": "Weekly Utility Meter Readings",
+  "desc": "Submit once at the end of each week (W1–W5, W5 is the short end-of-month week).",
+  "fields": [
+   {
+    "name": "Reading Date",
+    "type": "date",
+    "options": null,
+    "req": true,
+    "hint": ""
+   },
+   {
+    "name": "Month",
+    "type": "choice",
+    "options": [
+     "Jan",
+     "Feb",
+     "Mar",
+     "Apr",
+     "May",
+     "Jun",
+     "Jul",
+     "Aug",
+     "Sep",
+     "Oct",
+     "Nov",
+     "Dec"
+    ],
+    "req": true,
+    "hint": ""
+   },
+   {
+    "name": "Week",
+    "type": "choice",
+    "options": [
+     "W1",
+     "W2",
+     "W3",
+     "W4",
+     "W5"
+    ],
+    "req": true,
+    "hint": "W5 is the short end-of-month week"
+   },
+   {
+    "name": "Recorded By",
+    "type": "text",
+    "options": null,
+    "req": true,
+    "hint": ""
+   },
+   {
+    "name": "Electricity (kWh)",
+    "type": "number",
+    "options": null,
+    "req": true,
+    "hint": "Usage for the week, from the main meter"
+   },
+   {
+    "name": "Water (m³)",
+    "type": "number",
+    "options": null,
+    "req": true,
+    "hint": ""
+   },
+   {
+    "name": "Fuel (litres)",
+    "type": "number",
+    "options": null,
+    "req": true,
+    "hint": "Boiler fuel used"
+   },
+   {
+    "name": "CO2 (kg)",
+    "type": "number",
+    "options": null,
+    "req": true,
+    "hint": ""
+   },
+   {
+    "name": "Beer Produced (hl)",
+    "type": "number",
+    "options": null,
+    "req": true,
+    "hint": "From the weekly production report"
+   },
+   {
+    "name": "Comments",
+    "type": "long",
+    "options": null,
+    "req": false,
+    "hint": "Meter faults, estimates, etc. (optional)"
+   }
+  ]
+ },
+ {
+  "key": "packaging",
+  "code": "PKG",
+  "dept": "Packaging",
+  "title": "Line Shift Report",
+  "desc": "Line supervisor completes at the end of every shift, one entry per line.",
+  "fields": [
+   {
+    "name": "Shift Date",
+    "type": "date",
+    "options": null,
+    "req": true,
+    "hint": ""
+   },
+   {
+    "name": "Shift",
+    "type": "choice",
+    "options": [
+     "Day",
+     "Evening",
+     "Night"
+    ],
+    "req": true,
+    "hint": ""
+   },
+   {
+    "name": "Line",
+    "type": "choice",
+    "options": [
+     "GBL Line 1",
+     "GBL Line 2",
+     "Can Line"
+    ],
+    "req": true,
+    "hint": ""
+   },
+   {
+    "name": "Supervisor",
+    "type": "text",
+    "options": null,
+    "req": true,
+    "hint": ""
+   },
+   {
+    "name": "Brand",
+    "type": "choice",
+    "options": [
+     "Carib Lager",
+     "Stag",
+     "Shandy Carib Ginger",
+     "Shandy Carib Sorrel",
+     "Malta Carib",
+     "Other"
+    ],
+    "req": true,
+    "hint": ""
+   },
+   {
+    "name": "Planned Time (min)",
+    "type": "number",
+    "options": null,
+    "req": true,
+    "hint": "Usually 480 for an 8-hour shift"
+   },
+   {
+    "name": "Cases Bottled",
+    "type": "number",
+    "options": null,
+    "req": true,
+    "hint": ""
+   },
+   {
+    "name": "Downtime (min)",
+    "type": "number",
+    "options": null,
+    "req": true,
+    "hint": "Total minutes the line was stopped. Enter 0 if none."
+   },
+   {
+    "name": "Main Downtime Cause",
+    "type": "choice",
+    "options": [
+     "None",
+     "Mechanical",
+     "Electrical",
+     "Changeover",
+     "Material Shortage",
+     "Quality Hold",
+     "Utilities",
+     "CIP / Cleaning",
+     "Other"
+    ],
+    "req": true,
+    "hint": "Choose None if there was no downtime"
+   },
+   {
+    "name": "Downtime Notes",
+    "type": "long",
+    "options": null,
+    "req": false,
+    "hint": "Optional"
+   }
+  ],
+  "rated": {
+   "GBL Line 1": 1500,
+   "GBL Line 2": 1200,
+   "Can Line": 1800
+  }
+ },
+ {
+  "key": "logistics",
+  "code": "LOG",
+  "dept": "Logistics",
+  "title": "Dispatch & Export Log",
+  "desc": "One entry per load leaving the plant.",
+  "fields": [
+   {
+    "name": "Dispatch Date",
+    "type": "date",
+    "options": null,
+    "req": true,
+    "hint": ""
+   },
+   {
+    "name": "Shipment Type",
+    "type": "choice",
+    "options": [
+     "Local Delivery",
+     "Export"
+    ],
+    "req": true,
+    "hint": ""
+   },
+   {
+    "name": "Customer / Destination",
+    "type": "text",
+    "options": null,
+    "req": true,
+    "hint": ""
+   },
+   {
+    "name": "Invoice / Order No.",
+    "type": "text",
+    "options": null,
+    "req": true,
+    "hint": ""
+   },
+   {
+    "name": "Brand",
+    "type": "choice",
+    "options": [
+     "Carib Lager",
+     "Stag",
+     "Shandy Carib Ginger",
+     "Shandy Carib Sorrel",
+     "Malta Carib",
+     "Other"
+    ],
+    "req": true,
+    "hint": "If a load has several brands, submit one entry per brand"
+   },
+   {
+    "name": "Cases Dispatched",
+    "type": "number",
+    "options": null,
+    "req": true,
+    "hint": ""
+   },
+   {
+    "name": "Vehicle / Container No.",
+    "type": "text",
+    "options": null,
+    "req": true,
+    "hint": ""
+   },
+   {
+    "name": "Dispatched By",
+    "type": "text",
+    "options": null,
+    "req": true,
+    "hint": ""
+   },
+   {
+    "name": "Comments",
+    "type": "long",
+    "options": null,
+    "req": false,
+    "hint": "Optional"
+   }
+  ]
+ },
+ {
+  "key": "operations",
+  "code": "OPS",
+  "dept": "Operations",
+  "title": "Weekly Production Plan & Forecast",
+  "desc": "Planner submits every Monday for the week just ended, one entry per brand.",
+  "fields": [
+   {
+    "name": "Week Starting",
+    "type": "date",
+    "options": null,
+    "req": true,
+    "hint": "Monday of the week being reported"
+   },
+   {
+    "name": "Brand",
+    "type": "choice",
+    "options": [
+     "Carib Lager",
+     "Stag",
+     "Shandy Carib Ginger",
+     "Shandy Carib Sorrel",
+     "Malta Carib",
+     "Other"
+    ],
+    "req": true,
+    "hint": ""
+   },
+   {
+    "name": "Planned Cases",
+    "type": "number",
+    "options": null,
+    "req": true,
+    "hint": ""
+   },
+   {
+    "name": "Actual Cases",
+    "type": "number",
+    "options": null,
+    "req": true,
+    "hint": ""
+   },
+   {
+    "name": "Forecast Next Month (cases)",
+    "type": "number",
+    "options": null,
+    "req": true,
+    "hint": ""
+   },
+   {
+    "name": "Production Cost (XCD)",
+    "type": "number",
+    "options": null,
+    "req": true,
+    "hint": "Total cost for this brand this week, in EC dollars"
+   },
+   {
+    "name": "Submitted By (Planner)",
+    "type": "text",
+    "options": null,
+    "req": true,
+    "hint": ""
+   },
+   {
+    "name": "Comments",
+    "type": "long",
+    "options": null,
+    "req": false,
+    "hint": "Optional"
+   }
+  ]
+ },
+ {
+  "key": "qa",
+  "code": "QA",
+  "dept": "Quality Assurance",
+  "title": "QA Lab Results & Complaints",
+  "desc": "Log lab results, product holds and customer complaints. One entry per test or complaint.",
+  "fields": [
+   {
+    "name": "Record Date",
+    "type": "date",
+    "options": null,
+    "req": true,
+    "hint": ""
+   },
+   {
+    "name": "Recorded By",
+    "type": "text",
+    "options": null,
+    "req": true,
+    "hint": ""
+   },
+   {
+    "name": "Record Type",
+    "type": "choice",
+    "options": [
+     "Lab Result",
+     "Product Hold",
+     "Customer Complaint"
+    ],
+    "req": true,
+    "hint": ""
+   },
+   {
+    "name": "Brand",
+    "type": "choice",
+    "options": [
+     "Carib Lager",
+     "Stag",
+     "Shandy Carib Ginger",
+     "Shandy Carib Sorrel",
+     "Malta Carib",
+     "Other"
+    ],
+    "req": true,
+    "hint": ""
+   },
+   {
+    "name": "Batch / Brew No.",
+    "type": "text",
+    "options": null,
+    "req": true,
+    "hint": ""
+   },
+   {
+    "name": "Parameter Tested",
+    "type": "choice",
+    "options": [
+     "ABV",
+     "pH",
+     "CO2 Volumes",
+     "Dissolved O2",
+     "Colour",
+     "Micro",
+     "Sensory",
+     "Fill Height",
+     "Other"
+    ],
+    "req": true,
+    "hint": "Choose Other for complaints"
+   },
+   {
+    "name": "Result Value",
+    "type": "number",
+    "options": null,
+    "req": false,
+    "hint": "Leave blank for complaints"
+   },
+   {
+    "name": "Within Spec?",
+    "type": "choice",
+    "options": [
+     "Yes",
+     "No"
+    ],
+    "req": true,
+    "hint": ""
+   },
+   {
+    "name": "Complaint Category",
+    "type": "choice",
+    "options": [
+     "Not a complaint",
+     "Foreign Object",
+     "Flat / Low CO2",
+     "Off-taste",
+     "Packaging Defect",
+     "Short Fill",
+     "Other"
+    ],
+    "req": true,
+    "hint": "Choose Not a complaint for lab results"
+   },
+   {
+    "name": "Description",
+    "type": "long",
+    "options": null,
+    "req": false,
+    "hint": ""
+   },
+   {
+    "name": "Action Taken",
+    "type": "long",
+    "options": null,
+    "req": false,
+    "hint": ""
+   }
+  ]
+ }
+];</script>
+<script>/* Default settings; a config.js next to this file overrides them */
+/* CBG Data Entry configuration. Edit this file only; index.html never needs changing.
+   mode: "demo"  = entries stay on the device (for showing the forms)
+         "graph" = staff sign in with their CBG Microsoft 365 account; rows are added to the Excel tables directly
+         "flow"  = each form posts to its own Power Automate flow (HTTP trigger, Premium licence), which adds the row */
+window.CBG_CONFIG = {
+  mode: "demo",
+
+  // flow mode (recommended, no sign-in): the HTTP POST URL of the one "CBG Data Entry" flow, used by every form
+  flowUrl: "",
+
+  // graph mode: from the Entra ID app registration (see README)
+  tenantId: "",          // Directory (tenant) ID
+  clientId: "",          // Application (client) ID
+  siteHostname: "yourtenant.sharepoint.com",
+  sitePath: "/sites/CBGSupplyChainHub",
+
+  // file = path inside the site's Documents library; table = Excel table name
+  // flowUrl here is optional: only if a form should use its own flow instead of the shared one
+  forms: {
+    brewing: { file: "01 Brewing & Fermentation/CBG_Brew_Process_2026_DEMO.xlsx", table: "tblBrewing", flowUrl: "" },
+    hse: { file: "02 HSE/CBG_HSE_Register_2026_DEMO.xlsx", table: "tblHSE", flowUrl: "" },
+    facilities: { file: "03 Facilities/CBG_Utilities_Weekly_2026_DEMO.xlsx", table: "tblUtilities", flowUrl: "" },
+    packaging: { file: "04 Packaging/CBG_Packaging_Line_Shift_2026_DEMO.xlsx", table: "tblPackaging", flowUrl: "" },
+    logistics: { file: "05 Logistics/CBG_Logistics_Dispatch_2026_DEMO.xlsx", table: "tblLogistics", flowUrl: "" },
+    operations: { file: "06 Operations/CBG_Operations_Plan_2026_DEMO.xlsx", table: "tblOperations", flowUrl: "" },
+    qa: { file: "07 Quality Assurance/CBG_QA_Lab_Complaints_2026_DEMO.xlsx", table: "tblQA", flowUrl: "" },
+  }
+};
+</script>
+<script src="config.js"></script>
+
+<script>
+"use strict";
+const FORMS = window.CBG_FORMS || [];
+/* every form gets .all = its answerable fields in order; grid tables expand into one field per cell */
+FORMS.forEach(f => {
+  f.all = [];
+  f.fields.forEach(x => {
+    if (x.type === "section") return;
+    if (x.type === "grid") x.rows.forEach(r => x.cols.forEach(c => f.all.push({ name: x.fmt.replace("{row}", r.name).replace("{col}", c.name), type: c.type, options: c.options || null, req: false, hint: "", grid: x.name })));
+    else { f.all.push(x); (x.sub || []).forEach(sb => f.all.push(Object.assign({ req: false, hint: "" }, sb))); }
+  });
+});
+if (!FORMS.length) document.addEventListener("DOMContentLoaded", () => { document.getElementById("app").innerHTML = "<div class=\"empty\">The form definitions are missing from this file.</div>"; });
+const CFG = Object.assign({ mode: "demo", forms: {} }, window.CBG_CONFIG || {});
+const MSAL_URL = "https://cdn.jsdelivr.net/npm/@azure/msal-browser@2.38.3/lib/msal-browser.min.js";
+const GRAPH = "https://graph.microsoft.com/v1.0";
+const SCOPES = ["Files.ReadWrite.All", "Sites.Read.All"];
+const NAME_FIELDS = /(Name|By|Supervisor|Started by)/;
+const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+/* ---------- storage (works without localStorage) ---------- */
+const mem = {};
+const store = {
+  get(k, d) { try { const v = localStorage.getItem(k); if (v != null) return JSON.parse(v); } catch (e) {} return k in mem ? mem[k] : d; },
+  set(k, v) { mem[k] = v; try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+};
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const $ = (s, el = document) => el.querySelector(s);
+const pad = n => String(n).padStart(2, "0");
+const isoDate = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+const stamp = d => `${isoDate(d)} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+
+/* ---------- defaults & rules ---------- */
+function defaults(form) {
+  const now = new Date(), v = {};
+  const hr = now.getHours();
+  for (const f of form.all) {
+    if (f.type === "date") {
+      if (f.name === "Week Starting") { const d = new Date(now); d.setDate(d.getDate() - ((d.getDay() + 6) % 7) - 7); v[f.name] = isoDate(d); }
+      else v[f.name] = isoDate(now);
+    } else if (f.type === "time") v[f.name] = form.key === "hse" ? `${pad(hr)}:${pad(now.getMinutes())}` : "";
+    else if (f.name === "Shift") v[f.name] = hr >= 6 && hr < 14 ? "Day" : hr >= 14 && hr < 22 ? "Evening" : "Night";
+    else if (f.name === "Month") v[f.name] = MONTHS[now.getMonth()];
+    else if (f.name === "Week") v[f.name] = "W" + Math.min(5, Math.ceil(now.getDate() / 7));
+    else if (f.name === "Planned Time (min)") v[f.name] = "480";
+    else if (false) v[f.name] = "";
+    else if (f.type === "text" && NAME_FIELDS.test(f.name) && !/No\./.test(f.name)) v[f.name] = store.get("cbg.name", "");
+    else v[f.name] = "";
+  }
+  return v;
+}
+function rules(key, v) {
+  const r = { hide: new Set(), force: {}, exclude: {}, req: {}, note: null };
+  if (key === "packaging") {
+    const dt = parseFloat(v["Downtime (min)"]);
+    if (!(dt > 0)) { r.hide.add("Main Downtime Cause"); r.hide.add("Downtime Notes"); r.force["Main Downtime Cause"] = "None"; }
+    else { r.exclude["Main Downtime Cause"] = ["None"]; r.req["Main Downtime Cause"] = true; }
+  }
+  if (key === "qa") {
+    if (v["Record Type"] === "Customer Complaint") {
+      ["Parameter Tested", "Result Value", "Within Spec?"].forEach(n => r.hide.add(n));
+      r.force["Parameter Tested"] = "Other"; r.force["Within Spec?"] = "No"; r.force["Result Value"] = "";
+      r.exclude["Complaint Category"] = ["Not a complaint"];
+    } else { r.hide.add("Complaint Category"); r.force["Complaint Category"] = "Not a complaint"; }
+  }
+  if (key === "hse" && ["High", "Critical"].includes(v["Severity"]))
+    r.note = "High or Critical: make the area safe and tell your supervisor now. Saving this report also alerts the HSE lead.";
+  return r;
+}
+function minsBetween(a, b) {
+  if (!a || !b) return null;
+  const [h1, m1] = a.split(":").map(Number), [h2, m2] = b.split(":").map(Number);
+  let d = (h2 * 60 + m2) - (h1 * 60 + m1); if (d < 0) d += 1440; return d;
+}
+/* fill a minutes box from its start/end times, unless the person typed their own figure */
+function autoFill(form, v) {
+  return; /* the brew sheet is filled exactly as on paper */
+  current.auto = current.auto || {};
+  const pairs = [["Run-off Time (mins)", "Run-off Start", "Run-off End"], ["Cool Time (mins)", "Cooling Start", "Cool End"], ["Pump to Whirlpool (mins)", "Pump to Whirlpool Start", "Pump to Whirlpool End"]];
+  for (const [tgt, a, b] of pairs) {
+    const m = minsBetween(v[a], v[b]);
+    if (m == null) continue;
+    if (v[tgt] === "" || v[tgt] == null || current.auto[tgt] === v[tgt]) {
+      v[tgt] = String(m); current.auto[tgt] = v[tgt];
+      const w = document.querySelector(`[data-name="${tgt}"] input`); if (w && w !== document.activeElement) w.value = v[tgt];
+    }
+  }
+}
+function calcs(form, v) {
+  const n = k => { const x = parseFloat(v[k]); return isFinite(x) ? x : null; };
+  const f1 = (x, d = 2) => x == null || !isFinite(x) ? "–" : x.toLocaleString(undefined, { minimumFractionDigits: d, maximumFractionDigits: d });
+  const pct = x => x == null || !isFinite(x) ? "–" : (x * 100).toFixed(1) + "%";
+  if (form.key === "packaging") {
+    const p = n("Planned Time (min)"), c = n("Cases Bottled"), d = n("Downtime (min)") ?? 0, rated = form.rated[v["Line"]];
+    return [["Run time (min)", p == null ? "–" : f1(p - d, 0)], ["Rated speed", rated ? rated.toLocaleString() + "/hr" : "–"],
+            ["Efficiency", p && c != null && rated ? pct(c / (p / 60 * rated)) : "–"]];
+  }
+  if (form.key === "brewing") return null;
+  if (false) {
+    const ko = n("Kettle Out (°P)"), boil = ["Boil Init (mins)", "Boil Final (mins)", "Boil Extra (mins)"].map(n);
+    const tot = boil.some(x => x != null) ? boil.reduce((a, b) => a + (b || 0), 0) : null;
+    const ro = minsBetween(v["Run-off Start"], v["Run-off End"]), cool = minsBetween(v["Cooling Start"], v["Cool End"]);
+    return [["Run-off (mins)", ro == null ? "–" : String(ro)], ["Boil total (mins)", tot == null ? "–" : String(tot)],
+            ["Cool time (mins)", cool == null ? "–" : String(cool)],
+            ["Kettle out vs 16.9–17.2 °P", ko == null ? "–" : ko.toFixed(2) + (ko >= 16.9 && ko <= 17.2 ? " ✓" : " ✕")]];
+  }
+  if (form.key === "facilities") {
+    const hl = n("Beer Produced (hl)"), per = k => hl ? n(k) / hl : null;
+    return [["kWh per hl", f1(per("Electricity (kWh)"))], ["Water hl/hl", f1(hl ? n("Water (m³)") * 10 / hl : null)],
+            ["Fuel L/hl", f1(per("Fuel (litres)"))], ["CO2 kg/hl", f1(per("CO2 (kg)"))]];
+  }
+  if (form.key === "operations") {
+    const p = n("Planned Cases"), a = n("Actual Cases"), c = n("Production Cost (XCD)");
+    return [["Variance (cases)", p != null && a != null ? (a - p).toLocaleString() : "–"], ["Plan attainment", p && a != null ? pct(a / p) : "–"],
+            ["Cost per case (XCD)", a && c != null ? f1(c / a) : "–"]];
+  }
+  return null;
+}
+
+/* ---------- views (CBG Operations Dashboard skin) ---------- */
+let current = null; // {form, vals, errors}
+const ICON = {
+  home: '<rect x="4" y="4" width="7" height="7" rx="1"/><rect x="13" y="4" width="7" height="7" rx="1"/><rect x="4" y="13" width="7" height="7" rx="1"/><rect x="13" y="13" width="7" height="7" rx="1"/>',
+  brewing: '<path d="M7 3h10l-1 18H8z"/><path d="M7.5 9h9"/>',
+  hse: '<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/>',
+  facilities: '<path d="M13 2L4 14h7l-1 8 9-12h-7z"/>',
+  packaging: '<path d="M10 2h4v3l1.5 2.5V21a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1V7.5L10 5z"/><path d="M8.5 12h7"/><path d="M8.5 16h7"/>',
+  logistics: '<path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/><circle cx="7" cy="17.5" r="1.6"/><circle cx="17" cy="17.5" r="1.6"/>',
+  operations: '<path d="M4 19V5M4 19h16"/><path d="M8 15l3-4 3 2 5-6"/>',
+  qa: '<path d="M9 3h6"/><path d="M10 3v6L4.5 19a1.5 1.5 0 0 0 1.3 2h12.4a1.5 1.5 0 0 0 1.3-2L14 9V3"/><path d="M7 15h10"/>',
+  entries: '<path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>'
+};
+const svg = k => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICON[k] || ICON.home}</svg>`;
+function setSavebar(html) { $("#savebarHost").innerHTML = html; }
+const todayISO = () => isoDate(new Date());
+const longDate = () => new Date().toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short", year: "numeric" });
+function todays() { return store.get("cbg.entries", []).filter(e => (e.submittedAt || "").startsWith(todayISO())); }
+const fileName = k => ((CFG.forms[k] || {}).file || "").split("/").pop();
+
+function updStatus() {
+  $("#signinTop").hidden = !(CFG.mode === "graph" && !account);
+}
+function statusLine() {
+  if (CFG.mode === "demo") return "Demo mode <span class='dot'></span> Entries stay on this device and are not sent to SharePoint";
+  if (CFG.mode === "graph") return account ? "Live <span class='dot'></span> Signed in as " + esc(account.username) : "Live <span class='dot'></span> Not signed in: use Sign in at the top right";
+  return "Live <span class='dot'></span> Entries are sent to SharePoint";
+}
+/* rail, breadcrumb, tabs and the controls bar, like the operations dashboard */
+function chrome(page, crumbs, meta, chips, bar) {
+  const link = (href, key, label, cur) => `<a href="${href}" ${cur ? 'aria-current="page"' : ""} title="${esc(label)}">${svg(key)}<span class="lbl">${esc(label)}</span></a>`;
+  $("#rail").innerHTML = link("#home", "home", "Overview", page === "home") + '<span class="div"></span>' +
+    FORMS.map(f => link("#f-" + f.key, f.key, f.dept, page === f.key)).join("");
+  $("#tabs").innerHTML = `<a href="#home" ${page === "home" ? 'aria-current="page"' : ""}>Overview</a>` +
+    FORMS.map(f => `<a href="#f-${f.key}" ${page === f.key ? 'aria-current="page"' : ""}>${esc(f.dept)}</a>`).join("");
+  $("#eyebrow").innerHTML = `<a href="#home">Start</a>` + crumbs.map(c => `<span class="sep">›</span>${esc(c)}`).join("");
+  $("#pmeta").innerHTML = meta;
+  $("#upd").innerHTML = statusLine();
+  $("#fresh").innerHTML = chips;
+  $("#bar").innerHTML = bar;
+  const n = $("#myname"); if (n) n.addEventListener("input", e => store.set("cbg.name", e.target.value.trim()));
+  updStatus();
+}
+const nameCtl = () => `<label class="msb"><span class="msk">Your name</span><input id="myname" autocomplete="name" value="${esc(store.get("cbg.name", ""))}" placeholder="e.g. J. Charles"></label>`;
+const demoChip = () => CFG.mode === "demo" ? `<span class="fb demo"><i></i>Demo mode <em>not sent to SharePoint</em></span>` : "";
+
+function viewHome() {
+  setSavebar("");
+  const t = todays(), q = store.get("cbg.queue", []).length;
+  const sent = t.filter(e => e.status !== "Queued").length, depts = new Set(t.map(e => e.form)).size;
+  const byForm = k => t.filter(e => e.form === k).length;
+  const last = store.get("cbg.entries", [])[0];
+  chrome("home", ["Data entry", "Overview"],
+    `Data entry <span class="dot"></span> ${esc(longDate())}`,
+    demoChip() + FORMS.map(f => `<span class="fb"><i></i>${esc(fileName(f.key))}</span>`).join(""),
+    nameCtl() + `<span class="hseg"><span class="on">Today</span></span><div class="note">Pick a department on the left or in the tabs. Each entry is added to that department's tracker as Pending until a data clerk checks it.</div>`);
+  $("#app").innerHTML = `
+    <div class="sec">Today on this device</div>
+    <div class="trow">
+      <div class="tile"><div class="tl">Entries saved</div><div class="tf">${esc(longDate())}</div><div class="tv">${t.length}</div><div class="ts">${last ? "Last at " + esc(last.submittedAt.slice(11)) : "No entries yet"}</div></div>
+      <div class="tile ${sent ? "good" : ""}"><div class="tl">${CFG.mode === "demo" ? "Saved (demo)" : "Sent to SharePoint"}</div><div class="tf">${CFG.mode === "demo" ? "Kept on this device" : "Waiting for clerk review"}</div><div class="tv">${sent}</div><div class="ts">${CFG.mode === "demo" ? "Demo mode" : "Status Pending in the tracker"}</div></div>
+      <div class="tile ${q ? "warn" : "good"}"><div class="tl">Waiting to send</div><div class="tf">Saved offline</div><div class="tv">${q}</div><div class="ts">${q ? "Sends when the connection returns" : "Nothing waiting"}</div></div>
+      <div class="tile"><div class="tl">Departments covered</div><div class="tf">With at least one entry today</div><div class="tv">${depts}<small>of ${FORMS.length}</small></div><div class="ts">${FORMS.filter(f => !byForm(f.key)).length} still to report</div></div>
+    </div>
+    <div class="sec">Forms</div>
+    <div class="panel">
+      <h2>Department forms</h2><p class="hint">Click a row to open the form · ${FORMS.length} forms</p>
+      <div class="btbl"><table>
+        <thead><tr><th>Department</th><th>Form</th><th>When to use it</th><th class="r">Questions</th><th class="r">Today</th><th>Tracker</th></tr></thead>
+        <tbody>${FORMS.map(f => `<tr class="link" data-go="${f.key}">
+          <td><span class="ico">${svg(f.key)}</span>${esc(f.dept)}</td>
+          <td><a href="#f-${f.key}">${esc(f.title)}</a></td>
+          <td class="wrap">${esc(f.desc)}</td>
+          <td class="r">${f.all.length}</td>
+          <td class="r">${byForm(f.key) ? `<span class="pill g">${byForm(f.key)}</span>` : `<span class="pill a">0</span>`}</td>
+          <td>${esc((CFG.forms[f.key] || {}).table || "")}</td></tr>`).join("")}</tbody>
+      </table></div>
+    </div>`;
+  document.querySelectorAll("tr[data-go]").forEach(r => r.addEventListener("click", e => { if (!e.target.closest("a")) location.hash = "#f-" + r.dataset.go; }));
+}
+
+function cellInput(c, id, val, label) {
+  const a = `id="${id}" aria-label="${esc(label)}"`;
+  if (c.type === "check") return `<input type="checkbox" ${a} ${val === "Yes" ? "checked" : ""}>`;
+  if (c.type === "time") return `<input type="time" ${a} value="${esc(val)}">`;
+  if (c.type === "number") return `<input type="number" inputmode="decimal" step="any" min="0" ${a} value="${esc(val)}">`;
+  if (c.type === "choice") return `<select ${a}><option value=""></option>${c.options.map(o => `<option ${val === o ? "selected" : ""}>${esc(o)}</option>`).join("")}</select>`;
+  return `<input type="text" ${a} value="${esc(val)}">`;
+}
+function sheetInput(f, id, val, aria) {
+  if (f.type === "choice") return `<div class="seg sm" role="radiogroup" aria-label="${esc(f.label || f.name)}">${f.options.map(o => `<label><input type="radio" name="${id}" value="${esc(o)}" ${val === o ? "checked" : ""} ${aria}><span>${esc(o)}</span></label>`).join("")}</div>`;
+  if (f.type === "long") return `<textarea id="${id}" ${aria}>${esc(val)}</textarea>`;
+  if (f.type === "date" || f.type === "time") return `<input id="${id}" type="${f.type}" value="${esc(val)}" ${aria}>`;
+  if (f.type === "text") return `<input id="${id}" type="text" value="${esc(val)}" ${f.unit ? `placeholder="${esc(f.unit)}-"` : ""} ${NAME_FIELDS.test(f.name) ? 'autocomplete="name"' : ""} ${aria}>`;
+  return `<span class="ub"><input id="${id}" type="number" inputmode="decimal" step="any" min="0" value="${esc(val)}" ${aria}>${f.unit ? `<em>${esc(f.unit)}</em>` : ""}</span>`;
+}
+function sheetField(f, i, v, r, err, cols) {
+  const id = "f" + i, star = f.req ? `<span class="req" aria-hidden="true">*</span>` : "";
+  const aria = `${err ? 'aria-invalid="true"' : ""} ${f.req ? "required" : ""}`;
+  const span = Math.min(f.span || 1, cols);
+  const subs = (f.sub || []).map((sb, k) => {
+    const sid = `${id}s${k}`, sv = v[sb.name] ?? "";
+    const inp = sb.type === "choice" ? sheetInput(sb, sid, sv, "") :
+      `<input id="${sid}" type="${sb.type === "time" ? "time" : sb.type === "text" ? "text" : "number"}" ${sb.type === "number" ? 'inputmode="decimal" step="any" min="0"' : ""} value="${esc(sv)}" aria-label="${esc((f.label || f.name) + " " + (sb.label || ""))}">`;
+    const tag = sb.type === "choice" ? "div" : "label";
+    return `<${tag} class="sbx" data-name="${esc(sb.name)}">${sb.label ? `<span>${esc(sb.label)}</span>` : ""}${inp}${sb.unit ? `<em>${esc(sb.unit)}</em>` : ""}</${tag}>`;
+  }).join("");
+  return `<div class="fld sf${err ? " bad" : ""}" data-name="${esc(f.name)}" ${span > 1 ? `data-span style="grid-column:span ${span}"` : ""}>
+    <div class="sfh">${f.col ? `<span class="cchip">${esc(f.col)}</span>` : ""}<label for="${id}">${esc(f.label || f.name)}${star}</label>${f.std ? `<span class="sstd">${esc(f.std)}</span>` : ""}</div>
+    ${sheetInput(f, id, v[f.name] ?? "", aria)}${subs ? `<div class="ssub">${subs}</div>` : ""}${f.hint ? `<div class="snote">${esc(f.hint)}</div>` : ""}${err ? `<span class="msg">${esc(err)}</span>` : ""}</div>`;
+}
+function sheetBody(form, v, r, errors) {
+  let html = "", open = false, cols = 4;
+  form.fields.forEach((f, i) => {
+    if (f.type === "section") {
+      if (open) html += "</div>";
+      cols = f.cols || 4;
+      html += `<div class="fsec" id="sec${i}">${f.n ? `<span class="sn">${esc(f.n)}</span>` : ""}<h3>${esc(f.name)}</h3>${f.hint ? `<span class="sr">${esc(f.hint)}</span>` : ""}</div>${f.note ? `<div class="snl">${esc(f.note)}</div>` : ""}<div class="sgrid" style="--c:${cols}">`;
+      open = true; return;
+    }
+    html += f.type === "grid" ? fieldHTML(f, i, v, r, null) : sheetField(f, i, v, r, errors[f.name], cols);
+  });
+  return html + (open ? "</div>" : "");
+}
+function fieldHTML(f, i, v, r, err) {
+  if (f.type === "section") return `<div class="fsec" id="sec${i}"><h3>${esc(f.name)}</h3>${f.hint ? `<span>${esc(f.hint)}</span>` : ""}</div>`;
+  if (f.type === "grid") {
+    return `<div class="fld wide gridf"><div class="glbl">${esc(f.name)}</div>${f.hint ? `<span class="fhint">${esc(f.hint)}</span>` : ""}
+      <div class="gwrap"><table class="gt"><thead><tr><th></th>${f.cols.map(c => `<th>${esc(c.name)}</th>`).join("")}</tr></thead><tbody>
+      ${f.rows.map((rw, ri) => `<tr><th scope="row">${esc(rw.name)}${rw.hint ? `<small>${esc(rw.hint)}</small>` : ""}</th>${f.cols.map((c, ci) => {
+        const nm = f.fmt.replace("{row}", rw.name).replace("{col}", c.name);
+        return `<td data-name="${esc(nm)}" class="t-${c.type}">${cellInput(c, `g${i}_${ri}_${ci}`, v[nm] ?? "", nm)}</td>`; }).join("")}</tr>`).join("")}
+      </tbody></table></div></div>`;
+  }
+  const id = "f" + i, hidden = r.hide.has(f.name), required = (f.req || r.req[f.name]) && !hidden;
+  const star = (f.req || r.req[f.name]) ? `<span class="req" aria-hidden="true">*</span>` : "";
+  const hint = f.hint ? `<span class="fhint" id="${id}h">${esc(f.hint)}</span>` : "";
+  const msg = err ? `<span class="msg" id="${id}e">${esc(err)}</span>` : "";
+  const desc = [f.hint ? id + "h" : "", err ? id + "e" : ""].filter(Boolean).join(" ");
+  const aria = `${desc ? `aria-describedby="${desc}"` : ""} ${err ? 'aria-invalid="true"' : ""} ${required ? "required" : ""}`;
+  const val = v[f.name] ?? "";
+  const isSeg = f.type === "choice" && f.options.length <= 4;
+  const wide = f.type === "long" || (isSeg && f.options.length > 2);
+  const cls = `fld${wide ? " wide" : ""}${err ? " bad" : ""}`;
+  if (f.type === "choice") {
+    const opts = f.options.filter(o => !(r.exclude[f.name] || []).includes(o));
+    if (isSeg) {
+      return `<fieldset class="${cls}" data-name="${esc(f.name)}" ${hidden ? "hidden" : ""}><legend>${esc(f.name)}${star}</legend>${hint}
+        <div class="seg" role="radiogroup">${opts.map(o =>
+          `<label class="sev-${esc(o)}"><input type="radio" name="${id}" value="${esc(o)}" ${val === o ? "checked" : ""} ${aria}><span>${esc(o)}</span></label>`).join("")}</div>${msg}</fieldset>`;
+    }
+    return `<div class="${cls}" data-name="${esc(f.name)}" ${hidden ? "hidden" : ""}><label for="${id}">${esc(f.name)}${star}</label>${hint}
+      <select id="${id}" ${aria}><option value="">Choose…</option>${opts.map(o => `<option ${val === o ? "selected" : ""}>${esc(o)}</option>`).join("")}</select>${msg}</div>`;
+  }
+  let input;
+  if (f.type === "long") input = `<textarea id="${id}" ${aria}>${esc(val)}</textarea>`;
+  else if (f.type === "date") input = `<input id="${id}" type="date" value="${esc(val)}" ${aria}>`;
+  else if (f.type === "time") input = `<input id="${id}" type="time" value="${esc(val)}" ${aria}>`;
+  else if (f.type === "number") input = `<input id="${id}" type="number" inputmode="decimal" step="any" min="0" value="${esc(val)}" ${aria}>`;
+  else input = `<input id="${id}" type="text" value="${esc(val)}" ${NAME_FIELDS.test(f.name) ? 'autocomplete="name"' : ""} ${aria}>`;
+  return `<div class="${cls}" data-name="${esc(f.name)}" ${hidden ? "hidden" : ""}><label for="${id}">${esc(f.name)}${star}</label>${hint}${input}${msg}</div>`;
+}
+
+function viewForm(key) {
+  const form = FORMS.find(f => f.key === key);
+  if (!form) return viewHome();
+  if (!current || current.form.key !== key) current = { form, vals: Object.assign(defaults(form), store.get("cbg.draft." + key, {})), errors: {} };
+  const fc = CFG.forms[key] || {};
+  chrome(key, [form.dept, form.title],
+    `${esc(form.dept)} <span class="dot"></span> ${esc(form.desc)}`,
+    demoChip() + `<span class="fb"><i></i>${esc(fileName(key))} <em>${esc(fc.table || "")}</em></span>`,
+    nameCtl() + `<label class="msb"><span class="msk">Form</span><select id="jump">${FORMS.map(f => `<option value="${f.key}" ${f.key === key ? "selected" : ""}>${esc(f.dept)}: ${esc(f.title)}</option>`).join("")}</select></label>` +
+    `<div class="note">Required questions are marked *. Saved entries go to the tracker as Pending.</div>`);
+  $("#jump").addEventListener("change", e => { location.hash = "#f-" + e.target.value; });
+  const secs = form.fields.map((x, i) => [x, i]).filter(([x]) => x.type === "section");
+  if (secs.length) {
+    $("#bar").insertAdjacentHTML("beforeend", `<label class="msb"><span class="msk">Go to</span><select id="secjump"><option value="">Section…</option>${secs.map(([x, i]) => `<option value="sec${i}">${x.n ? esc(x.n) + " · " : ""}${esc(x.name)}</option>`).join("")}</select></label>`);
+    const note = $("#bar .note"); if (note) $("#bar").appendChild(note);
+    $("#secjump").addEventListener("change", e => { const el = document.getElementById(e.target.value); if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 70, behavior: "smooth" }); e.target.value = ""; });
+  }
+  renderForm();
+  setSavebar(`<div class="savebar"><div class="in"><span class="sbtxt">Saves to <b>${esc(fc.table || "the tracker")}</b> as Pending</span><a class="obtn" href="#home">Cancel</a><button class="pbtn" id="saveBtn" type="button">Save entry</button></div></div>`);
+  $("#saveBtn").addEventListener("click", submit);
+}
+function renderForm() {
+  const { form, vals, errors } = current;
+  const r = rules(form.key, vals);
+  Object.assign(vals, r.force);
+  const c = calcs(form, vals);
+  const scroll = window.scrollY, active = document.activeElement && document.activeElement.id;
+  const reqCount = form.all.filter(f => f.req).length;
+  const sheet = form.fields.some(x => x.type === "section");
+  if (sheet) {
+    $("#app").innerHTML = `
+    ${errors._form ? `<div class="err" role="alert">${esc(errors._form)}</div>` : ""}
+    <div class="sec">${esc(form.dept)}</div>
+    <section class="panel">
+      <h2>${esc(form.title)}</h2><p class="hint">${esc(form.desc)}</p>
+      <form id="theForm" class="sheetform" novalidate>${sheetBody(form, vals, r, errors)}</form>
+    </section>`;
+  } else $("#app").innerHTML = `
+    ${errors._form ? `<div class="err" role="alert">${esc(errors._form)}</div>` : ""}
+    <div class="sec">${esc(form.dept)}</div>
+    <div class="grid">
+      <section class="panel s8">
+        <h2>${esc(form.title)}</h2><p class="hint">${form.all.length} questions · ${reqCount} required${form.fields.some(x => x.type === "section") ? " · fill in as the brew goes; your entries are kept on this device until you save" : ""}</p>
+        <form id="theForm" novalidate>
+          ${form.fields.map((f, i) => fieldHTML(f, i, vals, r, errors[f.name])).join("")}
+          <div class="rule" id="ruleNote" role="alert" ${r.note ? "" : "hidden"}>${esc(r.note || "")}</div>
+        </form>
+      </section>
+      <aside class="s4 stick">
+        ${c ? `<div class="kpis calc" aria-label="Worked out automatically">${c.map(([k, x]) => `<div class="tile"><div class="tl">${esc(k)}</div><div class="tv">${esc(x)}</div></div>`).join("")}</div>` : ""}
+        <div class="panel" style="${c ? "margin-top:10px" : ""}">
+          <h2>What happens when you save</h2><p class="hint">${esc((CFG.forms[form.key] || {}).table || "Tracker")}</p>
+          <ul class="side-list">
+            <li><span class="pill n">Pending</span> The entry is added as a new row</li>
+            <li><span class="pill g">Verified</span> A data clerk checks it, then it reaches the dashboards</li>
+            <li><span class="pill a">Offline</span> No signal? It's kept on this device and sent automatically later</li>
+          </ul>
+        </div>
+      </aside>
+    </div>`;
+  const formEl = $("#theForm");
+  formEl.addEventListener("input", onInput);
+  formEl.addEventListener("change", onInput);
+  formEl.addEventListener("submit", e => { e.preventDefault(); submit(); });
+  if (active && document.getElementById(active)) { const el = document.getElementById(active); el.focus({ preventScroll: true }); }
+  window.scrollTo(0, scroll);
+}
+
+function onInput(e) {
+  const t = e.target, wrap = t.closest("[data-name]");
+  if (!wrap) return;
+  const name = wrap.dataset.name, f = current.form.all.find(x => x.name === name);
+  current.vals[name] = t.type === "checkbox" ? (t.checked ? "Yes" : "") : t.value;
+  if (current.auto) delete current.auto[name];
+  if (NAME_FIELDS.test(name) && f.type === "text" && !/No\./.test(name) && t.value.trim()) store.set("cbg.name", t.value.trim());
+  if (current.errors[name]) { delete current.errors[name]; wrap.classList.remove("bad"); const m = wrap.querySelector(".msg"); if (m) m.remove(); }
+  applyRules();
+  store.set("cbg.draft." + current.form.key, current.vals);
+}
+/* update visibility, allowed options, notices and calculations in place (no re-render, so taps aren't lost) */
+function applyRules() {
+  const { form, vals } = current, r = rules(form.key, vals);
+  Object.assign(vals, r.force);
+  autoFill(form, vals);
+  document.querySelectorAll("#theForm [data-name]").forEach(w => {
+    const n = w.dataset.name, ex = r.exclude[n] || [];
+    w.hidden = r.hide.has(n);
+    w.querySelectorAll("option").forEach(o => { if (o.value) o.hidden = ex.includes(o.value); });
+    w.querySelectorAll('input[type="radio"]').forEach(i => { i.closest("label").hidden = ex.includes(i.value); });
+    const sel = w.querySelector("select");
+    if (sel && !w.hidden && ex.includes(sel.value)) { sel.value = ""; vals[n] = ""; }
+    if (sel && w.hidden && n in r.force) sel.value = r.force[n];
+  });
+  const note = $("#ruleNote"); if (note) { note.hidden = !r.note; note.textContent = r.note || ""; }
+  const c = calcs(form, vals), box = $(".calc");
+  if (c && box) box.innerHTML = c.map(([k, x]) => `<div class="tile"><div class="tl">${esc(k)}</div><div class="tv">${esc(x)}</div></div>`).join("");
+}
+function validate() {
+  const { form, vals } = current, r = rules(form.key, vals), errs = {};
+  for (const f of form.all) {
+    if (r.hide.has(f.name)) continue;
+    const v = String(vals[f.name] ?? "").trim(), required = f.req || r.req[f.name];
+    if (required && !v) { errs[f.name] = f.type === "choice" ? "Choose one." : "Fill this in."; continue; }
+    if (v && f.type === "number" && !(isFinite(Number(v)) && Number(v) >= 0)) errs[f.name] = "Enter a number of 0 or more.";
+    if (v && f.type === "choice" && (r.exclude[f.name] || []).includes(v)) errs[f.name] = "Choose a different option.";
+  }
+  return errs;
+}
+
+async function submit() {
+  const btn = $("#saveBtn");
+  current.errors = validate();
+  if (Object.keys(current.errors).length) {
+    renderForm();
+    const first = $(".fld.bad input, .fld.bad select, .fld.bad textarea"); if (first) first.focus();
+    return;
+  }
+  const { form, vals } = current;
+  const now = new Date();
+  const values = {};
+  for (const f of form.all) {
+    let v = String(vals[f.name] ?? "").trim();
+    values[f.name] = v === "" ? null : f.type === "number" ? Number(v) : v;
+  }
+  const entry = {
+    id: "WEB-" + isoDate(now).replace(/-/g, "") + "-" + pad(now.getHours()) + pad(now.getMinutes()) + pad(now.getSeconds()) + "-" + Math.random().toString(36).slice(2, 5).toUpperCase(),
+    form: form.key, submittedAt: stamp(now), submittedBy: (account && account.username) || store.get("cbg.name", "") || "Unknown", values
+  };
+  btn.disabled = true; btn.textContent = "Saving…";
+  let status;
+  try { await send(entry); status = CFG.mode === "demo" ? "Demo" : "Sent"; }
+  catch (e) {
+    if (e.retry) { queue(entry); status = "Queued"; }
+    else { btn.disabled = false; btn.textContent = "Save entry"; current.errors = { _form: e.message || "Could not save. Try again." }; renderForm(); window.scrollTo(0, 0); return; }
+  }
+  record(entry, status);
+  store.set("cbg.draft." + form.key, {});
+  current = null;
+  viewDone(entry, status, form);
+}
+function viewDone(entry, status, form) {
+  setSavebar("");
+  chrome(form.key, [form.dept, form.title, "Saved"], `${esc(form.dept)} <span class="dot"></span> ${esc(longDate())}`, demoChip(), nameCtl());
+  const q = status === "Queued";
+  $("#app").innerHTML = `
+    <div class="panel done ${q ? "q" : ""}">
+      <div class="tick" aria-hidden="true">${q ? "!" : "✓"}</div>
+      <h2>${q ? "Saved on this device" : status === "Demo" ? "Saved (demo)" : "Entry saved"}</h2>
+      <p>${q ? "No connection to SharePoint right now. It will send automatically when the connection returns; keep this page open or reopen it later." :
+        status === "Demo" ? "In live mode this would now be a Pending row in the " + esc(form.dept) + " tracker." :
+        "Added to the " + esc(form.dept) + " tracker as Pending. A data clerk will check it."}</p>
+      <span class="rid">${esc(entry.id)}</span>
+      <div class="btns"><a class="pbtn" href="#f-${form.key}" id="again">Record another</a><a class="obtn" href="#home">Overview</a></div>
+    </div>`;
+  $("#again").addEventListener("click", e => { if (location.hash === "#f-" + form.key) { e.preventDefault(); route(); } });
+  $("#again").focus();
+}
+/* ---------- entries log & offline queue ---------- */
+function record(entry, status) {
+  const list = store.get("cbg.entries", []).filter(e => e.id !== entry.id);
+  list.unshift(Object.assign({}, entry, { status }));
+  store.set("cbg.entries", list.slice(0, 50));
+}
+function queue(entry) { const q = store.get("cbg.queue", []); q.push(entry); store.set("cbg.queue", q); showQueue(); }
+function showQueue() {
+  const n = store.get("cbg.queue", []).length, b = $("#queueBadge");
+  b.hidden = !n; b.textContent = n + " waiting to send";
+  if ((location.hash || "#home") === "#home" && !current) { /* keep home tiles current */ }
+}
+let flushing = false;
+async function flush() {
+  if (flushing || CFG.mode === "demo") return;
+  flushing = true;
+  let q = store.get("cbg.queue", []);
+  const left = [];
+  for (const e of q) {
+    try { await send(e); record(e, "Sent"); } catch (err) { left.push(e); if (err.retry === false) break; }
+  }
+  store.set("cbg.queue", left); flushing = false; showQueue();
+}
+
+/* ---------- sending ---------- */
+function httpError(status, text) {
+  const e = new Error();
+  e.status = status;
+  e.retry = [0, 408, 409, 423, 429, 500, 502, 503, 504].includes(status);
+  e.message = status === 401 || status === 403 ? "You don't have permission to add to this tracker. Ask the site owner to give you edit access, then try again." :
+    status === 404 ? "The tracker file or table wasn't found. The site owner needs to check config.js." :
+    e.retry ? "SharePoint is busy or unreachable." : "Could not save (" + status + "). " + (text || "");
+  return e;
+}
+async function send(entry) {
+  if (CFG.mode === "demo") return new Promise(r => setTimeout(r, 500));
+  const fc = CFG.forms[entry.form] || {};
+  if (CFG.mode === "flow") {
+    const url = fc.flowUrl || CFG.flowUrl;
+    if (!url) throw httpError(404);
+    let res;
+    try {
+      res = await fetch(url, { method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ form: entry.form, file: "/" + (fc.file || ""), table: fc.table || "", responseId: entry.id, submittedAt: entry.submittedAt, submittedBy: entry.submittedBy,
+          row: Object.assign({ "Response ID": entry.id, "Submitted At": entry.submittedAt, "Submitted By": entry.submittedBy, "Status": "Pending" }, entry.values), values: entry.values }) });
+    } catch (e) { throw httpError(0); }
+    if (!res.ok) throw httpError(res.status, await res.text().catch(() => ""));
+    return;
+  }
+  if (CFG.mode === "graph") return graphAddRow(fc, entry);
+  throw new Error("Unknown mode in config.js: " + CFG.mode);
+}
+
+/* Microsoft Graph: add a row to the Excel table on the SharePoint site, matched by column name */
+let pca = null, account = null;
+function loadScript(src) { return new Promise((ok, no) => { const s = document.createElement("script"); s.src = src; s.onload = ok; s.onerror = () => no(new Error("Could not load sign-in library.")); document.head.appendChild(s); }); }
+async function msalInit() {
+  if (pca) return;
+  await loadScript(MSAL_URL);
+  pca = new msal.PublicClientApplication({
+    auth: { clientId: CFG.clientId, authority: "https://login.microsoftonline.com/" + CFG.tenantId, redirectUri: CFG.redirectUri || location.origin + location.pathname },
+    cache: { cacheLocation: "localStorage" }
+  });
+  const res = await pca.handleRedirectPromise();
+  account = (res && res.account) || pca.getAllAccounts()[0] || null;
+}
+async function signIn() { await msalInit(); await pca.loginRedirect({ scopes: SCOPES }); }
+async function token() {
+  await msalInit();
+  if (!account) { const e = httpError(401); e.retry = false; e.message = "Sign in with your CBG account first (home page)."; throw e; }
+  try { return (await pca.acquireTokenSilent({ scopes: SCOPES, account })).accessToken; }
+  catch (e) { await pca.acquireTokenRedirect({ scopes: SCOPES, account }); }
+}
+async function g(path, opt = {}) {
+  const t = await token();
+  let res;
+  try { res = await fetch(GRAPH + path, Object.assign({}, opt, { headers: { Authorization: "Bearer " + t, "Content-Type": "application/json" } })); }
+  catch (e) { throw httpError(0); }
+  if (!res.ok) throw httpError(res.status, await res.text().catch(() => ""));
+  return res.json();
+}
+const headerCache = {};
+async function graphAddRow(fc, entry) {
+  let siteId = store.get("cbg.siteId", null);
+  if (!siteId) { siteId = (await g(`/sites/${CFG.siteHostname}:${CFG.sitePath}`)).id; store.set("cbg.siteId", siteId); }
+  const path = fc.file.split("/").map(encodeURIComponent).join("/");
+  const base = `/sites/${siteId}/drive/root:/${path}:/workbook/tables/${encodeURIComponent(fc.table)}`;
+  if (!headerCache[fc.table]) headerCache[fc.table] = (await g(base + "/headerRowRange")).values[0];
+  const sys = { "Response ID": entry.id, "Submitted At": entry.submittedAt, "Submitted By": entry.submittedBy, "Status": "Pending" };
+  const row = headerCache[fc.table].map(h => h in sys ? sys[h] : h in entry.values ? entry.values[h] : null);
+  await g(base + "/rows/add", { method: "POST", body: JSON.stringify({ values: [row] }) });
+}
+
+/* ---------- router & start ---------- */
+function route() {
+  const h = location.hash.replace("#", "");
+  if (h.startsWith("f-")) viewForm(h.slice(2));
+  else { current = null; viewHome(); }
+  if (!h.startsWith("f-")) window.scrollTo(0, 0);
+}
+async function start() {
+  $("#signinTop").addEventListener("click", () => signIn());
+  $("#railTog").addEventListener("click", () => document.body.classList.toggle("rail-open"));
+  $("#rail").addEventListener("click", e => { if (e.target.closest("a")) document.body.classList.remove("rail-open"); });
+  const tb = $("#themeBtn"), curT = () => document.documentElement.getAttribute("data-theme") || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  tb.addEventListener("click", () => { const n = curT() === "dark" ? "light" : "dark"; document.documentElement.setAttribute("data-theme", n); try { localStorage.setItem("cbg-theme", n); } catch (e) {} });
+  showQueue();
+  if (CFG.mode === "graph") { try { await msalInit(); } catch (e) { console.warn(e); } }
+  updStatus();
+  window.addEventListener("hashchange", () => { if (!location.hash.startsWith("#f-")) current = null; route(); });
+  window.addEventListener("online", flush);
+  setInterval(flush, 60000);
+  route();
+  flush();
+}
+start();
+</script>
+
+</body>
+</html>

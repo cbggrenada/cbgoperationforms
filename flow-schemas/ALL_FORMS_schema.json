@@ -1,0 +1,35 @@
+{
+  "type": "object",
+  "properties": {
+    "form": {
+      "type": "string"
+    },
+    "file": {
+      "type": "string"
+    },
+    "table": {
+      "type": "string"
+    },
+    "responseId": {
+      "type": "string"
+    },
+    "submittedAt": {
+      "type": "string"
+    },
+    "submittedBy": {
+      "type": "string"
+    },
+    "row": {
+      "type": "object"
+    },
+    "values": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "form",
+    "file",
+    "table",
+    "row"
+  ]
+}
