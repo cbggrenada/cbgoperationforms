@@ -294,38 +294,74 @@ window.CBG_FORMS = [
   "key": "brewing",
   "code": "BRW",
   "dept": "Brewing & Fermentation",
-  "title": "Star Malt Brew Process Sheet",
-  "desc": "GR-BOD-R54-A, pages 1 to 3. Boxes marked with a letter go to that column of the Brewhouse log.",
+  "title": "Brew Process Sheet",
+  "desc": "GR-BOD-R54-A, pages 1 to 3, for Carib, Stag and Star Malt. Choose the brand first; boxes marked with a letter go to that column of the brand's Brewhouse log.",
   "fields": [
    {
     "type": "section",
     "n": "",
     "name": "Brew",
     "hint": "Page 1",
-    "cols": 3,
-    "note": "Recipe standard: Pilsen 575 kg · Viking Munich 0 kg · Caramel 150: 125 kg · Chocolate 20 kg · Caramel 203: 26 kg · Sugar 400 kg"
+    "cols": 4,
+    "note": "Choose the brand first: the standards and log columns shown on the sheet change to match it.",
+    "noteB": {
+     "Carib": "Recipe standard (Carib log specs): Pilsen 700 kg · Sugar 100 kg",
+     "Stag": "Stag recipe standards are not filled in on the Stag log yet, so no standards are shown.",
+     "Star Malt": "Recipe standard: Pilsen 575 kg · Viking Munich 0 kg · Caramel 150: 125 kg · Chocolate 20 kg · Caramel 203: 26 kg · Sugar 400 kg. Kettle out 16.9 to 17.2 °P."
+    }
+   },
+   {
+    "name": "Brand",
+    "label": "Brand",
+    "type": "choice",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": true,
+    "hint": "",
+    "span": 2,
+    "options": [
+     "Carib",
+     "Stag",
+     "Star Malt"
+    ]
    },
    {
     "name": "Brew No",
     "label": "Brew No",
     "type": "text",
-    "unit": "SM",
-    "col": "A",
+    "unit": "",
+    "col": "",
     "std": "",
     "req": true,
     "hint": "",
-    "span": 1
+    "span": 1,
+    "colB": {
+     "Carib": "A",
+     "Stag": "A",
+     "Star Malt": "A"
+    },
+    "unitB": {
+     "Carib": "CA",
+     "Stag": "ST",
+     "Star Malt": "SM"
+    }
    },
    {
     "name": "Date",
     "label": "Date",
     "type": "date",
     "unit": "",
-    "col": "B",
+    "col": "",
     "std": "",
     "req": true,
     "hint": "",
-    "span": 1
+    "span": 1,
+    "colB": {
+     "Carib": "B",
+     "Stag": "B",
+     "Star Malt": "B"
+    }
    },
    {
     "name": "Batch Ticket No",
@@ -342,7 +378,7 @@ window.CBG_FORMS = [
     "type": "section",
     "n": "1",
     "name": "Malt, sugar and mash",
-    "hint": "Columns C to J",
+    "hint": "Page 1",
     "cols": 4,
     "note": ""
    },
@@ -351,8 +387,8 @@ window.CBG_FORMS = [
     "label": "Pilsen Malt",
     "type": "number",
     "unit": "kg",
-    "col": "C",
-    "std": "std 575",
+    "col": "",
+    "std": "",
     "req": false,
     "hint": "",
     "span": 1,
@@ -363,34 +399,54 @@ window.CBG_FORMS = [
       "type": "text",
       "unit": ""
      }
-    ]
+    ],
+    "stdB": {
+     "Carib": "std 700",
+     "Stag": "",
+     "Star Malt": "std 575"
+    },
+    "colB": {
+     "Carib": "C",
+     "Stag": "C",
+     "Star Malt": "C"
+    }
    },
    {
-    "name": "Caramel 150 (kg)",
-    "label": "Caramel 150",
+    "name": "Caramel Malt (kg)",
+    "label": "Caramel malt (Caramel 150)",
     "type": "number",
     "unit": "kg",
-    "col": "F",
-    "std": "std 125",
+    "col": "",
+    "std": "",
     "req": false,
     "hint": "",
     "span": 1,
     "sub": [
      {
-      "name": "Caramel 150 Bags",
+      "name": "Caramel Malt Bags",
       "label": "No. of bags",
       "type": "number",
       "unit": ""
      }
-    ]
+    ],
+    "stdB": {
+     "Carib": "",
+     "Stag": "",
+     "Star Malt": "std 125"
+    },
+    "colB": {
+     "Carib": "F",
+     "Stag": "F",
+     "Star Malt": "F"
+    }
    },
    {
     "name": "Sugar (kg)",
     "label": "Sugar",
     "type": "number",
     "unit": "kg",
-    "col": "H",
-    "std": "std 400",
+    "col": "",
+    "std": "",
     "req": false,
     "hint": "",
     "span": 1,
@@ -401,14 +457,24 @@ window.CBG_FORMS = [
       "type": "number",
       "unit": ""
      }
-    ]
+    ],
+    "stdB": {
+     "Carib": "std 100",
+     "Stag": "",
+     "Star Malt": "std 400"
+    },
+    "colB": {
+     "Carib": "H",
+     "Stag": "H",
+     "Star Malt": "L"
+    }
    },
    {
     "name": "Mash Dip",
     "label": "Mash Dip",
     "type": "number",
     "unit": "",
-    "col": "J",
+    "col": "",
     "std": "",
     "req": false,
     "hint": "",
@@ -425,35 +491,55 @@ window.CBG_FORMS = [
        "Below"
       ]
      }
-    ]
+    ],
+    "colB": {
+     "Carib": "J",
+     "Stag": "J",
+     "Star Malt": "N"
+    }
    },
    {
     "name": "Viking Munich (kg)",
-    "label": "Viking Munich (not in log)",
+    "label": "Viking Munich",
     "type": "number",
     "unit": "kg",
     "col": "",
-    "std": "std 0",
+    "std": "",
     "req": false,
     "hint": "",
-    "span": 1
+    "span": 1,
+    "stdB": {
+     "Carib": "",
+     "Stag": "",
+     "Star Malt": "std 0"
+    }
    },
    {
-    "name": "Chocolate (kg)",
-    "label": "Chocolate (not in log)",
+    "name": "Chocolate Malt (kg)",
+    "label": "Chocolate malt",
     "type": "number",
     "unit": "kg",
     "col": "",
-    "std": "std 20",
+    "std": "",
     "req": false,
     "hint": "",
-    "span": 1
+    "span": 1,
+    "stdB": {
+     "Carib": "",
+     "Stag": "",
+     "Star Malt": "std 20"
+    },
+    "colB": {
+     "Carib": "",
+     "Stag": "",
+     "Star Malt": "H"
+    }
    },
    {
     "type": "section",
     "n": "2",
     "name": "Run-off gravities",
-    "hint": "Columns K to O",
+    "hint": "Page 1",
     "cols": 5,
     "note": ""
    },
@@ -462,7 +548,7 @@ window.CBG_FORMS = [
     "label": "1st Runnings",
     "type": "number",
     "unit": "°P",
-    "col": "K",
+    "col": "",
     "std": "",
     "req": false,
     "hint": "",
@@ -474,14 +560,19 @@ window.CBG_FORMS = [
       "type": "number",
       "unit": ""
      }
-    ]
+    ],
+    "colB": {
+     "Carib": "K",
+     "Stag": "K",
+     "Star Malt": "O"
+    }
    },
    {
     "name": "60 Minutes (°P)",
     "label": "60 Minutes",
     "type": "number",
     "unit": "°P",
-    "col": "L",
+    "col": "",
     "std": "",
     "req": false,
     "hint": "",
@@ -493,14 +584,19 @@ window.CBG_FORMS = [
       "type": "number",
       "unit": ""
      }
-    ]
+    ],
+    "colB": {
+     "Carib": "L",
+     "Stag": "L",
+     "Star Malt": "P"
+    }
    },
    {
     "name": "90 Minutes (°P)",
     "label": "90 Minutes",
     "type": "number",
     "unit": "°P",
-    "col": "M",
+    "col": "",
     "std": "",
     "req": false,
     "hint": "",
@@ -512,14 +608,19 @@ window.CBG_FORMS = [
       "type": "number",
       "unit": ""
      }
-    ]
+    ],
+    "colB": {
+     "Carib": "M",
+     "Stag": "M",
+     "Star Malt": "Q"
+    }
    },
    {
     "name": "Last Runnings (°P)",
     "label": "Last Runnings",
     "type": "number",
     "unit": "°P",
-    "col": "N",
+    "col": "",
     "std": "",
     "req": false,
     "hint": "",
@@ -531,14 +632,19 @@ window.CBG_FORMS = [
       "type": "number",
       "unit": ""
      }
-    ]
+    ],
+    "colB": {
+     "Carib": "N",
+     "Stag": "N",
+     "Star Malt": "R"
+    }
    },
    {
     "name": "Run-off Time (mins)",
     "label": "Run-off Time",
     "type": "number",
     "unit": "mins",
-    "col": "O",
+    "col": "",
     "std": "",
     "req": false,
     "hint": "",
@@ -556,13 +662,18 @@ window.CBG_FORMS = [
       "type": "time",
       "unit": ""
      }
-    ]
+    ],
+    "colB": {
+     "Carib": "O",
+     "Stag": "O",
+     "Star Malt": "S"
+    }
    },
    {
     "type": "section",
     "n": "3",
     "name": "Boil, cooling and brew times",
-    "hint": "Columns P to X",
+    "hint": "Page 1",
     "cols": 4,
     "note": ""
    },
@@ -571,8 +682,8 @@ window.CBG_FORMS = [
     "label": "Boil Time",
     "type": "number",
     "unit": "mins",
-    "col": "P",
-    "std": "std 60",
+    "col": "",
+    "std": "",
     "req": false,
     "hint": "",
     "span": 1,
@@ -595,14 +706,24 @@ window.CBG_FORMS = [
       "type": "number",
       "unit": ""
      }
-    ]
+    ],
+    "stdB": {
+     "Carib": "",
+     "Stag": "",
+     "Star Malt": "std 60"
+    },
+    "colB": {
+     "Carib": "P",
+     "Stag": "P",
+     "Star Malt": "T"
+    }
    },
    {
     "name": "Kettle Vol at Boil End (HLs)",
     "label": "Kettle Vol. at boil end",
     "type": "number",
     "unit": "HLs",
-    "col": "R",
+    "col": "",
     "std": "",
     "req": false,
     "hint": "",
@@ -614,36 +735,51 @@ window.CBG_FORMS = [
       "type": "number",
       "unit": "°P"
      }
-    ]
+    ],
+    "colB": {
+     "Carib": "R",
+     "Stag": "R",
+     "Star Malt": "V"
+    }
    },
    {
     "name": "Kettle Stand (mins)",
     "label": "Kettle Stand",
     "type": "number",
     "unit": "mins",
-    "col": "S",
+    "col": "",
     "std": "",
     "req": false,
     "hint": "Stand in wort kettle",
-    "span": 1
+    "span": 1,
+    "colB": {
+     "Carib": "S",
+     "Stag": "S",
+     "Star Malt": "W"
+    }
    },
    {
     "name": "Boil Start",
     "label": "Boil Start",
     "type": "time",
     "unit": "",
-    "col": "T",
+    "col": "",
     "std": "",
     "req": false,
     "hint": "Initial boil start",
-    "span": 1
+    "span": 1,
+    "colB": {
+     "Carib": "T",
+     "Stag": "T",
+     "Star Malt": "X"
+    }
    },
    {
     "name": "Cool End",
     "label": "Cool End",
     "type": "time",
     "unit": "",
-    "col": "U",
+    "col": "",
     "std": "",
     "req": false,
     "hint": "",
@@ -655,114 +791,164 @@ window.CBG_FORMS = [
       "type": "time",
       "unit": ""
      }
-    ]
+    ],
+    "colB": {
+     "Carib": "U",
+     "Stag": "U",
+     "Star Malt": "Y"
+    }
    },
    {
     "name": "Cool Time (mins)",
     "label": "Cool Time",
     "type": "number",
     "unit": "mins",
-    "col": "V",
+    "col": "",
     "std": "",
     "req": false,
     "hint": "End minus start",
-    "span": 1
+    "span": 1,
+    "colB": {
+     "Carib": "V",
+     "Stag": "V",
+     "Star Malt": "Z"
+    }
    },
    {
     "name": "Mash In Time",
     "label": "Mash In Time",
     "type": "time",
     "unit": "",
-    "col": "W",
+    "col": "",
     "std": "",
     "req": false,
     "hint": "Start of mash in",
-    "span": 1
+    "span": 1,
+    "colB": {
+     "Carib": "W",
+     "Stag": "W",
+     "Star Malt": "AA"
+    }
    },
    {
     "name": "Cast Out Time",
     "label": "Cast Out Time",
     "type": "time",
     "unit": "",
-    "col": "X",
+    "col": "",
     "std": "",
     "req": false,
     "hint": "End of transfer to FV",
-    "span": 1
+    "span": 1,
+    "colB": {
+     "Carib": "X",
+     "Stag": "X",
+     "Star Malt": "AB"
+    }
    },
    {
     "type": "section",
     "n": "4",
     "name": "Kettle and FV gravities and volumes",
-    "hint": "Columns Z to AG",
+    "hint": "Page 1",
     "cols": 6,
-    "note": "Target kettle out gravity 16.9 to 17.2 °P. FV volume from the diesel meter."
+    "note": "FV volume from the diesel meter."
    },
    {
     "name": "Kettle Up (°P)",
     "label": "Kettle Up",
     "type": "number",
     "unit": "°P",
-    "col": "Z",
+    "col": "",
     "std": "",
     "req": false,
     "hint": "",
-    "span": 1
+    "span": 1,
+    "colB": {
+     "Carib": "AA",
+     "Stag": "AA",
+     "Star Malt": "AE"
+    }
    },
    {
     "name": "Kettle Up (HLs)",
     "label": "Kettle Up",
     "type": "number",
     "unit": "HLs",
-    "col": "AB",
+    "col": "",
     "std": "",
     "req": false,
     "hint": "",
-    "span": 1
+    "span": 1,
+    "colB": {
+     "Carib": "AC",
+     "Stag": "AC",
+     "Star Malt": "AG"
+    }
    },
    {
     "name": "Kettle Out (°P)",
     "label": "Kettle Out",
     "type": "number",
     "unit": "°P",
-    "col": "AC",
+    "col": "",
     "std": "",
     "req": false,
     "hint": "",
-    "span": 1
+    "span": 1,
+    "colB": {
+     "Carib": "AD",
+     "Stag": "AD",
+     "Star Malt": "AH"
+    }
    },
    {
     "name": "Kettle Out (HLs)",
     "label": "Kettle Out",
     "type": "number",
     "unit": "HLs",
-    "col": "AD",
+    "col": "",
     "std": "",
     "req": false,
     "hint": "",
-    "span": 1
+    "span": 1,
+    "colB": {
+     "Carib": "AE",
+     "Stag": "AE",
+     "Star Malt": "AI"
+    }
    },
    {
     "name": "FV Gravity (°P)",
     "label": "FV Gravity",
     "type": "number",
     "unit": "°P",
-    "col": "AE",
+    "col": "",
     "std": "",
     "req": false,
     "hint": "",
-    "span": 1
+    "span": 1,
+    "colB": {
+     "Carib": "AF",
+     "Stag": "AF",
+     "Star Malt": "AJ"
+    }
    },
    {
     "name": "FV Volume (HLs)",
     "label": "FV Volume",
     "type": "number",
     "unit": "HLs",
-    "col": "AG",
+    "col": "",
     "std": "",
     "req": false,
     "hint": "",
-    "span": 1
+    "span": 1,
+    "colB": {
+     "Carib": "AH",
+     "Stag": "AH",
+     "Star Malt": "AL"
+    }
    },
    {
     "name": "FV/DPV No",
@@ -779,7 +965,7 @@ window.CBG_FORMS = [
     "type": "section",
     "n": "5",
     "name": "HLT, malt dust and operator",
-    "hint": "Columns AQ to AV",
+    "hint": "Page 1",
     "cols": 4,
     "note": ""
    },
@@ -788,44 +974,64 @@ window.CBG_FORMS = [
     "label": "HLT Before Mashing",
     "type": "number",
     "unit": "",
-    "col": "AQ",
+    "col": "",
     "std": "",
     "req": false,
     "hint": "",
-    "span": 1
+    "span": 1,
+    "colB": {
+     "Carib": "AR",
+     "Stag": "AR",
+     "Star Malt": "AV"
+    }
    },
    {
     "name": "HLT Before Cooling",
     "label": "HLT Before Cooling",
     "type": "number",
     "unit": "",
-    "col": "AR",
+    "col": "",
     "std": "",
     "req": false,
     "hint": "",
-    "span": 1
+    "span": 1,
+    "colB": {
+     "Carib": "AS",
+     "Stag": "AS",
+     "Star Malt": "AW"
+    }
    },
    {
     "name": "Malt Dust (kg)",
     "label": "Malt Dust",
     "type": "number",
     "unit": "kg",
-    "col": "AU",
+    "col": "",
     "std": "",
     "req": false,
     "hint": "",
-    "span": 1
+    "span": 1,
+    "colB": {
+     "Carib": "AV",
+     "Stag": "AV",
+     "Star Malt": "AZ"
+    }
    },
    {
     "name": "Operator Initials",
     "label": "Operator Initials",
     "type": "text",
     "unit": "",
-    "col": "AV",
+    "col": "",
     "std": "",
     "req": true,
     "hint": "",
-    "span": 1
+    "span": 1,
+    "colB": {
+     "Carib": "AW",
+     "Stag": "AW",
+     "Star Malt": "BA"
+    }
    },
    {
     "type": "section",
@@ -963,15 +1169,30 @@ window.CBG_FORMS = [
     "rows": [
      {
       "name": "Acid",
-      "hint": "std 0 mls"
+      "hint": "",
+      "hintB": {
+       "Carib": "std 150 mls",
+       "Stag": "",
+       "Star Malt": "std 0 mls"
+      }
      },
      {
       "name": "CaSO₄",
-      "hint": "std 764.6 g"
+      "hint": "",
+      "hintB": {
+       "Carib": "std 396 g",
+       "Stag": "",
+       "Star Malt": "std 764.6 g"
+      }
      },
      {
       "name": "CaCl₂",
-      "hint": "std 1588.2 g"
+      "hint": "",
+      "hintB": {
+       "Carib": "std 333 g",
+       "Stag": "",
+       "Star Malt": "std 1588.2 g"
+      }
      }
     ],
     "cols": [
@@ -1180,41 +1401,103 @@ window.CBG_FORMS = [
     "name": "Kettle additions and settings",
     "hint": "Page 2",
     "cols": 4,
-    "note": "One (1) tin of hops in this brew"
+    "note": ""
    },
    {
     "type": "grid",
-    "name": "Addition (Vitamalt hops)",
+    "name": "Kettle additions",
     "hint": "",
     "fmt": "Kettle {row} – {col}",
     "rows": [
      {
       "name": "Hop extract",
-      "hint": "std 158.0 g"
+      "hint": "",
+      "hintB": {
+       "Carib": "std 0.9 kg",
+       "Stag": "",
+       "Star Malt": "std 158.0 g"
+      }
+     },
+     {
+      "name": "Hop pellets",
+      "hint": "",
+      "hintB": {
+       "Carib": "std 444",
+       "Stag": "",
+       "Star Malt": ""
+      }
      },
      {
       "name": "Caramel 203",
-      "hint": "std 26.0 kg"
+      "hint": "",
+      "hintB": {
+       "Carib": "",
+       "Stag": "",
+       "Star Malt": "std 26.0 kg"
+      }
      },
      {
       "name": "Gypsum (CaSO₄)",
-      "hint": "std 688 g"
+      "hint": "",
+      "hintB": {
+       "Carib": "std 700 g",
+       "Stag": "",
+       "Star Malt": "std 688 g"
+      }
      },
      {
       "name": "CaCl₂",
-      "hint": "std 300 g"
+      "hint": "",
+      "hintB": {
+       "Carib": "std 225 g",
+       "Stag": "",
+       "Star Malt": "std 300 g"
+      }
+     },
+     {
+      "name": "Acid",
+      "hint": "",
+      "hintB": {
+       "Carib": "std 200 mls",
+       "Stag": "",
+       "Star Malt": ""
+      }
+     },
+     {
+      "name": "ZnSO₄",
+      "hint": "",
+      "hintB": {
+       "Carib": "std 2 g",
+       "Stag": "",
+       "Star Malt": ""
+      }
      },
      {
       "name": "Sugar",
-      "hint": "std 400 kg"
+      "hint": "",
+      "hintB": {
+       "Carib": "",
+       "Stag": "",
+       "Star Malt": "std 400 kg"
+      }
      },
      {
       "name": "CO₂ hop extract",
-      "hint": "g"
+      "hint": "",
+      "hintB": {
+       "Carib": "",
+       "Stag": "",
+       "Star Malt": ""
+      }
      },
      {
       "name": "Pelfloc G",
-      "hint": "std 200 g"
+      "hint": "",
+      "hintB": {
+       "Carib": "",
+       "Stag": "",
+       "Star Malt": "std 200 g"
+      }
      }
     ],
     "cols": [
@@ -2470,7 +2753,11 @@ window.CBG_CONFIG = {
   // file = path inside the site's Documents library; table = Excel table name
   // flowUrl here is optional: only if a form should use its own flow instead of the shared one
   forms: {
-    brewing: { file: "01 Brewing & Fermentation/CBG_Brew_Process_2026_DEMO.xlsx", table: "tblBrewing", flowUrl: "" },
+    brewing: { flowUrl: "", brands: {  // one tracker per brand; the form's Brand answer picks which
+      "Carib": { file: "01 Brewing & Fermentation/CBG_Brewhouse_Carib_2026.xlsx", table: "tblBrewCarib" },
+      "Stag": { file: "01 Brewing & Fermentation/CBG_Brewhouse_Stag_2026.xlsx", table: "tblBrewStag" },
+      "Star Malt": { file: "01 Brewing & Fermentation/CBG_Brewhouse_StarMalt_2026.xlsx", table: "tblBrewStarMalt" },
+    } },
     hse: { file: "02 HSE/CBG_HSE_Register_2026_DEMO.xlsx", table: "tblHSE", flowUrl: "" },
     facilities: { file: "03 Facilities/CBG_Utilities_Weekly_2026_DEMO.xlsx", table: "tblUtilities", flowUrl: "" },
     packaging: { file: "04 Packaging/CBG_Packaging_Line_Shift_2026_DEMO.xlsx", table: "tblPackaging", flowUrl: "" },
@@ -2619,7 +2906,15 @@ function setSavebar(html) { $("#savebarHost").innerHTML = html; }
 const todayISO = () => isoDate(new Date());
 const longDate = () => new Date().toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short", year: "numeric" });
 function todays() { return store.get("cbg.entries", []).filter(e => (e.submittedAt || "").startsWith(todayISO())); }
-const fileName = k => ((CFG.forms[k] || {}).file || "").split("/").pop();
+/* where an entry goes: forms with brands (Brewing) pick the tracker from the Brand answer */
+function target(k, vals) {
+  const fc = CFG.forms[k] || {};
+  if (!fc.brands) return fc;
+  const b = vals && vals.Brand && fc.brands[vals.Brand];
+  return b ? Object.assign({ flowUrl: fc.flowUrl }, b) : { flowUrl: fc.flowUrl, file: "", table: "", brands: fc.brands };
+}
+const fileName = (k, vals) => { const t = target(k, vals); return t.brands ? Object.keys(t.brands).length + " brand trackers" : (t.file || "").split("/").pop(); };
+const tableName = (k, vals) => { const t = target(k, vals); return t.brands ? "choose the brand" : (t.table || ""); };
 
 function updStatus() {
   $("#signinTop").hidden = !(CFG.mode === "graph" && !account);
@@ -2676,7 +2971,7 @@ function viewHome() {
           <td class="wrap">${esc(f.desc)}</td>
           <td class="r">${f.all.length}</td>
           <td class="r">${byForm(f.key) ? `<span class="pill g">${byForm(f.key)}</span>` : `<span class="pill a">0</span>`}</td>
-          <td>${esc((CFG.forms[f.key] || {}).table || "")}</td></tr>`).join("")}</tbody>
+          <td>${esc(tableName(f.key))}</td></tr>`).join("")}</tbody>
       </table></div>
     </div>`;
   document.querySelectorAll("tr[data-go]").forEach(r => r.addEventListener("click", e => { if (!e.target.closest("a")) location.hash = "#f-" + r.dataset.go; }));
@@ -2694,9 +2989,11 @@ function sheetInput(f, id, val, aria) {
   if (f.type === "choice") return `<div class="seg sm" role="radiogroup" aria-label="${esc(f.label || f.name)}">${f.options.map(o => `<label><input type="radio" name="${id}" value="${esc(o)}" ${val === o ? "checked" : ""} ${aria}><span>${esc(o)}</span></label>`).join("")}</div>`;
   if (f.type === "long") return `<textarea id="${id}" ${aria}>${esc(val)}</textarea>`;
   if (f.type === "date" || f.type === "time") return `<input id="${id}" type="${f.type}" value="${esc(val)}" ${aria}>`;
-  if (f.type === "text") return `<input id="${id}" type="text" value="${esc(val)}" ${f.unit ? `placeholder="${esc(f.unit)}-"` : ""} ${NAME_FIELDS.test(f.name) ? 'autocomplete="name"' : ""} ${aria}>`;
+  if (f.type === "text") return `<input id="${id}" type="text" value="${esc(val)}" ${f.unitB ? `data-unitb="${esc(JSON.stringify(f.unitB))}" placeholder="${esc(pick(f.unitB) ? "e.g. " + pick(f.unitB) + "123" : "")}"` : f.unit ? `placeholder="${esc(f.unit)}-"` : ""} ${NAME_FIELDS.test(f.name) ? 'autocomplete="name"' : ""} ${aria}>`;
   return `<span class="ub"><input id="${id}" type="number" inputmode="decimal" step="any" min="0" value="${esc(val)}" ${aria}>${f.unit ? `<em>${esc(f.unit)}</em>` : ""}</span>`;
 }
+const curBrand = () => (current && current.vals && current.vals.Brand) || "";
+const pick = (m, d) => (m && m[curBrand()]) || d || "";
 function sheetField(f, i, v, r, err, cols) {
   const id = "f" + i, star = f.req ? `<span class="req" aria-hidden="true">*</span>` : "";
   const aria = `${err ? 'aria-invalid="true"' : ""} ${f.req ? "required" : ""}`;
@@ -2709,7 +3006,7 @@ function sheetField(f, i, v, r, err, cols) {
     return `<${tag} class="sbx" data-name="${esc(sb.name)}">${sb.label ? `<span>${esc(sb.label)}</span>` : ""}${inp}${sb.unit ? `<em>${esc(sb.unit)}</em>` : ""}</${tag}>`;
   }).join("");
   return `<div class="fld sf${err ? " bad" : ""}" data-name="${esc(f.name)}" ${span > 1 ? `data-span style="grid-column:span ${span}"` : ""}>
-    <div class="sfh">${f.col ? `<span class="cchip">${esc(f.col)}</span>` : ""}<label for="${id}">${esc(f.label || f.name)}${star}</label>${f.std ? `<span class="sstd">${esc(f.std)}</span>` : ""}</div>
+    <div class="sfh">${f.colB ? `<span class="cchip" data-colb="${esc(JSON.stringify(f.colB))}" ${pick(f.colB) ? "" : "hidden"}>${esc(pick(f.colB))}</span>` : f.col ? `<span class="cchip">${esc(f.col)}</span>` : ""}<label for="${id}">${esc(f.label || f.name)}${star}</label>${f.stdB ? `<span class="sstd" data-stdb="${esc(JSON.stringify(f.stdB))}">${esc(pick(f.stdB))}</span>` : f.std ? `<span class="sstd">${esc(f.std)}</span>` : ""}</div>
     ${sheetInput(f, id, v[f.name] ?? "", aria)}${subs ? `<div class="ssub">${subs}</div>` : ""}${f.hint ? `<div class="snote">${esc(f.hint)}</div>` : ""}${err ? `<span class="msg">${esc(err)}</span>` : ""}</div>`;
 }
 function sheetBody(form, v, r, errors) {
@@ -2718,7 +3015,7 @@ function sheetBody(form, v, r, errors) {
     if (f.type === "section") {
       if (open) html += "</div>";
       cols = f.cols || 4;
-      html += `<div class="fsec" id="sec${i}">${f.n ? `<span class="sn">${esc(f.n)}</span>` : ""}<h3>${esc(f.name)}</h3>${f.hint ? `<span class="sr">${esc(f.hint)}</span>` : ""}</div>${f.note ? `<div class="snl">${esc(f.note)}</div>` : ""}<div class="sgrid" style="--c:${cols}">`;
+      html += `<div class="fsec" id="sec${i}">${f.n ? `<span class="sn">${esc(f.n)}</span>` : ""}<h3>${esc(f.name)}</h3>${f.hint ? `<span class="sr">${esc(f.hint)}</span>` : ""}</div>${f.noteB ? `<div class="snl" data-noteb="${esc(JSON.stringify(f.noteB))}" data-def="${esc(f.note || "")}">${esc(pick(f.noteB, f.note))}</div>` : f.note ? `<div class="snl">${esc(f.note)}</div>` : ""}<div class="sgrid" style="--c:${cols}">`;
       open = true; return;
     }
     html += f.type === "grid" ? fieldHTML(f, i, v, r, null) : sheetField(f, i, v, r, errors[f.name], cols);
@@ -2730,7 +3027,7 @@ function fieldHTML(f, i, v, r, err) {
   if (f.type === "grid") {
     return `<div class="fld wide gridf"><div class="glbl">${esc(f.name)}</div>${f.hint ? `<span class="fhint">${esc(f.hint)}</span>` : ""}
       <div class="gwrap"><table class="gt"><thead><tr><th></th>${f.cols.map(c => `<th>${esc(c.name)}</th>`).join("")}</tr></thead><tbody>
-      ${f.rows.map((rw, ri) => `<tr><th scope="row">${esc(rw.name)}${rw.hint ? `<small>${esc(rw.hint)}</small>` : ""}</th>${f.cols.map((c, ci) => {
+      ${f.rows.map((rw, ri) => `<tr><th scope="row">${esc(rw.name)}${rw.hintB ? `<small data-hintb="${esc(JSON.stringify(rw.hintB))}">${esc(pick(rw.hintB))}</small>` : rw.hint ? `<small>${esc(rw.hint)}</small>` : ""}</th>${f.cols.map((c, ci) => {
         const nm = f.fmt.replace("{row}", rw.name).replace("{col}", c.name);
         return `<td data-name="${esc(nm)}" class="t-${c.type}">${cellInput(c, `g${i}_${ri}_${ci}`, v[nm] ?? "", nm)}</td>`; }).join("")}</tr>`).join("")}
       </tbody></table></div></div>`;
@@ -2771,7 +3068,7 @@ function viewForm(key) {
   const fc = CFG.forms[key] || {};
   chrome(key, [form.dept, form.title],
     `${esc(form.dept)} <span class="dot"></span> ${esc(form.desc)}`,
-    demoChip() + `<span class="fb"><i></i>${esc(fileName(key))} <em>${esc(fc.table || "")}</em></span>`,
+    demoChip() + `<span class="fb" id="fbChip"><i></i>${esc(fileName(key, current.vals))} <em>${esc(tableName(key, current.vals))}</em></span>`,
     nameCtl() + `<label class="msb"><span class="msk">Form</span><select id="jump">${FORMS.map(f => `<option value="${f.key}" ${f.key === key ? "selected" : ""}>${esc(f.dept)}: ${esc(f.title)}</option>`).join("")}</select></label>` +
     `<div class="note">Required questions are marked *. Saved entries go to the tracker as Pending.</div>`);
   $("#jump").addEventListener("change", e => { location.hash = "#f-" + e.target.value; });
@@ -2782,7 +3079,7 @@ function viewForm(key) {
     $("#secjump").addEventListener("change", e => { const el = document.getElementById(e.target.value); if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 70, behavior: "smooth" }); e.target.value = ""; });
   }
   renderForm();
-  setSavebar(`<div class="savebar"><div class="in"><span class="sbtxt">Saves to <b>${esc(fc.table || "the tracker")}</b> as Pending</span><a class="obtn" href="#home">Cancel</a><button class="pbtn" id="saveBtn" type="button">Save entry</button></div></div>`);
+  setSavebar(`<div class="savebar"><div class="in"><span class="sbtxt">Saves to <b id="sbTable">${esc(tableName(key, current.vals) || "the tracker")}</b> as Pending</span><a class="obtn" href="#home">Cancel</a><button class="pbtn" id="saveBtn" type="button">Save entry</button></div></div>`);
   $("#saveBtn").addEventListener("click", submit);
 }
 function renderForm() {
@@ -2815,7 +3112,7 @@ function renderForm() {
       <aside class="s4 stick">
         ${c ? `<div class="kpis calc" aria-label="Worked out automatically">${c.map(([k, x]) => `<div class="tile"><div class="tl">${esc(k)}</div><div class="tv">${esc(x)}</div></div>`).join("")}</div>` : ""}
         <div class="panel" style="${c ? "margin-top:10px" : ""}">
-          <h2>What happens when you save</h2><p class="hint">${esc((CFG.forms[form.key] || {}).table || "Tracker")}</p>
+          <h2>What happens when you save</h2><p class="hint">${esc(tableName(form.key, current.vals) || "Tracker")}</p>
           <ul class="side-list">
             <li><span class="pill n">Pending</span> The entry is added as a new row</li>
             <li><span class="pill g">Verified</span> A data clerk checks it, then it reaches the dashboards</li>
@@ -2858,8 +3155,22 @@ function applyRules() {
     if (sel && w.hidden && n in r.force) sel.value = r.force[n];
   });
   const note = $("#ruleNote"); if (note) { note.hidden = !r.note; note.textContent = r.note || ""; }
+  brandify();
   const c = calcs(form, vals), box = $(".calc");
   if (c && box) box.innerHTML = c.map(([k, x]) => `<div class="tile"><div class="tl">${esc(k)}</div><div class="tv">${esc(x)}</div></div>`).join("");
+}
+/* Brewing: show the chosen brand's standards, log column letters, brew number prefix and tracker */
+function brandify() {
+  if (!current) return;
+  const J = s => { try { return JSON.parse(s); } catch (e) { return {}; } }, b = curBrand();
+  document.querySelectorAll("#theForm [data-stdb]").forEach(e => { e.textContent = J(e.dataset.stdb)[b] || ""; });
+  document.querySelectorAll("#theForm [data-hintb]").forEach(e => { e.textContent = J(e.dataset.hintb)[b] || ""; });
+  document.querySelectorAll("#theForm [data-colb]").forEach(e => { const t = J(e.dataset.colb)[b] || ""; e.textContent = t; e.hidden = !t; });
+  document.querySelectorAll("#theForm [data-unitb]").forEach(e => { const t = J(e.dataset.unitb)[b] || ""; e.placeholder = t ? "e.g. " + t + "123" : ""; });
+  document.querySelectorAll("#theForm [data-noteb]").forEach(e => { e.textContent = J(e.dataset.noteb)[b] || e.dataset.def || ""; });
+  const k = current.form.key, chip = $("#fbChip"), sb = $("#sbTable");
+  if (chip) chip.innerHTML = `<i></i>${esc(fileName(k, current.vals))} <em>${esc(tableName(k, current.vals))}</em>`;
+  if (sb) sb.textContent = tableName(k, current.vals) || "the tracker";
 }
 function validate() {
   const { form, vals } = current, r = rules(form.key, vals), errs = {};
@@ -2957,7 +3268,8 @@ function httpError(status, text) {
 }
 async function send(entry) {
   if (CFG.mode === "demo") return new Promise(r => setTimeout(r, 500));
-  const fc = CFG.forms[entry.form] || {};
+  const fc = target(entry.form, entry.values);
+  if (fc.brands) { const e = httpError(404); e.retry = false; e.message = "Choose the brand first, so the entry goes to that brand's tracker."; throw e; }
   if (CFG.mode === "flow") {
     const url = fc.flowUrl || CFG.flowUrl;
     if (!url) throw httpError(404);
