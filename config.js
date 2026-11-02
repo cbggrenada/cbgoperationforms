@@ -11,18 +11,18 @@ window.CBG_CONFIG = {
   // graph mode: from the Entra ID app registration (see README)
   tenantId: "",          // Directory (tenant) ID
   clientId: "",          // Application (client) ID
-  siteHostname: "yourtenant.sharepoint.com",
-  sitePath: "/sites/CBGSupplyChainHub",
+  siteHostname: "ansamcal.sharepoint.com",
+  sitePath: "/sites/CBG_Operations",
 
-  // file = path inside the site's Documents library; table = Excel table name
+  // file = path inside the CBG_Operations Documents library; table = Excel table name
   // flowUrl here is optional: only if a form should use its own flow instead of the shared one
   forms: {
-    brewing: { file: "01 Brewing & Fermentation/CBG_Brew_Process_2026_DEMO.xlsx", table: "tblBrewing", flowUrl: "" },
-    hse: { file: "02 HSE/CBG_HSE_Register_2026_DEMO.xlsx", table: "tblHSE", flowUrl: "" },
-    facilities: { file: "03 Facilities/CBG_Utilities_Weekly_2026_DEMO.xlsx", table: "tblUtilities", flowUrl: "" },
-    packaging: { file: "04 Packaging/CBG_Packaging_Line_Shift_2026_DEMO.xlsx", table: "tblPackaging", flowUrl: "" },
-    logistics: { file: "05 Logistics/CBG_Logistics_Dispatch_2026_DEMO.xlsx", table: "tblLogistics", flowUrl: "" },
-    operations: { file: "06 Operations/CBG_Operations_Plan_2026_DEMO.xlsx", table: "tblOperations", flowUrl: "" },
-    qa: { file: "07 Quality Assurance/CBG_QA_Lab_Complaints_2026_DEMO.xlsx", table: "tblQA", flowUrl: "" },
+    brewing: { file: "CBG Supply Chain Hub/01 Brewing & Fermentation/CBG_Brew_Process_2026_DEMO.xlsx", table: "tblBrewing", flowUrl: "" },
+    hse: { file: "CBG Supply Chain Hub/02 HSE/CBG_HSE_Register_2026_DEMO.xlsx", table: "tblHSE", flowUrl: "" },
+    facilities: { file: "CBG Supply Chain Hub/03 Facilities/CBG_Utilities_Weekly_2026_DEMO.xlsx", table: "tblUtilities", flowUrl: "" },
+    packaging: { file: "CBG Supply Chain Hub/04 Packaging/CBG_Packaging_Line_Shift_2026_DEMO.xlsx", table: "tblPackaging", flowUrl: "" },
+    logistics: { file: "CBG Supply Chain Hub/05 Logistics/CBG_Logistics_Dispatch_2026_DEMO.xlsx", table: "tblLogistics", flowUrl: "" },
+    operations: { file: "CBG Supply Chain Hub/06 Operations/CBG_Operations_Plan_2026_DEMO.xlsx", table: "tblOperations", flowUrl: "" },
+    qa: { file: "CBG Supply Chain Hub/07 Quality Assurance/CBG_QA_Lab_Complaints_2026_DEMO.xlsx", table: "tblQA", flowUrl: "" },
   }
 };
