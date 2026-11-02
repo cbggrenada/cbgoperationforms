@@ -17,7 +17,11 @@ window.CBG_CONFIG = {
   // file = path inside the CBG_Operations Documents library; table = Excel table name
   // flowUrl here is optional: only if a form should use its own flow instead of the shared one
   forms: {
-    brewing: { file: "CBG Supply Chain Hub/01 Brewing & Fermentation/CBG_Brew_Process_2026_DEMO.xlsx", table: "tblBrewing", flowUrl: "" },
+    brewing: { flowUrl: "", brands: {  // one tracker per brand; the form's Brand answer picks which
+      "Carib": { file: "CBG Supply Chain Hub/01 Brewing & Fermentation/CBG_Brewhouse_Carib_2026.xlsx", table: "tblBrewCarib" },
+      "Stag": { file: "CBG Supply Chain Hub/01 Brewing & Fermentation/CBG_Brewhouse_Stag_2026.xlsx", table: "tblBrewStag" },
+      "Star Malt": { file: "CBG Supply Chain Hub/01 Brewing & Fermentation/CBG_Brewhouse_StarMalt_2026.xlsx", table: "tblBrewStarMalt" },
+    } },
     hse: { file: "CBG Supply Chain Hub/02 HSE/CBG_HSE_Register_2026_DEMO.xlsx", table: "tblHSE", flowUrl: "" },
     facilities: { file: "CBG Supply Chain Hub/03 Facilities/CBG_Utilities_Weekly_2026_DEMO.xlsx", table: "tblUtilities", flowUrl: "" },
     packaging: { file: "CBG Supply Chain Hub/04 Packaging/CBG_Packaging_Line_Shift_2026_DEMO.xlsx", table: "tblPackaging", flowUrl: "" },
