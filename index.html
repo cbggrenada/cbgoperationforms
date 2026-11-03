@@ -271,6 +271,18 @@ table.gt input:focus,table.gt select:focus{outline:none;border-color:var(--pi-in
 .fcard .pill{flex:none}
 .fb.warn i{background:#d97706}
 @media (max-width:640px){.fgrid{grid-template-columns:1fr}#tabs{display:none}}
+/* waiting to send: edit / delete */
+.qhead{display:flex;gap:12px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap}
+.qlist{list-style:none;margin:0;padding:0}
+.qlist li{display:flex;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--pi-line)}
+.qlist .ico{flex:none;margin:0}
+.qtxt{display:flex;flex-direction:column;gap:2px;min-width:0;flex:1;font-size:12px;color:var(--pi-muted)}
+.qtxt b{font:700 13px/1.3 var(--sans);color:var(--pi-ink)}
+.qbtns{display:flex;gap:6px;flex:none}
+.obtn.qdel.armed{background:var(--bad);color:#fff;box-shadow:none}
+a.tlink{color:inherit;text-decoration:none}a.tlink:hover{border-color:var(--pi-ink)}
+.editnote{background:color-mix(in srgb,var(--amber) 18%,transparent);border-radius:4px;padding:10px 12px;margin-bottom:10px;font-size:12.5px}
+@media (max-width:640px){.qlist li{flex-wrap:wrap}.qbtns{width:100%;padding-left:34px}}
 </style>
 <script>(function(){try{var t=localStorage.getItem('cbg-theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t)}catch(e){}})();</script>
 
@@ -2968,14 +2980,62 @@ function viewHome() {
     <div class="sec">Today</div>
     <div class="trow">
       <div class="tile ${t.length ? "good" : ""}"><div class="tl">Entries today</div><div class="tv">${t.length}</div><div class="ts">${last ? "Last at " + esc(last.submittedAt.slice(11, 16)) + " · " + depts + " of " + FORMS.length + " departments" : "None yet on this device"}</div></div>
-      <div class="tile ${q ? "warn" : ""}"><div class="tl">Waiting to send</div><div class="tv">${q}</div><div class="ts">${q ? "Sends when the connection returns" : "Everything is sent"}</div></div>
+      ${q ? `<a class="tile warn tlink" href="#queue"><div class="tl">Waiting to send</div><div class="tv">${q}</div><div class="ts">Sends when the connection returns · edit or delete below</div></a>` : `<div class="tile"><div class="tl">Waiting to send</div><div class="tv">0</div><div class="ts">Everything is sent</div></div>`}
     </div>
+    ${q ? queuePanel() : ""}
     <div class="sec">Forms</div>
     <div class="fgrid">${FORMS.map(f => `<a class="fcard" href="#f-${f.key}">
         <span class="ico">${svg(f.key)}</span>
         <span class="fc-txt"><span class="fc-d">${esc(f.dept)}</span><b>${esc(f.title)}</b><span class="fc-s">${esc(f.desc)}</span></span>
         ${byForm(f.key) ? `<span class="pill g">${byForm(f.key)} today</span>` : ""}
       </a>`).join("")}</div>`;
+  wireQueue();
+}
+/* ---------- waiting to send: edit or delete ---------- */
+function qSummary(e) {
+  const v = e.values || {}, form = FORMS.find(f => f.key === e.form);
+  const keys = ["Brand", "Brew No.", "Brew No", "Line", "Shift", "Week", "Load No.", "Type", "Location"].filter(k => v[k] != null && v[k] !== "");
+  const bits = keys.slice(0, 3).map(k => k + ": " + v[k]);
+  if (!bits.length && form) form.all.filter(f => f.type !== "section" && v[f.name] != null && v[f.name] !== "").slice(0, 2).forEach(f => bits.push(f.name + ": " + String(v[f.name]).slice(0, 30)));
+  return bits.join(" · ");
+}
+function queuePanel() {
+  const q = store.get("cbg.queue", []);
+  return `<div class="sec" id="queue">Waiting to send</div>
+    <div class="panel">
+      <div class="qhead"><div><h2>Saved on this device, not sent yet</h2><p class="hint">They send by themselves when the connection returns. Edit one to fix a mistake, or delete it if it shouldn't go to the tracker.</p></div>
+        <button class="obtn" id="qSendNow" type="button">Try sending now</button></div>
+      <ul class="qlist">${q.map(e => { const f = FORMS.find(x => x.key === e.form) || { dept: e.form, title: "" }; return `<li data-id="${esc(e.id)}">
+        <span class="ico">${svg(e.form)}</span>
+        <span class="qtxt"><b>${esc(f.title || f.dept)}</b><span>${esc(f.dept)} · saved ${esc(e.submittedAt)} by ${esc(e.submittedBy)}</span>${qSummary(e) ? `<span>${esc(qSummary(e))}</span>` : ""}</span>
+        <span class="qbtns"><button class="obtn" type="button" data-act="edit">Edit</button><button class="obtn qdel" type="button" data-act="del">Delete</button></span></li>`; }).join("")}</ul>
+    </div>`;
+}
+function wireQueue() {
+  const sn = $("#qSendNow");
+  if (sn) sn.addEventListener("click", async () => { sn.disabled = true; sn.textContent = "Sending…"; await flush(); viewHome(); });
+  document.querySelectorAll(".qlist li").forEach(li => li.addEventListener("click", e => {
+    const b = e.target.closest("button[data-act]"); if (!b) return;
+    const id = li.dataset.id;
+    if (b.dataset.act === "edit") return editQueued(id);
+    if (b.dataset.armed) { dropQueued(id); viewHome(); return; }
+    b.dataset.armed = "1"; b.textContent = "Tap again to delete"; b.classList.add("armed");
+    setTimeout(() => { if (b.isConnected) { delete b.dataset.armed; b.textContent = "Delete"; b.classList.remove("armed"); } }, 4000);
+  }));
+}
+function dropQueued(id) {
+  store.set("cbg.queue", store.get("cbg.queue", []).filter(e => e.id !== id));
+  store.set("cbg.entries", store.get("cbg.entries", []).filter(e => e.id !== id));
+  showQueue();
+}
+function editQueued(id) {
+  const e = store.get("cbg.queue", []).find(x => x.id === id);
+  const form = e && FORMS.find(f => f.key === e.form);
+  if (!form) return;
+  const vals = Object.assign(defaults(form), {});
+  for (const [k, v] of Object.entries(e.values || {})) vals[k] = v == null ? "" : String(v);
+  current = { form, vals, errors: {}, editId: id, editAt: e.submittedAt, editBy: e.submittedBy };
+  if (location.hash === "#f-" + form.key) route(); else location.hash = "#f-" + form.key;
 }
 
 function cellInput(c, id, val, label) {
@@ -3080,7 +3140,8 @@ function viewForm(key) {
     $("#secjump").addEventListener("change", e => { const el = document.getElementById(e.target.value); if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 70, behavior: "smooth" }); e.target.value = ""; });
   }
   renderForm();
-  setSavebar(`<div class="savebar"><div class="in"><span class="sbtxt">Saves to <b id="sbTable">${esc(tableName(key, current.vals) || "the tracker")}</b> as Pending</span><a class="obtn" href="#home">Cancel</a><button class="pbtn" id="saveBtn" type="button">Save entry</button></div></div>`);
+  const ed = current.editId;
+  setSavebar(`<div class="savebar"><div class="in"><span class="sbtxt">${ed ? "Editing an entry that's waiting to send · " : ""}Saves to <b id="sbTable">${esc(tableName(key, current.vals) || "the tracker")}</b> as Pending</span><a class="obtn" href="#home">${ed ? "Discard changes" : "Cancel"}</a><button class="pbtn" id="saveBtn" type="button">${ed ? "Save changes" : "Save entry"}</button></div></div>`);
   $("#saveBtn").addEventListener("click", submit);
 }
 function renderForm() {
@@ -3093,6 +3154,7 @@ function renderForm() {
   const sheet = form.fields.some(x => x.type === "section");
   if (sheet) {
     $("#app").innerHTML = `
+    ${current.editId ? `<div class="editnote">Editing an entry saved on ${esc(current.editAt)} that hasn't been sent yet. Save changes to keep it in the queue, or go back to leave it as it was.</div>` : ""}
     ${errors._form ? `<div class="err" role="alert">${esc(errors._form)}</div>` : ""}
     <div class="sec">${esc(form.dept)}</div>
     <section class="panel">
@@ -3100,6 +3162,7 @@ function renderForm() {
       <form id="theForm" class="sheetform" novalidate>${sheetBody(form, vals, r, errors)}</form>
     </section>`;
   } else $("#app").innerHTML = `
+    ${current.editId ? `<div class="editnote">Editing an entry saved on ${esc(current.editAt)} that hasn't been sent yet. Save changes to keep it in the queue, or go back to leave it as it was.</div>` : ""}
     ${errors._form ? `<div class="err" role="alert">${esc(errors._form)}</div>` : ""}
     <div class="sec">${esc(form.dept)}</div>
     <div class="grid">
@@ -3200,11 +3263,13 @@ async function submit() {
     let v = String(vals[f.name] ?? "").trim();
     values[f.name] = v === "" ? null : f.type === "number" ? Number(v) : v;
   }
-  const entry = {
+  const edit = current.editId && store.get("cbg.queue", []).some(e => e.id === current.editId) ? current.editId : null;
+  const entry = edit ? { id: edit, form: form.key, submittedAt: current.editAt, submittedBy: current.editBy, values } : {
     id: "WEB-" + isoDate(now).replace(/-/g, "") + "-" + pad(now.getHours()) + pad(now.getMinutes()) + pad(now.getSeconds()) + "-" + Math.random().toString(36).slice(2, 5).toUpperCase(),
     form: form.key, submittedAt: stamp(now), submittedBy: (account && account.username) || store.get("cbg.name", "") || "Unknown", values
   };
   btn.disabled = true; btn.textContent = "Saving…";
+  if (edit) dropQueued(edit);
   let status;
   try { await send(entry); status = CFG.mode === "demo" ? "Demo" : "Sent"; }
   catch (e) {
@@ -3212,7 +3277,7 @@ async function submit() {
     else { btn.disabled = false; btn.textContent = "Save entry"; current.errors = { _form: e.message || "Could not save. Try again." }; renderForm(); window.scrollTo(0, 0); return; }
   }
   record(entry, status);
-  store.set("cbg.draft." + form.key, {});
+  if (!current.editId) store.set("cbg.draft." + form.key, {});
   current = null;
   viewDone(entry, status, form);
 }
@@ -3242,7 +3307,8 @@ function record(entry, status) {
 function queue(entry) { const q = store.get("cbg.queue", []); q.push(entry); store.set("cbg.queue", q); showQueue(); }
 function showQueue() {
   const n = store.get("cbg.queue", []).length, b = $("#queueBadge");
-  b.hidden = !n; b.textContent = n + " waiting to send";
+  b.hidden = !n; b.textContent = n + " waiting to send"; b.title = "Edit or delete on the Overview page";
+  if (!b.dataset.wired) { b.dataset.wired = "1"; b.style.cursor = "pointer"; b.addEventListener("click", () => { location.hash = "#home"; setTimeout(() => { const el = $("#queue"); if (el) el.scrollIntoView({ behavior: "smooth" }); }, 50); }); }
   if ((location.hash || "#home") === "#home" && !current) { /* keep home tiles current */ }
 }
 let flushing = false;
@@ -3252,6 +3318,7 @@ async function flush() {
   let q = store.get("cbg.queue", []);
   const left = [];
   for (const e of q) {
+    if (current && current.editId === e.id) { left.push(e); continue; }
     try { await send(e); record(e, "Sent"); } catch (err) { left.push(e); if (err.retry === false) break; }
   }
   store.set("cbg.queue", left); flushing = false; showQueue();
