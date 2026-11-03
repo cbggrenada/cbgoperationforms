@@ -259,6 +259,18 @@ table.gt input:focus,table.gt select:focus{outline:none;border-color:var(--pi-in
   .btbl td.wrap{min-width:160px}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+/* simpler home: form cards */
+.fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px}
+.fcard{display:flex;align-items:flex-start;gap:10px;padding:14px;background:var(--pi-surface);border:1px solid var(--pi-line);border-radius:4px;color:var(--pi-ink);text-decoration:none;min-width:0}
+.fcard:hover{border-color:var(--pi-ink)}
+.fcard .ico{flex:none;width:32px;height:32px;margin:0}.fcard .ico svg{width:17px;height:17px}
+.fc-txt{display:flex;flex-direction:column;gap:2px;min-width:0;flex:1}
+.fc-d{font:600 11px/1.3 var(--sans);letter-spacing:.04em;text-transform:uppercase;color:var(--pi-muted)}
+.fc-txt b{font:700 14px/1.3 var(--sans)}
+.fc-s{font-size:12px;line-height:1.4;color:var(--pi-muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.fcard .pill{flex:none}
+.fb.warn i{background:#d97706}
+@media (max-width:640px){.fgrid{grid-template-columns:1fr}#tabs{display:none}}
 </style>
 <script>(function(){try{var t=localStorage.getItem('cbg-theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t)}catch(e){}})();</script>
 
@@ -2940,41 +2952,30 @@ function chrome(page, crumbs, meta, chips, bar) {
   updStatus();
 }
 const nameCtl = () => `<label class="msb"><span class="msk">Your name</span><input id="myname" autocomplete="name" value="${esc(store.get("cbg.name", ""))}" placeholder="e.g. J. Charles"></label>`;
-const demoChip = () => CFG.mode === "demo" ? `<span class="fb demo"><i></i>Demo mode <em>not sent to SharePoint</em></span>` : "";
+const demoChip = () => ""; // the status line under the title already says Demo mode
 
 function viewHome() {
   setSavebar("");
   const t = todays(), q = store.get("cbg.queue", []).length;
-  const sent = t.filter(e => e.status !== "Queued").length, depts = new Set(t.map(e => e.form)).size;
+  const depts = new Set(t.map(e => e.form)).size;
   const byForm = k => t.filter(e => e.form === k).length;
-  const last = store.get("cbg.entries", [])[0];
-  chrome("home", ["Data entry", "Overview"],
-    `Data entry <span class="dot"></span> ${esc(longDate())}`,
-    demoChip() + FORMS.map(f => `<span class="fb"><i></i>${esc(fileName(f.key))}</span>`).join(""),
-    nameCtl() + `<span class="hseg"><span class="on">Today</span></span><div class="note">Pick a department on the left or in the tabs. Each entry is added to that department's tracker as Pending until a data clerk checks it.</div>`);
+  const last = t[0];
+  chrome("home", ["Data entry"],
+    esc(longDate()),
+    demoChip() + (q ? `<span class="fb warn"><i></i>${q} waiting to send <em>sends when the connection returns</em></span>` : ""),
+    nameCtl() + `<div class="note">Pick a form below. Each entry goes to that department's tracker as Pending until a data clerk checks it.</div>`);
   $("#app").innerHTML = `
-    <div class="sec">Today on this device</div>
+    <div class="sec">Today</div>
     <div class="trow">
-      <div class="tile"><div class="tl">Entries saved</div><div class="tf">${esc(longDate())}</div><div class="tv">${t.length}</div><div class="ts">${last ? "Last at " + esc(last.submittedAt.slice(11)) : "No entries yet"}</div></div>
-      <div class="tile ${sent ? "good" : ""}"><div class="tl">${CFG.mode === "demo" ? "Saved (demo)" : "Sent to SharePoint"}</div><div class="tf">${CFG.mode === "demo" ? "Kept on this device" : "Waiting for clerk review"}</div><div class="tv">${sent}</div><div class="ts">${CFG.mode === "demo" ? "Demo mode" : "Status Pending in the tracker"}</div></div>
-      <div class="tile ${q ? "warn" : "good"}"><div class="tl">Waiting to send</div><div class="tf">Saved offline</div><div class="tv">${q}</div><div class="ts">${q ? "Sends when the connection returns" : "Nothing waiting"}</div></div>
-      <div class="tile"><div class="tl">Departments covered</div><div class="tf">With at least one entry today</div><div class="tv">${depts}<small>of ${FORMS.length}</small></div><div class="ts">${FORMS.filter(f => !byForm(f.key)).length} still to report</div></div>
+      <div class="tile ${t.length ? "good" : ""}"><div class="tl">Entries today</div><div class="tv">${t.length}</div><div class="ts">${last ? "Last at " + esc(last.submittedAt.slice(11, 16)) + " · " + depts + " of " + FORMS.length + " departments" : "None yet on this device"}</div></div>
+      <div class="tile ${q ? "warn" : ""}"><div class="tl">Waiting to send</div><div class="tv">${q}</div><div class="ts">${q ? "Sends when the connection returns" : "Everything is sent"}</div></div>
     </div>
     <div class="sec">Forms</div>
-    <div class="panel">
-      <h2>Department forms</h2><p class="hint">Click a row to open the form · ${FORMS.length} forms</p>
-      <div class="btbl"><table>
-        <thead><tr><th>Department</th><th>Form</th><th>When to use it</th><th class="r">Questions</th><th class="r">Today</th><th>Tracker</th></tr></thead>
-        <tbody>${FORMS.map(f => `<tr class="link" data-go="${f.key}">
-          <td><span class="ico">${svg(f.key)}</span>${esc(f.dept)}</td>
-          <td><a href="#f-${f.key}">${esc(f.title)}</a></td>
-          <td class="wrap">${esc(f.desc)}</td>
-          <td class="r">${f.all.length}</td>
-          <td class="r">${byForm(f.key) ? `<span class="pill g">${byForm(f.key)}</span>` : `<span class="pill a">0</span>`}</td>
-          <td>${esc(tableName(f.key))}</td></tr>`).join("")}</tbody>
-      </table></div>
-    </div>`;
-  document.querySelectorAll("tr[data-go]").forEach(r => r.addEventListener("click", e => { if (!e.target.closest("a")) location.hash = "#f-" + r.dataset.go; }));
+    <div class="fgrid">${FORMS.map(f => `<a class="fcard" href="#f-${f.key}">
+        <span class="ico">${svg(f.key)}</span>
+        <span class="fc-txt"><span class="fc-d">${esc(f.dept)}</span><b>${esc(f.title)}</b><span class="fc-s">${esc(f.desc)}</span></span>
+        ${byForm(f.key) ? `<span class="pill g">${byForm(f.key)} today</span>` : ""}
+      </a>`).join("")}</div>`;
 }
 
 function cellInput(c, id, val, label) {
