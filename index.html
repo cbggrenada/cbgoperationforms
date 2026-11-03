@@ -315,28 +315,38 @@ a.tlink{color:inherit;text-decoration:none}a.tlink:hover{border-color:var(--pi-i
 <script>/* Form definitions: question names must match the Excel table column headers exactly */
 window.CBG_FORMS = [
  {
-  "key": "brewing",
-  "code": "BRW",
+  "key": "filtration",
+  "code": "FIL",
   "dept": "Brewing & Fermentation",
-  "title": "Brew Process Sheet",
-  "desc": "GR-BOD-R54-A, pages 1 to 3, for Carib, Stag and Star Malt. Choose the brand first; boxes marked with a letter go to that column of the brand's Brewhouse log.",
+  "title": "Filtration Record",
+  "desc": "GR-BOD-R02 rev 2, BMF and P&L sheets. One entry per filtration run.",
   "fields": [
    {
     "type": "section",
     "n": "",
-    "name": "Brew",
-    "hint": "Page 1",
+    "name": "Filter run",
+    "hint": "Both sheets",
     "cols": 4,
-    "note": "Choose the brand first: the standards and log columns shown on the sheet change to match it.",
-    "noteB": {
-     "Carib": "Recipe standard (Carib log specs): Pilsen 700 kg · Sugar 100 kg",
-     "Stag": "Stag recipe standards are not filled in on the Stag log yet, so no standards are shown.",
-     "Star Malt": "Recipe standard: Pilsen 575 kg · Viking Munich 0 kg · Caramel 150: 125 kg · Chocolate 20 kg · Caramel 203: 26 kg · Sugar 400 kg. Kettle out 16.9 to 17.2 °P."
-    }
+    "note": "Choose the filter first. Sections marked P&L or BMF only apply to that filter."
    },
    {
-    "name": "Brand",
-    "label": "Brand",
+    "name": "Filter",
+    "label": "Filter",
+    "type": "choice",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": true,
+    "hint": "",
+    "span": 2,
+    "options": [
+     "P&L (powder) filter",
+     "BMF"
+    ]
+   },
+   {
+    "name": "Product",
+    "label": "Product",
     "type": "choice",
     "unit": "",
     "col": "",
@@ -347,50 +357,87 @@ window.CBG_FORMS = [
     "options": [
      "Carib",
      "Stag",
-     "Star Malt"
+     "Star Malt",
+     "Malta Carib",
+     "Carlsberg",
+     "Guinness",
+     "Vitamalt",
+     "Maximalt",
+     "Mackeson",
+     "Shandy",
+     "Other"
     ]
    },
    {
-    "name": "Brew No",
-    "label": "Brew No",
-    "type": "text",
-    "unit": "",
-    "col": "",
-    "std": "",
-    "req": true,
-    "hint": "",
-    "span": 1,
-    "colB": {
-     "Carib": "A",
-     "Stag": "A",
-     "Star Malt": "A"
-    },
-    "unitB": {
-     "Carib": "CA",
-     "Stag": "ST",
-     "Star Malt": "SM"
-    }
-   },
-   {
-    "name": "Date",
-    "label": "Date",
+    "name": "Date Filtered",
+    "label": "Date Filtered",
     "type": "date",
     "unit": "",
     "col": "",
     "std": "",
     "req": true,
     "hint": "",
-    "span": 1,
-    "colB": {
-     "Carib": "B",
-     "Stag": "B",
-     "Star Malt": "B"
-    }
+    "span": 1
    },
    {
-    "name": "Batch Ticket No",
-    "label": "Batch Ticket No",
-    "type": "text",
+    "name": "Date Bottled",
+    "label": "Date Bottled",
+    "type": "date",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Start At",
+    "label": "Start At",
+    "type": "time",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Finish At",
+    "label": "Finish At",
+    "type": "time",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Total Time (hrs)",
+    "label": "Total Time",
+    "type": "number",
+    "unit": "hrs",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Water Used (HLs)",
+    "label": "Water Used",
+    "type": "number",
+    "unit": "HLs",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "DIP at End",
+    "label": "DIP at End",
+    "type": "number",
     "unit": "",
     "col": "",
     "std": "",
@@ -401,1016 +448,324 @@ window.CBG_FORMS = [
    {
     "type": "section",
     "n": "1",
-    "name": "Malt, sugar and mash",
-    "hint": "Page 1",
-    "cols": 4,
-    "note": ""
-   },
-   {
-    "name": "Pilsen Malt (kg)",
-    "label": "Pilsen Malt",
-    "type": "number",
-    "unit": "kg",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 1,
-    "sub": [
-     {
-      "name": "Pilsen Silo No",
-      "label": "Silo #",
-      "type": "text",
-      "unit": ""
-     }
-    ],
-    "stdB": {
-     "Carib": "std 700",
-     "Stag": "",
-     "Star Malt": "std 575"
-    },
-    "colB": {
-     "Carib": "C",
-     "Stag": "C",
-     "Star Malt": "C"
-    }
-   },
-   {
-    "name": "Caramel Malt (kg)",
-    "label": "Caramel malt (Caramel 150)",
-    "type": "number",
-    "unit": "kg",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 1,
-    "sub": [
-     {
-      "name": "Caramel Malt Bags",
-      "label": "No. of bags",
-      "type": "number",
-      "unit": ""
-     }
-    ],
-    "stdB": {
-     "Carib": "",
-     "Stag": "",
-     "Star Malt": "std 125"
-    },
-    "colB": {
-     "Carib": "F",
-     "Stag": "F",
-     "Star Malt": "F"
-    }
-   },
-   {
-    "name": "Sugar (kg)",
-    "label": "Sugar",
-    "type": "number",
-    "unit": "kg",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 1,
-    "sub": [
-     {
-      "name": "Sugar Bags",
-      "label": "No. of bags",
-      "type": "number",
-      "unit": ""
-     }
-    ],
-    "stdB": {
-     "Carib": "std 100",
-     "Stag": "",
-     "Star Malt": "std 400"
-    },
-    "colB": {
-     "Carib": "H",
-     "Stag": "H",
-     "Star Malt": "L"
-    }
-   },
-   {
-    "name": "Mash Dip",
-    "label": "Mash Dip",
-    "type": "number",
-    "unit": "",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 1,
-    "sub": [
-     {
-      "name": "Mash Dip Level",
-      "label": "",
-      "type": "choice",
-      "unit": "",
-      "options": [
-       "Normal",
-       "Above",
-       "Below"
-      ]
-     }
-    ],
-    "colB": {
-     "Carib": "J",
-     "Stag": "J",
-     "Star Malt": "N"
-    }
-   },
-   {
-    "name": "Viking Munich (kg)",
-    "label": "Viking Munich",
-    "type": "number",
-    "unit": "kg",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 1,
-    "stdB": {
-     "Carib": "",
-     "Stag": "",
-     "Star Malt": "std 0"
-    }
-   },
-   {
-    "name": "Chocolate Malt (kg)",
-    "label": "Chocolate malt",
-    "type": "number",
-    "unit": "kg",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 1,
-    "stdB": {
-     "Carib": "",
-     "Stag": "",
-     "Star Malt": "std 20"
-    },
-    "colB": {
-     "Carib": "",
-     "Stag": "",
-     "Star Malt": "H"
-    }
-   },
-   {
-    "type": "section",
-    "n": "2",
-    "name": "Run-off gravities",
-    "hint": "Page 1",
+    "name": "Precoat",
+    "hint": "P&L only",
     "cols": 5,
     "note": ""
    },
    {
-    "name": "1st Runnings (°P)",
-    "label": "1st Runnings",
+    "name": "Precoat Hyflo (lbs)",
+    "label": "Hyflo",
     "type": "number",
-    "unit": "°P",
+    "unit": "lbs",
     "col": "",
     "std": "",
     "req": false,
     "hint": "",
-    "span": 1,
-    "sub": [
-     {
-      "name": "1st Runnings (HLs)",
-      "label": "HLs",
-      "type": "number",
-      "unit": ""
-     }
-    ],
-    "colB": {
-     "Carib": "K",
-     "Stag": "K",
-     "Star Malt": "O"
-    }
+    "span": 1
    },
    {
-    "name": "60 Minutes (°P)",
-    "label": "60 Minutes",
+    "name": "Precoat Standard (lbs)",
+    "label": "Standard",
     "type": "number",
-    "unit": "°P",
+    "unit": "lbs",
     "col": "",
     "std": "",
     "req": false,
     "hint": "",
-    "span": 1,
-    "sub": [
-     {
-      "name": "60 Minutes (HLs)",
-      "label": "HLs",
-      "type": "number",
-      "unit": ""
-     }
-    ],
-    "colB": {
-     "Carib": "L",
-     "Stag": "L",
-     "Star Malt": "P"
-    }
+    "span": 1
    },
    {
-    "name": "90 Minutes (°P)",
-    "label": "90 Minutes",
+    "name": "Precoat Filter Cell (lbs)",
+    "label": "Filter Cell",
     "type": "number",
-    "unit": "°P",
+    "unit": "lbs",
     "col": "",
     "std": "",
     "req": false,
     "hint": "",
-    "span": 1,
-    "sub": [
-     {
-      "name": "90 Minutes (HLs)",
-      "label": "HLs",
-      "type": "number",
-      "unit": ""
-     }
-    ],
-    "colB": {
-     "Carib": "M",
-     "Stag": "M",
-     "Star Malt": "Q"
-    }
+    "span": 1
    },
    {
-    "name": "Last Runnings (°P)",
-    "label": "Last Runnings",
+    "name": "Precoat Fibracell (lbs)",
+    "label": "Fibracell",
     "type": "number",
-    "unit": "°P",
+    "unit": "lbs",
     "col": "",
     "std": "",
     "req": false,
     "hint": "",
-    "span": 1,
-    "sub": [
-     {
-      "name": "Last Runnings (HLs)",
-      "label": "HLs",
-      "type": "number",
-      "unit": ""
-     }
-    ],
-    "colB": {
-     "Carib": "N",
-     "Stag": "N",
-     "Star Malt": "R"
-    }
+    "span": 1
    },
    {
-    "name": "Run-off Time (mins)",
-    "label": "Run-off Time",
+    "name": "Precoat 577 (lbs)",
+    "label": "577",
     "type": "number",
-    "unit": "mins",
+    "unit": "lbs",
     "col": "",
     "std": "",
     "req": false,
     "hint": "",
-    "span": 1,
-    "sub": [
-     {
-      "name": "Run-off Start",
-      "label": "Start",
-      "type": "time",
-      "unit": ""
-     },
-     {
-      "name": "Run-off End",
-      "label": "End",
-      "type": "time",
-      "unit": ""
-     }
-    ],
-    "colB": {
-     "Carib": "O",
-     "Stag": "O",
-     "Star Malt": "S"
-    }
+    "span": 1
+   },
+   {
+    "name": "Double Sheet Day",
+    "label": "Double Sheet Day",
+    "type": "text",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Single Sheet Day",
+    "label": "Single Sheet Day",
+    "type": "text",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "type": "section",
+    "n": "2",
+    "name": "Dosing",
+    "hint": "Britesorb: both · others: P&L",
+    "cols": 6,
+    "note": ""
+   },
+   {
+    "name": "Dosing Britesorb (lbs)",
+    "label": "Britesorb",
+    "type": "number",
+    "unit": "lbs",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Dosing Hyflo (lbs)",
+    "label": "Hyflo",
+    "type": "number",
+    "unit": "lbs",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Dosing Standard (lbs)",
+    "label": "Standard",
+    "type": "number",
+    "unit": "lbs",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Dosing Filter Cell (lbs)",
+    "label": "Filter Cell",
+    "type": "number",
+    "unit": "lbs",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Dosing Daraclar (lbs)",
+    "label": "Daraclar",
+    "type": "number",
+    "unit": "lbs",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Dosing Polyclar (lbs)",
+    "label": "Polyclar",
+    "type": "number",
+    "unit": "lbs",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
    },
    {
     "type": "section",
     "n": "3",
-    "name": "Boil, cooling and brew times",
-    "hint": "Page 1",
+    "name": "BMF checks",
+    "hint": "BMF only",
     "cols": 4,
     "note": ""
    },
    {
-    "name": "Boil Time (mins)",
-    "label": "Boil Time",
-    "type": "number",
-    "unit": "mins",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 1,
-    "sub": [
-     {
-      "name": "Boil Init (mins)",
-      "label": "Init",
-      "type": "number",
-      "unit": ""
-     },
-     {
-      "name": "Boil Final (mins)",
-      "label": "+ Final",
-      "type": "number",
-      "unit": ""
-     },
-     {
-      "name": "Boil Extra (mins)",
-      "label": "+ Extra",
-      "type": "number",
-      "unit": ""
-     }
-    ],
-    "stdB": {
-     "Carib": "",
-     "Stag": "",
-     "Star Malt": "std 60"
-    },
-    "colB": {
-     "Carib": "P",
-     "Stag": "P",
-     "Star Malt": "T"
-    }
-   },
-   {
-    "name": "Kettle Vol at Boil End (HLs)",
-    "label": "Kettle Vol. at boil end",
-    "type": "number",
-    "unit": "HLs",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 1,
-    "sub": [
-     {
-      "name": "Boil Ended at (°P)",
-      "label": "Boil ended at",
-      "type": "number",
-      "unit": "°P"
-     }
-    ],
-    "colB": {
-     "Carib": "R",
-     "Stag": "R",
-     "Star Malt": "V"
-    }
-   },
-   {
-    "name": "Kettle Stand (mins)",
-    "label": "Kettle Stand",
-    "type": "number",
-    "unit": "mins",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "Stand in wort kettle",
-    "span": 1,
-    "colB": {
-     "Carib": "S",
-     "Stag": "S",
-     "Star Malt": "W"
-    }
-   },
-   {
-    "name": "Boil Start",
-    "label": "Boil Start",
-    "type": "time",
-    "unit": "",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "Initial boil start",
-    "span": 1,
-    "colB": {
-     "Carib": "T",
-     "Stag": "T",
-     "Star Malt": "X"
-    }
-   },
-   {
-    "name": "Cool End",
-    "label": "Cool End",
-    "type": "time",
-    "unit": "",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 1,
-    "sub": [
-     {
-      "name": "Cooling Start",
-      "label": "Cooling start",
-      "type": "time",
-      "unit": ""
-     }
-    ],
-    "colB": {
-     "Carib": "U",
-     "Stag": "U",
-     "Star Malt": "Y"
-    }
-   },
-   {
-    "name": "Cool Time (mins)",
-    "label": "Cool Time",
-    "type": "number",
-    "unit": "mins",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "End minus start",
-    "span": 1,
-    "colB": {
-     "Carib": "V",
-     "Stag": "V",
-     "Star Malt": "Z"
-    }
-   },
-   {
-    "name": "Mash In Time",
-    "label": "Mash In Time",
-    "type": "time",
-    "unit": "",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "Start of mash in",
-    "span": 1,
-    "colB": {
-     "Carib": "W",
-     "Stag": "W",
-     "Star Malt": "AA"
-    }
-   },
-   {
-    "name": "Cast Out Time",
-    "label": "Cast Out Time",
-    "type": "time",
-    "unit": "",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "End of transfer to FV",
-    "span": 1,
-    "colB": {
-     "Carib": "X",
-     "Stag": "X",
-     "Star Malt": "AB"
-    }
-   },
-   {
-    "type": "section",
-    "n": "4",
-    "name": "Kettle and FV gravities and volumes",
-    "hint": "Page 1",
-    "cols": 6,
-    "note": "FV volume from the diesel meter."
-   },
-   {
-    "name": "Kettle Up (°P)",
-    "label": "Kettle Up",
-    "type": "number",
-    "unit": "°P",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 1,
-    "colB": {
-     "Carib": "AA",
-     "Stag": "AA",
-     "Star Malt": "AE"
-    }
-   },
-   {
-    "name": "Kettle Up (HLs)",
-    "label": "Kettle Up",
-    "type": "number",
-    "unit": "HLs",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 1,
-    "colB": {
-     "Carib": "AC",
-     "Stag": "AC",
-     "Star Malt": "AG"
-    }
-   },
-   {
-    "name": "Kettle Out (°P)",
-    "label": "Kettle Out",
-    "type": "number",
-    "unit": "°P",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 1,
-    "colB": {
-     "Carib": "AD",
-     "Stag": "AD",
-     "Star Malt": "AH"
-    }
-   },
-   {
-    "name": "Kettle Out (HLs)",
-    "label": "Kettle Out",
-    "type": "number",
-    "unit": "HLs",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 1,
-    "colB": {
-     "Carib": "AE",
-     "Stag": "AE",
-     "Star Malt": "AI"
-    }
-   },
-   {
-    "name": "FV Gravity (°P)",
-    "label": "FV Gravity",
-    "type": "number",
-    "unit": "°P",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 1,
-    "colB": {
-     "Carib": "AF",
-     "Stag": "AF",
-     "Star Malt": "AJ"
-    }
-   },
-   {
-    "name": "FV Volume (HLs)",
-    "label": "FV Volume",
-    "type": "number",
-    "unit": "HLs",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 1,
-    "colB": {
-     "Carib": "AH",
-     "Stag": "AH",
-     "Star Malt": "AL"
-    }
-   },
-   {
-    "name": "FV/DPV No",
-    "label": "FV/DPV No",
-    "type": "text",
-    "unit": "",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 1
-   },
-   {
-    "type": "section",
-    "n": "5",
-    "name": "HLT, malt dust and operator",
-    "hint": "Page 1",
-    "cols": 4,
-    "note": ""
-   },
-   {
-    "name": "HLT Before Mashing",
-    "label": "HLT Before Mashing",
-    "type": "number",
-    "unit": "",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 1,
-    "colB": {
-     "Carib": "AR",
-     "Stag": "AR",
-     "Star Malt": "AV"
-    }
-   },
-   {
-    "name": "HLT Before Cooling",
-    "label": "HLT Before Cooling",
-    "type": "number",
-    "unit": "",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 1,
-    "colB": {
-     "Carib": "AS",
-     "Stag": "AS",
-     "Star Malt": "AW"
-    }
-   },
-   {
-    "name": "Malt Dust (kg)",
-    "label": "Malt Dust",
-    "type": "number",
-    "unit": "kg",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 1,
-    "colB": {
-     "Carib": "AV",
-     "Stag": "AV",
-     "Star Malt": "AZ"
-    }
-   },
-   {
-    "name": "Operator Initials",
-    "label": "Operator Initials",
-    "type": "text",
-    "unit": "",
-    "col": "",
-    "std": "",
-    "req": true,
-    "hint": "",
-    "span": 1,
-    "colB": {
-     "Carib": "AW",
-     "Stag": "AW",
-     "Star Malt": "BA"
-    }
-   },
-   {
-    "type": "section",
-    "n": "6",
-    "name": "Mash programme",
-    "hint": "Page 2",
-    "cols": 6,
-    "note": ""
-   },
-   {
-    "type": "grid",
-    "name": "Mash programme",
-    "hint": "",
-    "fmt": "Mash: {row} – {col}",
-    "rows": [
-     {
-      "name": "Mash in",
-      "hint": "51 °C"
-     },
-     {
-      "name": "Proteolytic rest",
-      "hint": "15 mins"
-     },
-     {
-      "name": "Heat mash to 68 °C",
-      "hint": ""
-     },
-     {
-      "name": "1st saccharification rest",
-      "hint": "45 mins"
-     },
-     {
-      "name": "Heat mash to 78 °C",
-      "hint": ""
-     },
-     {
-      "name": "Pump to lauter tun",
-      "hint": ""
-     },
-     {
-      "name": "Recirculate",
-      "hint": "10 mins"
-     },
-     {
-      "name": "Run off",
-      "hint": "to page 1, O"
-     }
-    ],
-    "cols": [
-     {
-      "name": "Start",
-      "type": "time"
-     },
-     {
-      "name": "End",
-      "type": "time"
-     },
-     {
-      "name": "Mins",
-      "type": "number"
-     }
-    ]
-   },
-   {
-    "name": "Mash In pH",
-    "label": "Mash in: pH",
-    "type": "number",
-    "unit": "",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 1
-   },
-   {
-    "name": "Mash In Temp (°C)",
-    "label": "Mash in: °C",
-    "type": "number",
-    "unit": "°C",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 1
-   },
-   {
-    "name": "Proteolytic Rest Init",
-    "label": "Proteolytic rest: Init",
-    "type": "number",
-    "unit": "",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 1
-   },
-   {
-    "name": "Proteolytic Rest Final",
-    "label": "Proteolytic rest: Final",
-    "type": "number",
-    "unit": "",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 1
-   },
-   {
-    "name": "1st Sacch Rest Init",
-    "label": "1st sacch. rest: Init",
-    "type": "number",
-    "unit": "",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 1
-   },
-   {
-    "name": "1st Sacch Rest Final",
-    "label": "1st sacch. rest: Final",
-    "type": "number",
-    "unit": "",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 1
-   },
-   {
-    "type": "grid",
-    "name": "Mash salts",
-    "hint": "",
-    "fmt": "Mash salt {row} – {col}",
-    "rows": [
-     {
-      "name": "Acid",
-      "hint": "",
-      "hintB": {
-       "Carib": "std 150 mls",
-       "Stag": "",
-       "Star Malt": "std 0 mls"
-      }
-     },
-     {
-      "name": "CaSO₄",
-      "hint": "",
-      "hintB": {
-       "Carib": "std 396 g",
-       "Stag": "",
-       "Star Malt": "std 764.6 g"
-      }
-     },
-     {
-      "name": "CaCl₂",
-      "hint": "",
-      "hintB": {
-       "Carib": "std 333 g",
-       "Stag": "",
-       "Star Malt": "std 1588.2 g"
-      }
-     }
-    ],
-    "cols": [
-     {
-      "name": "Actual",
-      "type": "number"
-     },
-     {
-      "name": "Time",
-      "type": "time"
-     }
-    ]
-   },
-   {
-    "name": "Iodine",
-    "label": "Iodine",
+    "name": "Caustic Holding Tank Full",
+    "label": "Is the caustic holding tank on the BMF full of caustic?",
     "type": "choice",
     "unit": "",
     "col": "",
     "std": "",
     "req": false,
-    "hint": "",
+    "hint": "If no, please fill it.",
     "span": 2,
-    "options": [
-     "Negative",
-     "Positive",
-     "Trace"
-    ]
-   },
-   {
-    "name": "Wort",
-    "label": "Wort",
-    "type": "choice",
-    "unit": "",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 2,
-    "options": [
-     "Clear",
-     "Hazy",
-     "Sediments"
-    ]
-   },
-   {
-    "name": "Odour",
-    "label": "Odour",
-    "type": "choice",
-    "unit": "",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 2,
-    "options": [
-     "Normal",
-     "Mouldy",
-     "Off"
-    ]
-   },
-   {
-    "type": "section",
-    "n": "7",
-    "name": "Lauter and sparge",
-    "hint": "Page 2",
-    "cols": 4,
-    "note": ""
-   },
-   {
-    "name": "HLT Temp (°C)",
-    "label": "HLT Temp",
-    "type": "number",
-    "unit": "°C",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 1
-   },
-   {
-    "name": "HLT Volume (HLs)",
-    "label": "HLT Volume",
-    "type": "number",
-    "unit": "HLs",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 1
-   },
-   {
-    "name": "Sparge Temp (°C)",
-    "label": "Sparge Temp",
-    "type": "number",
-    "unit": "°C",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 1
-   },
-   {
-    "name": "Sparge pH",
-    "label": "Sparge pH",
-    "type": "number",
-    "unit": "",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 1
-   },
-   {
-    "name": "Sparge Flow Rate (HLs/hr)",
-    "label": "Sparge Flow Rate",
-    "type": "number",
-    "unit": "HLs/hr",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 1
-   },
-   {
-    "name": "Sparge Vol at Run Off (HLs)",
-    "label": "Sparge Vol. at Run Off",
-    "type": "number",
-    "unit": "HLs",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 1,
-    "sub": [
-     {
-      "name": "Sparge Run Off at (HLs)",
-      "label": "at",
-      "type": "number",
-      "unit": "HLs"
-     }
-    ]
-   },
-   {
-    "name": "Total Sparge Used (HLs)",
-    "label": "Total Sparge Used",
-    "type": "number",
-    "unit": "HLs",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 1
-   },
-   {
-    "name": "Pump to Underback (HLs)",
-    "label": "Pump to Underback",
-    "type": "number",
-    "unit": "HLs",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 1
-   },
-   {
-    "name": "Sparge On/Off (mins)",
-    "label": "Sparge on/off",
-    "type": "number",
-    "unit": "mins",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 1
-   },
-   {
-    "name": "Last Runnings Taken",
-    "label": "Last runnings taken",
-    "type": "choice",
-    "unit": "",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 1,
     "options": [
      "Yes",
      "No"
     ]
    },
    {
-    "name": "Last Runnings pH",
-    "label": "Last runnings pH",
+    "name": "BMF Drain Valve Closed",
+    "label": "Was the drain valve on the BMF closed?",
+    "type": "choice",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 2,
+    "options": [
+     "Yes",
+     "No"
+    ]
+   },
+   {
+    "type": "section",
+    "n": "4",
+    "name": "Tanks filled",
+    "hint": "Both sheets",
+    "cols": 4,
+    "note": ""
+   },
+   {
+    "type": "grid",
+    "name": "Tanks filled",
+    "hint": "",
+    "fmt": "Fill {row} – {col}",
+    "rows": [
+     {
+      "name": "1",
+      "hint": ""
+     },
+     {
+      "name": "2",
+      "hint": ""
+     },
+     {
+      "name": "3",
+      "hint": ""
+     },
+     {
+      "name": "4",
+      "hint": ""
+     }
+    ],
+    "cols": [
+     {
+      "name": "BBT No",
+      "type": "text"
+     },
+     {
+      "name": "Start Time",
+      "type": "time"
+     },
+     {
+      "name": "End Time",
+      "type": "time"
+     },
+     {
+      "name": "Initials",
+      "type": "text"
+     }
+    ]
+   },
+   {
+    "type": "section",
+    "n": "5",
+    "name": "GFE dosing, sugar and Vita Malt",
+    "hint": "Both sheets",
+    "cols": 5,
+    "note": ""
+   },
+   {
+    "name": "GFE Start (HLs)",
+    "label": "GFE start",
+    "type": "number",
+    "unit": "HLs",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "GFE Finish (HLs)",
+    "label": "GFE finish",
+    "type": "number",
+    "unit": "HLs",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "GFE Usage (HLs)",
+    "label": "GFE usage",
+    "type": "number",
+    "unit": "HLs",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Sugar Usage (bags)",
+    "label": "Sugar usage",
+    "type": "number",
+    "unit": "bags",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Vita Malt Blend (kg)",
+    "label": "Vita Malt blend",
+    "type": "number",
+    "unit": "kg",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "type": "section",
+    "n": "6",
+    "name": "Kegs and beer for Shandy",
+    "hint": "Both sheets",
+    "cols": 4,
+    "note": ""
+   },
+   {
+    "name": "Kegs Filled",
+    "label": "Kegs Filled",
     "type": "number",
     "unit": "",
     "col": "",
@@ -1420,163 +775,375 @@ window.CBG_FORMS = [
     "span": 1
    },
    {
+    "name": "Kegs Product",
+    "label": "Kegs Product",
+    "type": "choice",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 3,
+    "options": [
+     "Carib",
+     "Stag",
+     "Star Malt",
+     "Malta Carib",
+     "Carlsberg",
+     "Guinness",
+     "Vitamalt",
+     "Maximalt",
+     "Mackeson",
+     "Shandy",
+     "Other"
+    ]
+   },
+   {
+    "name": "Kegs From BBT",
+    "label": "Kegs From BBT",
+    "type": "text",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Kegs Time in Storage",
+    "label": "Kegs Time in Storage",
+    "type": "text",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Kegs Date",
+    "label": "Kegs Date",
+    "type": "date",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Beer for Shandy (HLs)",
+    "label": "Beer for Shandy",
+    "type": "number",
+    "unit": "HLs",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Shandy From BBT",
+    "label": "Shandy From BBT",
+    "type": "text",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Shandy Date",
+    "label": "Shandy Date",
+    "type": "date",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
     "type": "section",
-    "n": "8",
-    "name": "Kettle additions and settings",
-    "hint": "Page 2",
+    "n": "7",
+    "name": "BBT checks",
+    "hint": "Both sheets",
     "cols": 4,
-    "note": ""
+    "note": "HLs, dissolved oxygen and CO₂ in each bright beer tank."
+   },
+   {
+    "name": "Check 1 Date",
+    "label": "Check 1 Date",
+    "type": "date",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Check 1 Time",
+    "label": "Check 1 Time",
+    "type": "time",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
    },
    {
     "type": "grid",
-    "name": "Kettle additions",
+    "name": "Check 1",
     "hint": "",
-    "fmt": "Kettle {row} – {col}",
+    "fmt": "Check 1 {row} {col}",
     "rows": [
      {
-      "name": "Hop extract",
-      "hint": "",
-      "hintB": {
-       "Carib": "std 0.9 kg",
-       "Stag": "",
-       "Star Malt": "std 158.0 g"
-      }
+      "name": "BBT 2",
+      "hint": ""
      },
      {
-      "name": "Hop pellets",
-      "hint": "",
-      "hintB": {
-       "Carib": "std 444",
-       "Stag": "",
-       "Star Malt": ""
-      }
+      "name": "BBT 3",
+      "hint": ""
      },
      {
-      "name": "Caramel 203",
-      "hint": "",
-      "hintB": {
-       "Carib": "",
-       "Stag": "",
-       "Star Malt": "std 26.0 kg"
-      }
+      "name": "BBT 4",
+      "hint": ""
      },
      {
-      "name": "Gypsum (CaSO₄)",
-      "hint": "",
-      "hintB": {
-       "Carib": "std 700 g",
-       "Stag": "",
-       "Star Malt": "std 688 g"
-      }
+      "name": "BBT 5",
+      "hint": ""
      },
      {
-      "name": "CaCl₂",
-      "hint": "",
-      "hintB": {
-       "Carib": "std 225 g",
-       "Stag": "",
-       "Star Malt": "std 300 g"
-      }
-     },
-     {
-      "name": "Acid",
-      "hint": "",
-      "hintB": {
-       "Carib": "std 200 mls",
-       "Stag": "",
-       "Star Malt": ""
-      }
-     },
-     {
-      "name": "ZnSO₄",
-      "hint": "",
-      "hintB": {
-       "Carib": "std 2 g",
-       "Stag": "",
-       "Star Malt": ""
-      }
-     },
-     {
-      "name": "Sugar",
-      "hint": "",
-      "hintB": {
-       "Carib": "",
-       "Stag": "",
-       "Star Malt": "std 400 kg"
-      }
-     },
-     {
-      "name": "CO₂ hop extract",
-      "hint": "",
-      "hintB": {
-       "Carib": "",
-       "Stag": "",
-       "Star Malt": ""
-      }
-     },
-     {
-      "name": "Pelfloc G",
-      "hint": "",
-      "hintB": {
-       "Carib": "",
-       "Stag": "",
-       "Star Malt": "std 200 g"
-      }
+      "name": "Total",
+      "hint": ""
      }
     ],
     "cols": [
      {
-      "name": "Actual",
+      "name": "HLs",
       "type": "number"
      },
      {
-      "name": "Time",
-      "type": "time"
+      "name": "DO",
+      "type": "number"
      },
      {
-      "name": "Check",
-      "type": "check"
+      "name": "CO2",
+      "type": "number"
      }
     ]
    },
    {
-    "type": "grid",
-    "name": "Kettle setting",
+    "name": "Check 2 Time",
+    "label": "Check 2 Time",
+    "type": "time",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
     "hint": "",
-    "fmt": "{row}",
+    "span": 1
+   },
+   {
+    "type": "grid",
+    "name": "Check 2",
+    "hint": "",
+    "fmt": "Check 2 {row} {col}",
     "rows": [
      {
-      "name": "Steam on kettle at",
-      "hint": "HLs"
+      "name": "BBT 2",
+      "hint": ""
      },
      {
-      "name": "EC temp at boil",
-      "hint": "std 104.0 °C"
+      "name": "BBT 3",
+      "hint": ""
      },
      {
-      "name": "Circulation pump pressure",
-      "hint": "std 20 PSI"
+      "name": "BBT 4",
+      "hint": ""
      },
      {
-      "name": "Kettle temp, start",
-      "hint": "std 100 °C"
+      "name": "BBT 5",
+      "hint": ""
      },
      {
-      "name": "Kettle temp, end",
-      "hint": "std 100 °C"
-     },
-     {
-      "name": "EC pressure",
-      "hint": "std 50 PSI"
-     },
-     {
-      "name": "Incoming steam pressure",
-      "hint": "PSI"
+      "name": "Total",
+      "hint": ""
      }
     ],
     "cols": [
      {
-      "name": "Actual",
+      "name": "HLs",
+      "type": "number"
+     },
+     {
+      "name": "DO",
+      "type": "number"
+     },
+     {
+      "name": "CO2",
+      "type": "number"
+     }
+    ]
+   },
+   {
+    "name": "Morning Check Date",
+    "label": "Morning Check Date",
+    "type": "date",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Morning Check Time",
+    "label": "Morning Check Time",
+    "type": "time",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "type": "grid",
+    "name": "Morning check",
+    "hint": "",
+    "fmt": "Morning {row} {col}",
+    "rows": [
+     {
+      "name": "BBT 2",
+      "hint": ""
+     },
+     {
+      "name": "BBT 3",
+      "hint": ""
+     },
+     {
+      "name": "BBT 4",
+      "hint": ""
+     },
+     {
+      "name": "BBT 5",
+      "hint": ""
+     },
+     {
+      "name": "Total",
+      "hint": ""
+     }
+    ],
+    "cols": [
+     {
+      "name": "HLs",
+      "type": "number"
+     },
+     {
+      "name": "DO",
+      "type": "number"
+     },
+     {
+      "name": "CO2",
+      "type": "number"
+     }
+    ]
+   },
+   {
+    "type": "section",
+    "n": "8",
+    "name": "HLs per tank",
+    "hint": "Both sheets",
+    "cols": 4,
+    "note": "One line per vessel filtered."
+   },
+   {
+    "type": "grid",
+    "name": "HLs per tank",
+    "hint": "",
+    "fmt": "Tank {row} – {col}",
+    "rows": [
+     {
+      "name": "1",
+      "hint": ""
+     },
+     {
+      "name": "2",
+      "hint": ""
+     },
+     {
+      "name": "3",
+      "hint": ""
+     },
+     {
+      "name": "4",
+      "hint": ""
+     },
+     {
+      "name": "5",
+      "hint": ""
+     },
+     {
+      "name": "6",
+      "hint": ""
+     }
+    ],
+    "cols": [
+     {
+      "name": "Product",
+      "type": "choice",
+      "options": [
+       "Carib",
+       "Stag",
+       "Star Malt",
+       "Malta Carib",
+       "Carlsberg",
+       "Guinness",
+       "Vitamalt",
+       "Maximalt",
+       "Mackeson",
+       "Shandy",
+       "Other"
+      ]
+     },
+     {
+      "name": "SV/FV/DPV No",
+      "type": "text"
+     },
+     {
+      "name": "Temp (°C)",
+      "type": "number"
+     },
+     {
+      "name": "Haze",
+      "type": "number"
+     },
+     {
+      "name": "BBT 2 (HLs)",
+      "type": "number"
+     },
+     {
+      "name": "BBT 3 (HLs)",
+      "type": "number"
+     },
+     {
+      "name": "BBT 4 (HLs)",
+      "type": "number"
+     },
+     {
+      "name": "BBT 5 (HLs)",
+      "type": "number"
+     },
+     {
+      "name": "Other BBT No",
+      "type": "text"
+     },
+     {
+      "name": "Other BBT (HLs)",
       "type": "number"
      }
     ]
@@ -1584,192 +1151,16 @@ window.CBG_FORMS = [
    {
     "type": "section",
     "n": "9",
-    "name": "Boil and whirlpool",
-    "hint": "Page 2",
+    "name": "Filter readings",
+    "hint": "Fill the table for your filter",
     "cols": 4,
     "note": ""
    },
    {
-    "name": "Kettle Gravity, 45 min (°P)",
-    "label": "Kettle Gravity, 45 min",
-    "type": "number",
-    "unit": "°P",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 1
-   },
-   {
-    "name": "Kettle Volume, 45 min (HLs)",
-    "label": "Kettle Volume, 45 min",
-    "type": "number",
-    "unit": "HLs",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 1
-   },
-   {
-    "name": "Boil Evap Rate (%)",
-    "label": "Boil Evap. Rate",
-    "type": "number",
-    "unit": "%",
-    "col": "",
-    "std": "4 to 6",
-    "req": false,
-    "hint": "",
-    "span": 1
-   },
-   {
-    "name": "Cutting Liquor (HLs)",
-    "label": "Cutting Liquor",
-    "type": "number",
-    "unit": "HLs",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 1
-   },
-   {
-    "name": "Wort Colour",
-    "label": "Wort Colour",
+    "name": "Number of Starts",
+    "label": "Number of Starts",
     "type": "number",
     "unit": "",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 1
-   },
-   {
-    "name": "Wort pH",
-    "label": "Wort pH",
-    "type": "number",
-    "unit": "",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 1
-   },
-   {
-    "name": "Pump to Whirlpool (mins)",
-    "label": "Pump to Whirlpool",
-    "type": "number",
-    "unit": "mins",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 1,
-    "sub": [
-     {
-      "name": "Pump to Whirlpool Start",
-      "label": "Start",
-      "type": "time",
-      "unit": ""
-     },
-     {
-      "name": "Pump to Whirlpool End",
-      "label": "End",
-      "type": "time",
-      "unit": ""
-     }
-    ]
-   },
-   {
-    "name": "Whirlpool Rest (mins)",
-    "label": "Whirlpool Rest",
-    "type": "number",
-    "unit": "mins",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 1
-   },
-   {
-    "name": "Remarks",
-    "label": "Remarks",
-    "type": "long",
-    "unit": "",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 4
-   },
-   {
-    "type": "section",
-    "n": "10",
-    "name": "Wort cooling: plate heat exchanger",
-    "hint": "Page 3",
-    "cols": 6,
-    "note": ""
-   },
-   {
-    "name": "Oxygen On",
-    "label": "Oxygen on",
-    "type": "time",
-    "unit": "",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 1
-   },
-   {
-    "name": "Oxygen Off",
-    "label": "Oxygen off",
-    "type": "time",
-    "unit": "",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 1
-   },
-   {
-    "name": "Alcohol Temp Start",
-    "label": "Alcohol temp start",
-    "type": "number",
-    "unit": "",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 1
-   },
-   {
-    "name": "Alcohol Temp End",
-    "label": "Alcohol temp end",
-    "type": "number",
-    "unit": "",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 1
-   },
-   {
-    "name": "Temp (°C)",
-    "label": "Temp",
-    "type": "number",
-    "unit": "°C",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 1
-   },
-   {
-    "name": "DIP (inches)",
-    "label": "DIP",
-    "type": "number",
-    "unit": "inches",
     "col": "",
     "std": "",
     "req": false,
@@ -1778,9 +1169,9 @@ window.CBG_FORMS = [
    },
    {
     "type": "grid",
-    "name": "Cooling",
+    "name": "BMF readings",
     "hint": "",
-    "fmt": "Cooling {row} – {col}",
+    "fmt": "BMF {row} – {col}",
     "rows": [
      {
       "name": "1",
@@ -1817,6 +1208,18 @@ window.CBG_FORMS = [
      {
       "name": "9",
       "hint": ""
+     },
+     {
+      "name": "10",
+      "hint": ""
+     },
+     {
+      "name": "11",
+      "hint": ""
+     },
+     {
+      "name": "12",
+      "hint": ""
      }
     ],
     "cols": [
@@ -1825,214 +1228,223 @@ window.CBG_FORMS = [
       "type": "time"
      },
      {
-      "name": "O₂ cylinder pressure (psi)",
+      "name": "TMP",
       "type": "number"
      },
      {
-      "name": "O₂ flowrate (lpm)",
+      "name": "UF Vol",
       "type": "number"
      },
      {
-      "name": "Water in (°C)",
+      "name": "Filter Vol",
       "type": "number"
      },
      {
-      "name": "Water out (°C)",
+      "name": "Tank Vol",
       "type": "number"
      },
      {
-      "name": "IMS in (°C)",
+      "name": "Temp In",
+      "type": "number",
+      "neg": true
+     },
+     {
+      "name": "Temp Out",
+      "type": "number",
+      "neg": true
+     }
+    ]
+   },
+   {
+    "type": "grid",
+    "name": "P&L readings",
+    "hint": "",
+    "fmt": "P&L {row} – {col}",
+    "rows": [
+     {
+      "name": "1",
+      "hint": ""
+     },
+     {
+      "name": "2",
+      "hint": ""
+     },
+     {
+      "name": "3",
+      "hint": ""
+     },
+     {
+      "name": "4",
+      "hint": ""
+     },
+     {
+      "name": "5",
+      "hint": ""
+     },
+     {
+      "name": "6",
+      "hint": ""
+     },
+     {
+      "name": "7",
+      "hint": ""
+     },
+     {
+      "name": "8",
+      "hint": ""
+     },
+     {
+      "name": "9",
+      "hint": ""
+     },
+     {
+      "name": "10",
+      "hint": ""
+     },
+     {
+      "name": "11",
+      "hint": ""
+     },
+     {
+      "name": "12",
+      "hint": ""
+     }
+    ],
+    "cols": [
+     {
+      "name": "SV No",
+      "type": "text"
+     },
+     {
+      "name": "Time",
+      "type": "time"
+     },
+     {
+      "name": "Flow Rate",
       "type": "number"
      },
      {
-      "name": "IMS out (°C)",
+      "name": "In Press",
       "type": "number"
      },
      {
-      "name": "Wort in (°C)",
+      "name": "Out Press",
       "type": "number"
      },
      {
-      "name": "Wort out (°C)",
-      "type": "number"
+      "name": "Temp In",
+      "type": "number",
+      "neg": true
+     },
+     {
+      "name": "Temp Out",
+      "type": "number",
+      "neg": true
      }
     ]
    },
    {
     "type": "section",
-    "n": "11",
-    "name": "Wort into FV / DPV",
-    "hint": "Page 3",
+    "n": "10",
+    "name": "Sign-off",
+    "hint": "",
     "cols": 4,
     "note": ""
    },
    {
-    "name": "Wort Temp in FV/DPV (°C)",
-    "label": "Wort Temp in FV/DPV",
-    "type": "number",
-    "unit": "°C",
-    "col": "",
-    "std": "4.0 to 6.0",
-    "req": false,
-    "hint": "",
-    "span": 1
-   },
-   {
-    "name": "Wort Flowrate (l/hr)",
-    "label": "Wort Flowrate",
-    "type": "number",
-    "unit": "l/hr",
+    "name": "Filter Operator",
+    "label": "Filter Operator",
+    "type": "text",
+    "unit": "",
     "col": "",
     "std": "",
-    "req": false,
+    "req": true,
     "hint": "",
-    "span": 1
+    "span": 2
    },
    {
-    "name": "FTR End Time, Target",
-    "label": "FTR End Time, Target",
-    "type": "time",
+    "name": "Remarks",
+    "label": "Remarks",
+    "type": "long",
     "unit": "",
     "col": "",
     "std": "",
     "req": false,
     "hint": "",
-    "span": 1
-   },
-   {
-    "name": "FTR End Time, Actual",
-    "label": "FTR End Time, Actual",
-    "type": "time",
-    "unit": "",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 1
-   },
-   {
-    "name": "Trub Compaction",
-    "label": "Trub compaction",
-    "type": "choice",
-    "unit": "",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 1,
-    "options": [
-     "Good",
-     "Loose"
-    ]
-   },
-   {
-    "name": "Residual Wort",
-    "label": "Residual wort",
-    "type": "choice",
-    "unit": "",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 1,
-    "options": [
-     "Yes",
-     "No"
-    ]
-   },
-   {
-    "name": "IMS Check (Shiftman)",
-    "label": "IMS check (shiftman)",
-    "type": "choice",
-    "unit": "",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 1,
-    "options": [
-     "Yes",
-     "No"
-    ]
-   },
-   {
-    "name": "Wort Sample Taken",
-    "label": "Wort sample taken",
-    "type": "choice",
-    "unit": "",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 1,
-    "options": [
-     "Yes",
-     "No"
-    ]
-   },
-   {
-    "name": "Wort Micro Taken",
-    "label": "Wort micro taken",
-    "type": "choice",
-    "unit": "",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 1,
-    "options": [
-     "Yes",
-     "No"
-    ]
-   },
-   {
-    "name": "Magnet Cleaned",
-    "label": "Magnet cleaned",
-    "type": "choice",
-    "unit": "",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 1,
-    "options": [
-     "Yes",
-     "No"
-    ]
-   },
+    "span": 4
+   }
+  ],
+  "short": "Filtration",
+  "doc": "GR-BOD-R02",
+  "target": {
+   "file": "CBG Supply Chain Hub/01 Brewing & Fermentation/CBG_Filtration_2026.xlsx",
+   "table": "tblFiltration"
+  }
+ },
+ {
+  "key": "attemperation",
+  "code": "WRT",
+  "dept": "Brewing & Fermentation",
+  "title": "Cellars Wort Attemperation",
+  "desc": "GR-BOD-R09 rev 3. One entry per brew cooled into an FV or DPV.",
+  "fields": [
    {
     "type": "section",
-    "n": "12",
-    "name": "Yeast pitching",
-    "hint": "Page 3",
+    "n": "",
+    "name": "Brew",
+    "hint": "One entry per brew",
     "cols": 4,
     "note": ""
    },
    {
-    "name": "Volume Pitched (HLs)",
-    "label": "Volume Pitched",
-    "type": "number",
-    "unit": "HLs",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 1
-   },
-   {
-    "name": "Time Pitched",
-    "label": "Time Pitched",
-    "type": "time",
+    "name": "Date",
+    "label": "Date",
+    "type": "date",
     "unit": "",
     "col": "",
     "std": "",
-    "req": false,
+    "req": true,
     "hint": "",
     "span": 1
    },
    {
-    "name": "Pitched from YSV No",
-    "label": "Pitched from YSV No",
+    "name": "Product",
+    "label": "Product",
+    "type": "choice",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": true,
+    "hint": "",
+    "span": 3,
+    "options": [
+     "Carib",
+     "Stag",
+     "Star Malt",
+     "Malta Carib",
+     "Carlsberg",
+     "Guinness",
+     "Vitamalt",
+     "Maximalt",
+     "Mackeson",
+     "Shandy",
+     "Other"
+    ]
+   },
+   {
+    "name": "Brew No",
+    "label": "Brew No",
+    "type": "text",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": true,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Brew Code",
+    "label": "Brew Code",
     "type": "text",
     "unit": "",
     "col": "",
@@ -2042,10 +1454,29 @@ window.CBG_FORMS = [
     "span": 1
    },
    {
-    "name": "Packed Cell Volume (%)",
-    "label": "Packed Cell Volume",
+    "name": "FV/DPV No",
+    "label": "FV/DPV No",
+    "type": "text",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": true,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "type": "section",
+    "n": "1",
+    "name": "Yeast",
+    "hint": "",
+    "cols": 4,
+    "note": ""
+   },
+   {
+    "name": "Lab Yeast Dosage",
+    "label": "Lab Yeast Dosage",
     "type": "number",
-    "unit": "%",
+    "unit": "",
     "col": "",
     "std": "",
     "req": false,
@@ -2053,10 +1484,10 @@ window.CBG_FORMS = [
     "span": 1
    },
    {
-    "name": "Dead Cell Count (%)",
-    "label": "Dead Cell Count",
+    "name": "Cellar Yeast Dosage",
+    "label": "Cellar Yeast Dosage",
     "type": "number",
-    "unit": "%",
+    "unit": "",
     "col": "",
     "std": "",
     "req": false,
@@ -2064,10 +1495,10 @@ window.CBG_FORMS = [
     "span": 1
    },
    {
-    "name": "Cell Count at Pitching (x10⁶)",
-    "label": "Cell Count at Pitching",
-    "type": "number",
-    "unit": "x10⁶",
+    "name": "Time Yeast Added",
+    "label": "Time Yeast Added",
+    "type": "time",
+    "unit": "",
     "col": "",
     "std": "",
     "req": false,
@@ -2075,8 +1506,1404 @@ window.CBG_FORMS = [
     "span": 1
    },
    {
-    "name": "Yeast Micro Taken",
-    "label": "Yeast Micro Taken",
+    "name": "Vessel Pitched From",
+    "label": "Vessel Pitched From",
+    "type": "text",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Lab Tech Informed",
+    "label": "Did you inform the lab tech when you start yeast pitching?",
+    "type": "choice",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 2,
+    "options": [
+     "Yes",
+     "No"
+    ]
+   },
+   {
+    "type": "section",
+    "n": "2",
+    "name": "Cooling",
+    "hint": "",
+    "cols": 4,
+    "note": ""
+   },
+   {
+    "name": "Cooling Start Time",
+    "label": "Cooling Start Time",
+    "type": "time",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Cooling End Time",
+    "label": "Cooling End Time",
+    "type": "time",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Total Cooling Time (mins)",
+    "label": "Total cooling time",
+    "type": "number",
+    "unit": "mins",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "IMS Start Temp (°C)",
+    "label": "IMS start temp",
+    "type": "number",
+    "unit": "°C",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1,
+    "neg": true
+   },
+   {
+    "name": "IMS End Temp (°C)",
+    "label": "IMS end temp",
+    "type": "number",
+    "unit": "°C",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1,
+    "neg": true
+   },
+   {
+    "name": "Gravity (°P)",
+    "label": "Gravity",
+    "type": "number",
+    "unit": "°P",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Flow Rate",
+    "label": "Flow Rate",
+    "type": "number",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Aeration Level",
+    "label": "Aeration Level",
+    "type": "number",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Diesel Meter (HLs)",
+    "label": "Diesel meter (volume)",
+    "type": "number",
+    "unit": "HLs",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "In-line DO Reading",
+    "label": "In-line DO reading",
+    "type": "number",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Wort Cooling Pump Checked",
+    "label": "Was the wort cooling pump checked?",
+    "type": "choice",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 2,
+    "options": [
+     "Yes",
+     "No"
+    ]
+   },
+   {
+    "name": "Brewer's Clarex",
+    "label": "Brewer's Clarex",
+    "type": "number",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "type": "section",
+    "n": "3",
+    "name": "Medical oxygen tracking",
+    "hint": "",
+    "cols": 4,
+    "note": ""
+   },
+   {
+    "name": "Medical Oxygen Tank 1",
+    "label": "Tank 1",
+    "type": "choice",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 2,
+    "options": [
+     "Full",
+     "Half filled",
+     "Empty"
+    ]
+   },
+   {
+    "name": "Medical Oxygen Tank 2",
+    "label": "Tank 2",
+    "type": "choice",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 2,
+    "options": [
+     "Full",
+     "Half filled",
+     "Empty"
+    ]
+   },
+   {
+    "type": "section",
+    "n": "4",
+    "name": "Sign-off",
+    "hint": "",
+    "cols": 4,
+    "note": ""
+   },
+   {
+    "name": "Cold Stores Operator",
+    "label": "Cold Stores Operator",
+    "type": "text",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": true,
+    "hint": "",
+    "span": 2
+   }
+  ],
+  "short": "Wort cooling",
+  "doc": "GR-BOD-R09",
+  "target": {
+   "file": "CBG Supply Chain Hub/01 Brewing & Fermentation/CBG_Wort_Attemperation_2026.xlsx",
+   "table": "tblWortAttemperation"
+  }
+ },
+ {
+  "key": "racking",
+  "code": "RCK",
+  "dept": "Brewing & Fermentation",
+  "title": "Treatment / Racking Record",
+  "desc": "GR-BOD-R10 rev 1. One entry per transfer, with product-out temperatures every 15 minutes.",
+  "fields": [
+   {
+    "type": "section",
+    "n": "",
+    "name": "Treatment / racking",
+    "hint": "One entry per transfer",
+    "cols": 4,
+    "note": ""
+   },
+   {
+    "name": "Date",
+    "label": "Date",
+    "type": "date",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": true,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Product",
+    "label": "Product",
+    "type": "choice",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": true,
+    "hint": "",
+    "span": 3,
+    "options": [
+     "Carib",
+     "Stag",
+     "Star Malt",
+     "Malta Carib",
+     "Carlsberg",
+     "Guinness",
+     "Vitamalt",
+     "Maximalt",
+     "Mackeson",
+     "Shandy",
+     "Other"
+    ]
+   },
+   {
+    "name": "Time Start",
+    "label": "Time Start",
+    "type": "time",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Time End",
+    "label": "Time End",
+    "type": "time",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "FV/DPV No",
+    "label": "FV/DPV No",
+    "type": "text",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": true,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "type": "section",
+    "n": "1",
+    "name": "Servomatic vessels and DO",
+    "hint": "",
+    "cols": 4,
+    "note": ""
+   },
+   {
+    "type": "grid",
+    "name": "SV",
+    "hint": "",
+    "fmt": "SV {row} – {col}",
+    "rows": [
+     {
+      "name": "1",
+      "hint": ""
+     },
+     {
+      "name": "2",
+      "hint": ""
+     },
+     {
+      "name": "3",
+      "hint": ""
+     },
+     {
+      "name": "4",
+      "hint": ""
+     }
+    ],
+    "cols": [
+     {
+      "name": "SV No",
+      "type": "text"
+     },
+     {
+      "name": "HLs",
+      "type": "number"
+     },
+     {
+      "name": "DO Start",
+      "type": "number"
+     },
+     {
+      "name": "DO Finish",
+      "type": "number"
+     }
+    ]
+   },
+   {
+    "type": "section",
+    "n": "2",
+    "name": "Product out temperature",
+    "hint": "Record at start, every 15 minutes, and at the end",
+    "cols": 4,
+    "note": ""
+   },
+   {
+    "type": "grid",
+    "name": "Product out temperature",
+    "hint": "Target 0 to -2 °C",
+    "fmt": "Temp {row} – {col}",
+    "rows": [
+     {
+      "name": "Start",
+      "hint": ""
+     },
+     {
+      "name": "2",
+      "hint": ""
+     },
+     {
+      "name": "3",
+      "hint": ""
+     },
+     {
+      "name": "4",
+      "hint": ""
+     },
+     {
+      "name": "5",
+      "hint": ""
+     },
+     {
+      "name": "6",
+      "hint": ""
+     },
+     {
+      "name": "7",
+      "hint": ""
+     },
+     {
+      "name": "8",
+      "hint": ""
+     },
+     {
+      "name": "9",
+      "hint": ""
+     },
+     {
+      "name": "10",
+      "hint": ""
+     },
+     {
+      "name": "11",
+      "hint": ""
+     },
+     {
+      "name": "End",
+      "hint": ""
+     }
+    ],
+    "cols": [
+     {
+      "name": "Time",
+      "type": "time"
+     },
+     {
+      "name": "Product Out (°C)",
+      "type": "number",
+      "neg": true
+     }
+    ]
+   },
+   {
+    "type": "section",
+    "n": "3",
+    "name": "Comment and sign-off",
+    "hint": "",
+    "cols": 4,
+    "note": ""
+   },
+   {
+    "name": "Comment",
+    "label": "Comment",
+    "type": "long",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 4
+   },
+   {
+    "name": "Start Operator",
+    "label": "Start Operator",
+    "type": "text",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": true,
+    "hint": "",
+    "span": 2
+   },
+   {
+    "name": "End Operator",
+    "label": "End Operator",
+    "type": "text",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 2
+   },
+   {
+    "name": "Manager/Supervisor",
+    "label": "Manager/Supervisor",
+    "type": "text",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 2
+   }
+  ],
+  "short": "Racking",
+  "doc": "GR-BOD-R10",
+  "target": {
+   "file": "CBG Supply Chain Hub/01 Brewing & Fermentation/CBG_Treatment_Racking_2026.xlsx",
+   "table": "tblRacking"
+  }
+ },
+ {
+  "key": "fermentation",
+  "code": "FRM",
+  "dept": "Brewing & Fermentation",
+  "title": "Fermentation Tracking",
+  "desc": "GR-BOD-R11 rev 2. One entry per round of FV1–FV5 and DPV1–DPV11.",
+  "fields": [
+   {
+    "type": "section",
+    "n": "",
+    "name": "Round",
+    "hint": "One entry per round of the cellar",
+    "cols": 4,
+    "note": "Fill a line for every vessel in use; leave empty vessels blank."
+   },
+   {
+    "name": "Date",
+    "label": "Date",
+    "type": "date",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": true,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Check Time",
+    "label": "Check Time",
+    "type": "time",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Operator",
+    "label": "Operator",
+    "type": "text",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": true,
+    "hint": "",
+    "span": 2
+   },
+   {
+    "type": "section",
+    "n": "1",
+    "name": "Vessels",
+    "hint": "FV1–FV5 · DPV1–DPV11",
+    "cols": 4,
+    "note": ""
+   },
+   {
+    "type": "grid",
+    "name": "Vessels",
+    "hint": "",
+    "fmt": "{row} – {col}",
+    "rows": [
+     {
+      "name": "FV1",
+      "hint": ""
+     },
+     {
+      "name": "FV2",
+      "hint": ""
+     },
+     {
+      "name": "FV3",
+      "hint": ""
+     },
+     {
+      "name": "FV4",
+      "hint": ""
+     },
+     {
+      "name": "FV5",
+      "hint": ""
+     },
+     {
+      "name": "DPV1",
+      "hint": ""
+     },
+     {
+      "name": "DPV2",
+      "hint": ""
+     },
+     {
+      "name": "DPV3",
+      "hint": ""
+     },
+     {
+      "name": "DPV4",
+      "hint": ""
+     },
+     {
+      "name": "DPV5",
+      "hint": ""
+     },
+     {
+      "name": "DPV6",
+      "hint": ""
+     },
+     {
+      "name": "DPV7",
+      "hint": ""
+     },
+     {
+      "name": "DPV8",
+      "hint": ""
+     },
+     {
+      "name": "DPV9",
+      "hint": ""
+     },
+     {
+      "name": "DPV10",
+      "hint": ""
+     },
+     {
+      "name": "DPV11",
+      "hint": ""
+     }
+    ],
+    "cols": [
+     {
+      "name": "Product",
+      "type": "choice",
+      "options": [
+       "Carib",
+       "Stag",
+       "Star Malt",
+       "Malta Carib",
+       "Carlsberg",
+       "Guinness",
+       "Vitamalt",
+       "Maximalt",
+       "Mackeson",
+       "Shandy",
+       "Other"
+      ]
+     },
+     {
+      "name": "Gravity (°P)",
+      "type": "number"
+     },
+     {
+      "name": "Actual Temp (°C)",
+      "type": "number",
+      "neg": true
+     },
+     {
+      "name": "Yeast",
+      "type": "text"
+     },
+     {
+      "name": "Tank Temp (°C)",
+      "type": "number",
+      "neg": true
+     }
+    ]
+   },
+   {
+    "type": "section",
+    "n": "2",
+    "name": "Remarks",
+    "hint": "",
+    "cols": 4,
+    "note": ""
+   },
+   {
+    "name": "Remarks",
+    "label": "Remarks",
+    "type": "long",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 4
+   }
+  ],
+  "short": "Fermentation",
+  "doc": "GR-BOD-R11",
+  "target": {
+   "file": "CBG Supply Chain Hub/01 Brewing & Fermentation/CBG_Fermentation_Tracking_2026.xlsx",
+   "table": "tblFermentation"
+  }
+ },
+ {
+  "key": "lagerprocess",
+  "code": "LPF",
+  "dept": "Brewing & Fermentation",
+  "title": "Lager Process Form",
+  "desc": "Master Lager Process Form, Rev 03 (March 2025), pages 1 and 2, for every recipe sheet in the master file.",
+  "fields": [
+   {
+    "type": "section",
+    "n": "",
+    "name": "Brew",
+    "hint": "Page 1",
+    "cols": 4,
+    "note": "Choose the recipe sheet first: the grist, liquor, mash programme and additions shown change to match it.",
+    "noteB": {
+     "CARIB LAGER-SACC PROP": "Grist: Pilsen Malt 675 kg · Munich 60 Malt 2 kg · Sugar 50 kg. Mash liquor: Acid - H3PO4 300 mls · CaSo4 904 g · CaCL2 366 g. Pitch at 13.0°C - 14.0°C",
+     "CARIB LAGER-SACC": "Grist: Pilsen Malt 770 kg · Munich 60 2 kg · Sugar 30 kg. Mash liquor: H3PO4 400 mls · CaSo4 904 g · CaCL2 366 g. Pitch at 11.0°C - 12.0°C",
+     "CARIB LAGER-PROP1": "Grist: Pilsen Malt 675 kg · Sugar 100 kg. Mash liquor: Acid 1000 mls · CaSo4 904 g · CaCL2 366 g. Pitch at 11.0°C - 12.0°C",
+     "GUINNESS BALANCER": "Grist: Pilsen Malt 1050 kg · Sugar 150 kg. Mash liquor: CaSo4 638 g · CaCL2 534 g. Pitch at Wort temp 12.0°C- 13.0°C",
+     "STAG-PROP": "Grist: Pilsen Malt 587 kg · Munich 60 5 kg · Sugar 125 kg. Mash liquor: Acid(HCl) 300 mls · CaCL2 825 g. Pitch at 11.0°C - 12.0°C",
+     "STAG-SACC": "Grist: Pilsen Malt 637 kg · Munich - 60 5 kg · Sugar 125 kg. Mash liquor: Acid(HCl) 300 mls · CaCL2 825 g. Pitch at 10.0°C - 11.0°C",
+     "GUINNESS BALANCER NEW": "Grist: Pilsen Malt 1030 kg · Sugar 175 kg. Mash liquor: H3PO4 600 mls · CaSo4 683 g · CaCL2 534 g. Pitch at Wort temp 12.0°C- 13.0°C",
+     "BAD DOG ALE - 50Hls 2018": "Grist: Pilsen Malt 714 kg · Munich Malt 194 kg · Caramalt 143 kg. Mash liquor: Acid 875 mls · CaSo4 2324 g · CaCL2 1126 g. Pitch at Wort temp 19.0°C- 20.0°C",
+     "BAD DOG ALE - Mar. 31st": "Grist: Pilsen Malt 500 kg · Munich Malt 136 kg · Caramalt 100 kg. Mash liquor: Acid 600 mls · CaSo4 1627 g · CaCL2 788 g. Pitch at Wort temp 18.0°C- 19.0°C",
+     "BAD DOG ALE - 50Hls": "Grist: Pilsen Malt 714 kg · Munich Malt 194 kg · Caramalt 143 kg. Mash liquor: Acid 875 mls · CaSo4 2324 g · CaCL2 1126 g. Pitch at Wort temp 18.0°C- 19.0°C",
+     "HR-IPA - 50Hls 2022": "Grist: Pilsen Malt 900 kg · Flaked Oats 75 kg · Munich Malt 100 kg · Acid. Barley 15 kg · CW10 5 kg. Mash liquor: Acid 400 mls · CaSo4 454 g",
+     "HR-APA - 50Hls 2023": "Grist: Pilsen Malt 780 kg · Flaked Oats 70 kg · Munich Malt 90 kg · Acid. Barley 30 kg · CW60 5 kg. Mash liquor: Acid 600 mls · CaSo4 500 g",
+     "HR-APA - 50Hls 2024": "Grist: Pilsen Malt 780 kg · Flaked Oats 70 kg · Best Munich 90 kg · Acid. Barley 30 kg · CW60 5 kg. Mash liquor: Acid 600 mls · CaSo4 500 g",
+     "HR-IPA - 50Hls 2021": "Grist: Pilsen Malt 1050 kg · Flaked Oats 86 kg · Best Munich 75 kg · Acid. Barley 27 kg · GW-C60 34 kg. Mash liquor: CaSo4 422 g",
+     "HR-PILS - 50Hls 2022": "Grist: Pilsen Malt 775 kg · Best Munich Malt 15 kg · Acid. Barley 25 kg. Mash liquor: H3PO4 400 mls · CaSo4 600 g. Pitch at 11.0°C - 12.0°C",
+     "Mackeson": "Grist: Pilsen Malt 800 kg · Choc.  Malt 70 kg · Caramel 203 36 kg · Lactose Powder 44 kg. Pitch at 16.0°C - 17.0°C",
+     "VITAMALT new": "Grist: Pilsen Malt 190 kg · Viking Munich Light 380 kg · Caramel 203 18 kg · Sugar 285 kg. Mash liquor: CaSo4 639 g · CaCL2 1328 g",
+     "VITAMALT": "Grist: Pilsen Malt 200 kg · Munich Malt 400 kg · Caramel 203 17.5 kg · Sugar 300 kg. Mash liquor: CaSo4 639 g · CaCL2 1328 g",
+     "STARMALT (Hops) New": "Grist: Pilsen Malt 575 kg · Choc.  Malt 20 kg · Caramel 203 26 kg · Caramel 150 Malt 125 kg · Sugar 400 kg. Mash liquor: CaSo4 764.6 g · CaCL2 1588.2 g",
+     "STARMALT (No Hops) new": "Grist: Pilsen Malt 575 kg · Choc.  Malt 20 kg · Caramel 203 26 kg · Caramel 150 Malt 125 kg · Sugar 400 kg. Mash liquor: CaSo4 764.6 g · CaCL2 1588.2 g",
+     "STARMALT (half Hops) new": "Grist: Pilsen Malt 575 kg · Choc.  Malt 20 kg · Caramel 203 26 kg · Caramalt 125 kg · Sugar 400 kg. Mash liquor: CaSo4 764.6 g · CaCL2 1588.2 g",
+     "MAXIMALT (Hops)": "Grist: Pilsen Malt 575 kg · Choc.  Malt 20 kg · Caramalt 203 28 kg · Caramalt 125 kg · Sugar 400 kg. Mash liquor: CaSo4 764.6 g · CaCL2 1588.2 g",
+     "MAXIMALT (No Hops)": "Grist: Pilsen Malt 575 kg · Choc.  Malt 20 kg · Caramalt 203 28 kg · Caramalt 125 kg · Sugar 400 kg. Mash liquor: CaSo4 764.6 g · CaCL2 1588.2 g",
+     "MAXIMALT (Half Hops)": "Grist: Pilsen Malt 575 kg · Choc.  Malt 20 kg · Caramalt 203 28 kg · Caramalt 125 kg · Sugar 400 kg. Mash liquor: CaSo4 764.6 g · CaCL2 1588.2 g",
+     "MAXIMALT (TRIAL)": "Grist: Pilsen Malt 575 kg · Choc.  Malt 20 kg · Caramalt 203 28 kg · Caramalt 125 kg · Sugar 400 kg. Mash liquor: CaSo4 764.6 g · CaCL2 1588.2 g",
+     "STARMALT (Hops)": "Grist: Pilsen Malt 575 kg · Choc.  Malt 10 kg · Caramel 203 28 kg · Caramalt 135 kg · Sugar 400 kg. Mash liquor: CaSo4 764.6 g · CaCL2 1588.2 g",
+     "STARMALT (No Hops)": "Grist: Pilsen Malt 575 kg · Choc.  Malt 10 kg · Caramel 203 28 kg · Caramalt 135 kg · Sugar 400 kg. Mash liquor: CaSo4 764.6 g · CaCL2 1588.2 g",
+     "STAG": "Grist: Pilsen Malt 637 kg · Sugar 125 kg. Mash liquor: CaCL2 825 g. Pitch at 10.0°C - 11.0°C",
+     "GUINNESS BALANCER_Carib-Sacc": "Grist: Pilsen Malt 1050 kg · Sugar 150 kg. Mash liquor: Acid 150 mls · CaSo4 638 g · CaCL2 534 g. Pitch at Wort temp 13.0°C- 14.0°C",
+     "MALTA CARIB": "Grist: Pilsen Malt 600 kg · Black  Malt 92.7 kg · B.A.P. 21.65 kg · Crystal Malt 51.6 kg · Sugar 300 kg. Mash liquor: Acid 100 mls · CaSo4 764.2 g",
+     "CARLSBERG": "Grist: Pilsen Malt 800 kg. Pitch at 9.0°C - 10.0°C",
+     "CARIB LAGER (2)": "Grist: Pilsen Malt 725 kg · Sugar 100 kg. Mash liquor: Acid 150 mls · CaSo4 396 g · CaCL2 333 g. Pitch at 11.0°C - 12.0°C",
+     "CARIB LAGER": "Grist: Pilsen Malt 675 kg · Sugar 100 kg. Mash liquor: Acid 400 mls · CaSo4 436 g · CaCL2 366 g. Pitch at 11.0°C - 12.0°C"
+    }
+   },
+   {
+    "name": "Brand",
+    "label": "Recipe sheet",
+    "type": "choice",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": true,
+    "hint": "",
+    "span": 2,
+    "options": [
+     "CARIB LAGER-SACC PROP",
+     "CARIB LAGER-SACC",
+     "CARIB LAGER-PROP1",
+     "GUINNESS BALANCER",
+     "STAG-PROP",
+     "STAG-SACC",
+     "GUINNESS BALANCER NEW",
+     "BAD DOG ALE - 50Hls 2018",
+     "BAD DOG ALE - Mar. 31st",
+     "BAD DOG ALE - 50Hls",
+     "HR-IPA - 50Hls 2022",
+     "HR-APA - 50Hls 2023",
+     "HR-APA - 50Hls 2024",
+     "HR-IPA - 50Hls 2021",
+     "HR-PILS - 50Hls 2022",
+     "Mackeson",
+     "VITAMALT new",
+     "VITAMALT",
+     "STARMALT (Hops) New",
+     "STARMALT (No Hops) new",
+     "STARMALT (half Hops) new",
+     "MAXIMALT (Hops)",
+     "MAXIMALT (No Hops)",
+     "MAXIMALT (Half Hops)",
+     "MAXIMALT (TRIAL)",
+     "STARMALT (Hops)",
+     "STARMALT (No Hops)",
+     "STAG",
+     "GUINNESS BALANCER_Carib-Sacc",
+     "MALTA CARIB",
+     "CARLSBERG",
+     "CARIB LAGER (2)",
+     "CARIB LAGER"
+    ]
+   },
+   {
+    "name": "Brew No",
+    "label": "Brew No",
+    "type": "text",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": true,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Date",
+    "label": "Date",
+    "type": "date",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": true,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Batch Ticket No",
+    "label": "Batch Ticket No",
+    "type": "text",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "type": "section",
+    "n": "1",
+    "name": "Malt intake",
+    "hint": "Page 1",
+    "cols": 4,
+    "note": ""
+   },
+   {
+    "name": "Malt Weight (kg)",
+    "label": "Malt weight",
+    "type": "number",
+    "unit": "kg",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Malt Type",
+    "label": "Malt Type",
+    "type": "text",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Silo No",
+    "label": "Silo No",
+    "type": "text",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Tips/Silo",
+    "label": "Tips/Silo",
+    "type": "text",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Scale Counter Start",
+    "label": "Scale Counter Start",
+    "type": "number",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Scale Counter End",
+    "label": "Scale Counter End",
+    "type": "number",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "No of Tips",
+    "label": "No. of tips",
+    "type": "number",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "type": "grid",
+    "name": "Grist actual",
+    "hint": "",
+    "fmt": "Grist {row} – {col}",
+    "rows": [
+     {
+      "name": "Pilsen malt",
+      "hint": ""
+     },
+     {
+      "name": "Munich / Best Munich",
+      "hint": ""
+     },
+     {
+      "name": "Caramalt / Crystal",
+      "hint": ""
+     },
+     {
+      "name": "Caramel 203 / 150",
+      "hint": ""
+     },
+     {
+      "name": "Chocolate / Black malt",
+      "hint": ""
+     },
+     {
+      "name": "Flaked oats / Acid barley",
+      "hint": ""
+     },
+     {
+      "name": "Sugar",
+      "hint": ""
+     },
+     {
+      "name": "Other",
+      "hint": ""
+     }
+    ],
+    "cols": [
+     {
+      "name": "Actual (kg)",
+      "type": "number"
+     },
+     {
+      "name": "Bags",
+      "type": "number"
+     }
+    ]
+   },
+   {
+    "type": "grid",
+    "name": "Mash liquor",
+    "hint": "",
+    "fmt": "Mash liquor {row} – {col}",
+    "rows": [
+     {
+      "name": "Acid",
+      "hint": ""
+     },
+     {
+      "name": "CaSO₄",
+      "hint": ""
+     },
+     {
+      "name": "CaCl₂",
+      "hint": ""
+     }
+    ],
+    "cols": [
+     {
+      "name": "Actual",
+      "type": "number"
+     },
+     {
+      "name": "Time",
+      "type": "time"
+     }
+    ]
+   },
+   {
+    "type": "section",
+    "n": "2",
+    "name": "Mash programme",
+    "hint": "Page 1",
+    "cols": 4,
+    "note": "",
+    "noteB": {
+     "CARIB LAGER-SACC PROP": "Mash programme: Mash in (52°C) → Proteolytic rest (15 mins.) → Heat mash to 69.0°C → Saccharification rest (30 mins.) → Heat mash to 76 °C → Pump to Lauter Tun → Recirculate (10 mins)",
+     "CARIB LAGER-SACC": "Mash programme: Mash in (52°C) → Proteolytic rest (15 mins.) → Heat mash to 68.5°C → Saccharification rest (30 mins.) → Heat mash to 76 °C → Pump to Lauter Tun → Recirculate (10 mins)",
+     "CARIB LAGER-PROP1": "Mash programme: Mash in (52°C) → Proteolytic rest (15 mins.) → Heat mash to 64°C → 1st saccharification rest (15 mins.) → Heat mash to 67 °C → 2nd saccharification rest (15 mins.) → Heat mash to 76 °C → Pump to Lauter Tun → Recirculate (10 mins)",
+     "GUINNESS BALANCER": "Mash programme: Mash in (52°C) → Proteolytic rest (10 mins.) → Heat mash to 69°C → Saccharification rest (45 mins.) → Heat mash to 79 °C → Pump to Lauter Tun → Recirculate (10 mins)",
+     "STAG-PROP": "Mash programme: Mash in (52°C) → Proteolytic rest (15 mins.) → Heat mash to 67°C → Saccharification rest (40 mins.) → Heat mash to 76 °C → Pump to Lauter Tun → Recirculate (10 mins)",
+     "STAG-SACC": "Mash programme: Mash in (52°C) → Proteolytic rest (15 mins.) → Heat mash to 66°C → Saccharification rest (40 mins.) → Heat mash to 76 °C → Pump to Lauter Tun → Recirculate (10 mins)",
+     "GUINNESS BALANCER NEW": "Mash programme: Mash in (63°C) → No proteolytic rest → Heat mash to 68.5°C → Saccharification rest (40mins.) → Heat mash to 79 °C → Pump to Lauter Tun → Recirculate (10 mins)",
+     "BAD DOG ALE - 50Hls 2018": "Mash programme: Mash in (66.5°C) → Heat mash to 66.5°C → Saccharification rest (45 mins.) → Heat mash to 79 °C → Pump to Lauter Tun → Recirculate (10 mins)",
+     "BAD DOG ALE - Mar. 31st": "Mash programme: Mash in (67°C) → Heat mash to 67°C → Saccharification rest (45 mins.) → Heat mash to 79 °C → Pump to Lauter Tun → Recirculate (10 mins)",
+     "BAD DOG ALE - 50Hls": "Mash programme: Mash in (66.5°C) → Heat mash to 66.5°C → Saccharification rest (45 mins.) → Heat mash to 79 °C → Pump to Lauter Tun → Recirculate (10 mins)",
+     "HR-IPA - 50Hls 2022": "Mash programme: Mash in (50°C) → Proteolytic rest (10 mins) → Heat mash to 62.0°C → 1st saccharification rest (15 mins.) → Heat mash to 67°C → 2nd saccharification rest (15 mins.) → Heat mash to 76°C → Pump to Lauter Tun → Recirculate (10 mins)",
+     "HR-APA - 50Hls 2023": "Mash programme: Mash in (44°C) → Beta glucant rest (10 mins) → Heat mash to 50.0°C → Proteolysis rest (10 mins.) → Heat mash to 68°C → Saccharification rest (30 mins.) → Heat mash to 77°C → Pump to Lauter Tun → Recirculate (10 mins)",
+     "HR-APA - 50Hls 2024": "Mash programme: Mash in (44°C) → Beta glucan rest (10 mins) → Heat mash to 50°C → Proteolysis rest (10 mins.) → Heat mash to 68°C → Saccharification rest (30 mins.) → Heat mash to 77°C → Pump to Lauter Tun → Recirculate (10 mins)",
+     "HR-IPA - 50Hls 2021": "Mash programme: Mash in (50°C) → Proteolytic rest (10 mins) → Heat mash to 62.5°C → 1st saccharification rest (15 mins.) → Heat mash to 72.5°C → 2nd saccharification rest (15 mins.) → Heat mash to 78°C → Pump to Lauter Tun → Recirculate (10 mins)",
+     "HR-PILS - 50Hls 2022": "Mash programme: Mash in (35°C) → Heat mash to 43°C → Betaglucan rest (10 mins.) → Heat mash to 50°C → Proteolytic rest (10 mins.) → Heat mash to 63°C → 1st saccharification rest (15 mins.) → Heat mash to 67°C → 2nd saccharification rest (15 mins.) → Heat mash to 78°C",
+     "Mackeson": "Mash programme: Mash in (52°C) → Heat mash to 52°C → Proteolytic rest (15 mins.) → Heat mash to 68.0°C → Saccharification rest (45 mins.) → Heat mash to 76 °C → Pump to Lauter Tun",
+     "VITAMALT new": "Mash programme: Mash in (55°C) → Heat mash to 66°C → Saccharification rest # 1 (45mins.) → Heat mash to 72oc → Saccharification rest # 2(10 mins.) → Heat mash to 78 °C → Hold at 78˚C for 2 → Pump to Lauter Tun → Recirculate (10 mins)",
+     "VITAMALT": "Mash programme: Mash in (48°C) → Proteolytic rest (40 mins.) → Heat mash to 66°C → Saccharification rest (40 mins.) → Heat mash to 76 °C → Pump to Lauter Tun → Recirculate (10 mins)",
+     "STARMALT (Hops) New": "Mash programme: Mash in (51°C) → Proteolytic rest (15 mins.) → Heat mash to 68°C → 1st saccharification rest (45 mins.) → Heat mash to 78 °C → Pump to Lauter Tun → Recirculate (10 mins)",
+     "STARMALT (No Hops) new": "Mash programme: Mash in (51°C) → Proteolytic rest (15 mins.) → Heat mash to 68°C → 1st saccharification rest (45 mins.) → Heat mash to 78 °C → Pump to Lauter Tun → Recirculate (10 mins)",
+     "STARMALT (half Hops) new": "Mash programme: Mash in (51°C) → Proteolytic rest (15 mins.) → Heat mash to 68°C → 1st saccharification rest (45 mins.) → Heat mash to 78 °C → Pump to Lauter Tun → Recirculate (10 mins)",
+     "MAXIMALT (Hops)": "Mash programme: Mash in (51°C) → Proteolytic rest (20 mins.) → Heat mash to 63°C → 1st saccharification rest (30 mins.) → Heat mash to 70 °C → 2nd saccharification rest (30 mins.) → Heat mash to 78 °C → Pump to Lauter Tun → Recirculate (10 mins)",
+     "MAXIMALT (No Hops)": "Mash programme: Mash in (51°C) → Proteolytic rest (20 mins.) → Heat mash to 63°C → 1st saccharification rest (30 mins.) → Heat mash to 70 °C → 2nd saccharification rest (30 mins.) → Heat mash to 78 °C → Pump to Lauter Tun → Recirculate (10 mins)",
+     "MAXIMALT (Half Hops)": "Mash programme: Mash in (51°C) → Proteolytic rest (20 mins.) → Heat mash to 63°C → 1st saccharification rest (30 mins.) → Heat mash to 70 °C → 2nd saccharification rest (30 mins.) → Heat mash to 78 °C → Pump to Lauter Tun → Recirculate (10 mins)",
+     "MAXIMALT (TRIAL)": "Mash programme: Mash in (51°C) → Proteolytic rest (20 mins.) → Heat mash to 63°C → 1st saccharification rest (30 mins.) → Heat mash to 70 °C → 2nd saccharification rest (30 mins.) → Heat mash to 78 °C → Pump to Lauter Tun → Recirculate (10 mins)",
+     "STARMALT (Hops)": "Mash programme: Mash in (51°C) → Proteolytic rest (20 mins.) → Heat mash to 63°C → 1st saccharification rest (30 mins.) → Heat mash to 70 °C → 2nd saccharification rest (30 mins.) → Heat mash to 78 °C → Pump to Lauter Tun → Recirculate (10 mins)",
+     "STARMALT (No Hops)": "Mash programme: Mash in (51°C) → Proteolytic rest (20 mins.) → Heat mash to 63°C → 1st saccharification rest (30 mins.) → Heat mash to 70 °C → 2nd saccharification rest (30 mins.) → Heat mash to 78 °C → Pump to Lauter Tun → Recirculate (10 mins)",
+     "STAG": "Mash programme: Mash in (52°C) → Proteolytic rest (20 mins.) → Heat mash to 66.0°C → Saccharification rest (45 mins.) → Heat mash to 76 °C → Pump to Lauter Tun → Recirculate (10 mins)",
+     "GUINNESS BALANCER_Carib-Sacc": "Mash programme: Mash in (52°C) → Proteolytic rest (10 mins.) → Heat mash to 67.5°C → Saccharification rest (45 mins.) → Heat mash to 79 °C → Pump to Lauter Tun → Recirculate (10 mins)",
+     "MALTA CARIB": "Mash programme: Mash in (50°C) → Heat mash to 68°C → Saccharification rest (45 mins.) → Heat mash to 76 °C → Pump to Lauter Tun → Recirculate (10 mins)",
+     "CARLSBERG": "Mash programme: Mash in (48°C) → Proteolytic rest (20 mins.) → Heat mash to 67°C → Saccharification rest (45 mins.) → Heat mash to 78 °C → Pump to Lauter Tun → Recirculate (10 mins)",
+     "CARIB LAGER (2)": "Mash programme: Mash in (37°C) → Heat mash to 52°C → Proteolytic rest (15 mins.) → Heat mash to 67°C → Saccharification rest (30 mins.) → Heat mash to 76 °C → Pump to Lauter Tun",
+     "CARIB LAGER": "Mash programme: Mash in (52°C) → Proteolytic rest (15 mins.) → Heat mash to 67.5°C → Saccharification rest (40 mins.) → Heat mash to 76 °C → Pump to Lauter Tun → Recirculate (10 mins)"
+    }
+   },
+   {
+    "name": "Mash In (mins)",
+    "label": "Mash in",
+    "type": "number",
+    "unit": "mins",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Mash pH",
+    "label": "Mash pH",
+    "type": "number",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Actual Mash Temp (°C)",
+    "label": "Actual mash temp",
+    "type": "number",
+    "unit": "°C",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Level in Mash Vessel",
+    "label": "Level in Mash Vessel",
+    "type": "choice",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 2,
+    "options": [
+     "Normal",
+     "Above",
+     "Below"
+    ]
+   },
+   {
+    "name": "Mash Vessel DIP",
+    "label": "DIP",
+    "type": "number",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "type": "grid",
+    "name": "Mash steps",
+    "hint": "Steps in the order of the recipe's mash programme above",
+    "fmt": "Mash step {row} – {col}",
+    "rows": [
+     {
+      "name": "1",
+      "hint": ""
+     },
+     {
+      "name": "2",
+      "hint": ""
+     },
+     {
+      "name": "3",
+      "hint": ""
+     },
+     {
+      "name": "4",
+      "hint": ""
+     },
+     {
+      "name": "5",
+      "hint": ""
+     },
+     {
+      "name": "6",
+      "hint": ""
+     },
+     {
+      "name": "7",
+      "hint": ""
+     },
+     {
+      "name": "8",
+      "hint": ""
+     }
+    ],
+    "cols": [
+     {
+      "name": "Start",
+      "type": "time"
+     },
+     {
+      "name": "End",
+      "type": "time"
+     },
+     {
+      "name": "Mins",
+      "type": "number"
+     },
+     {
+      "name": "Temp initial (°C)",
+      "type": "number"
+     },
+     {
+      "name": "Temp final (°C)",
+      "type": "number"
+     }
+    ]
+   },
+   {
+    "name": "Iodine Test",
+    "label": "Iodine Test",
+    "type": "choice",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 2,
+    "options": [
+     "Negative",
+     "Positive",
+     "Trace"
+    ]
+   },
+   {
+    "name": "Pump to Lauter Tun (mins)",
+    "label": "Pump to lauter tun",
+    "type": "number",
+    "unit": "mins",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Recirculate (mins)",
+    "label": "Recirculate",
+    "type": "number",
+    "unit": "mins",
+    "col": "",
+    "std": "10",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Condition of Wort",
+    "label": "Condition of Wort",
+    "type": "choice",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 2,
+    "options": [
+     "Clear",
+     "Hazy",
+     "Sediments"
+    ]
+   },
+   {
+    "name": "Odour",
+    "label": "Odour",
+    "type": "choice",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 2,
+    "options": [
+     "Normal",
+     "Mouldy",
+     "Off"
+    ]
+   },
+   {
+    "type": "section",
+    "n": "3",
+    "name": "Run-off and sparge",
+    "hint": "Page 1",
+    "cols": 4,
+    "note": ""
+   },
+   {
+    "type": "grid",
+    "name": "Run-off",
+    "hint": "",
+    "fmt": "Run-off {row} – {col}",
+    "rows": [
+     {
+      "name": "First runnings",
+      "hint": ""
+     },
+     {
+      "name": "60 minutes",
+      "hint": ""
+     },
+     {
+      "name": "90 minutes",
+      "hint": ""
+     },
+     {
+      "name": "120 minutes",
+      "hint": ""
+     },
+     {
+      "name": "150 minutes",
+      "hint": ""
+     },
+     {
+      "name": "Last runnings",
+      "hint": "std 1.2 °P"
+     }
+    ],
+    "cols": [
+     {
+      "name": "°P",
+      "type": "number"
+     },
+     {
+      "name": "HLs",
+      "type": "number"
+     }
+    ]
+   },
+   {
+    "name": "Pump to Underback (HLs)",
+    "label": "Pump to underback",
+    "type": "number",
+    "unit": "HLs",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Sparge On/Off (mins)",
+    "label": "Sparge on/off",
+    "type": "number",
+    "unit": "mins",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Total Run-off (mins)",
+    "label": "Total run-off",
+    "type": "number",
+    "unit": "mins",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "HLT Temp (°C)",
+    "label": "HLT temp",
+    "type": "number",
+    "unit": "°C",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "HLT Volume (HLs)",
+    "label": "HLT volume",
+    "type": "number",
+    "unit": "HLs",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Sparge Temp (°C)",
+    "label": "Sparge temp",
+    "type": "number",
+    "unit": "°C",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Sparge pH",
+    "label": "Sparge pH",
+    "type": "number",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Sparge Flood Flow Rate (HLs/hr)",
+    "label": "Sparge flood flow rate",
+    "type": "number",
+    "unit": "HLs/hr",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Sparge Vol (HLs)",
+    "label": "Sparge vol.",
+    "type": "number",
+    "unit": "HLs",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1,
+    "sub": [
+     {
+      "name": "Sparge Vol at Run Off (HLs)",
+      "label": "at run off",
+      "type": "number",
+      "unit": "HLs"
+     }
+    ]
+   },
+   {
+    "name": "Total Sparge Used (HLs)",
+    "label": "Total sparge used",
+    "type": "number",
+    "unit": "HLs",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Last Runnings Taken",
+    "label": "Last Runnings Taken",
     "type": "choice",
     "unit": "",
     "col": "",
@@ -2090,12 +2917,558 @@ window.CBG_FORMS = [
     ]
    },
    {
+    "name": "Last Runnings pH",
+    "label": "Last Runnings pH",
+    "type": "number",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
     "type": "section",
-    "n": "13",
-    "name": "Non-conformance / corrective action log",
-    "hint": "Page 3",
+    "n": "4",
+    "name": "Kettle",
+    "hint": "Page 1",
+    "cols": 4,
+    "note": "",
+    "noteB": {
+     "CARIB LAGER-SACC PROP": "Kettle additions on the sheet: Hop Extract 0.205 kg (small can) · Acid - H3PO4 200 mls · CaCL2 578 g · Sugar 50 kg · ZnSo4 5 g",
+     "CARIB LAGER-SACC": "Kettle additions on the sheet: Hop Extract 0.205 kg (small can) · Acid - H3PO4 300 mls · CaCL2 578 g · Sugar 30 kg · ZnSo4 5 g",
+     "CARIB LAGER-PROP1": "Kettle additions on the sheet: Hop Extract 0.205 kg (small can) · Acid - 50% 100 mls · CaCL2 578 g · Sugar 100 kg · ZnSo4 5 g",
+     "GUINNESS BALANCER": "Kettle additions on the sheet: Hop Extract 2.625 kg(4 large cans) · Acid - 50% 200 mls · Gypsum(CaSo4) 770 g · CaCL2 385 g · Sugar 150 kg · Pelfloc 200 g · ZnSo4 5 g",
+     "STAG-PROP": "Kettle additions on the sheet: Hop Extract 0.205 kg (small can) · Acid (HCl) - 50% 200 mls · CaCL2 1056 g · Sugar 125 kg · ZnSo4 5 g",
+     "STAG-SACC": "Kettle additions on the sheet: Hop Extract 0.205 kg · Acid (HCl) - 50% 200 mls · CaCL2 1056 g · Sugar 125 kg · ZnSo4 5 g",
+     "GUINNESS BALANCER NEW": "Kettle additions on the sheet: Hop Extract 1.2 kg a.a.(4 lg cans) · Acid - H3PO4 75 mls · Gypsum(CaSo4) 770 g · CaCL2 385 g · Sugar 175 kg · Pelfloc G 200 g · ZnSo4 5 g",
+     "BAD DOG ALE - 50Hls 2018": "Kettle additions on the sheet: Cascade Hops 2730 g · Calypso Hops 1315 g · Gypsum(CaSo4) 1100 g · CaCL2 161 g · NaCL 571 g · Deltafloc G 200 g · ZnSo4 3 g",
+     "BAD DOG ALE - Mar. 31st": "Kettle additions on the sheet: CO2 Hops (2 StarMalt) 260 g · Cascade Hops 1911 g · Calypso Hops 920.5 g · MgSO4 160 g · Gypsum(CaSo4) 770 g · CaCL2 113 g · NaCL 400 g · Pelfloc 200 g · ZnSo4 2 g",
+     "BAD DOG ALE - 50Hls": "Kettle additions on the sheet: CO2 Hops (3 Starmalt tins) 371 g · Cascade Hops 2730 g · Calypso Hops 1315 g · Gypsum(CaSo4) 1100 g · CaCL2 161 g · NaCL 571 g · Pelfloc 200 g · ZnSo4 3 g",
+     "HR-IPA - 50Hls 2022": "No kettle additions printed on this sheet.",
+     "HR-APA - 50Hls 2023": "No kettle additions printed on this sheet.",
+     "HR-APA - 50Hls 2024": "No kettle additions printed on this sheet.",
+     "HR-IPA - 50Hls 2021": "No kettle additions printed on this sheet.",
+     "HR-PILS - 50Hls 2022": "Kettle additions on the sheet: Hop Extract (335g) 1 tin 130g a.a & 1 tin 205 a.a",
+     "Mackeson": "Kettle additions on the sheet: Hop Extract 0.568 kg (2 Carib, 1 Vitamalt) · Caramel 203 36 Kg · Lactose Powder 44 Kg · Rock Salt 1.64 kg · ZnSo4 5 g",
+     "VITAMALT new": "Kettle additions on the sheet: Hop Extract 130 g · Caramel 203 18 kg · Gypsum(CaSo4) 575 g · CaCL2 300 g · Sugar 285 kg · Deltafloc G 200 g",
+     "VITAMALT": "Kettle additions on the sheet: Hop Extract 276 g · Caramel 203 17.5 kg · Gypsum(CaSo4) 575 g · CaCL2 300 g · Sugar 300 kg · PelFloc 200 g",
+     "STARMALT (Hops) New": "Kettle additions on the sheet: Hop Extract 158 grams · CARAMEL 203 26 kg · Gypsum(CaSo4) 688 g · CaCL2 300 g · Sugar 400 kg · Pelfloc G 200 g",
+     "STARMALT (No Hops) new": "Kettle additions on the sheet: CARAMEL 203 26 kg · Gypsum(CaSo4) 688 g · CaCL2 300 g · Sugar 400 kg · Deltafloc G 200 g",
+     "STARMALT (half Hops) new": "Kettle additions on the sheet: Hop Extract 79 grams · CARAMEL 203 26 kg · Gypsum(CaSo4) 688 g · CaCL2 300 g · Sugar 350 kg · Deltafloc G 200 g",
+     "MAXIMALT (Hops)": "Kettle additions on the sheet: Hop Extract 110 kg · Caramalt 203 28 kg · Gypsum(CaSo4) 688 g · CaCL2 300 g · Sugar 400 kg · Deltafloc G 200 g",
+     "MAXIMALT (No Hops)": "Kettle additions on the sheet: Hop Extract 110 kg · Caramalt 203 28 kg · Gypsum(CaSo4) 688 g · CaCL2 300 g · Sugar 400 kg · Deltafloc G 200 g",
+     "MAXIMALT (Half Hops)": "Kettle additions on the sheet: Hop Extract 110 kg · Caramalt 203 28 kg · Gypsum(CaSo4) 688 g · CaCL2 300 g · Sugar 400 kg · Deltafloc G 200 g",
+     "MAXIMALT (TRIAL)": "Kettle additions on the sheet: Hop Extract 110 kg · Caramalt 203 28 kg · Gypsum(CaSo4) 688 g · CaCL2 300 g · Sugar 400 kg · Deltafloc G 200 g",
+     "STARMALT (Hops)": "Kettle additions on the sheet: Hop Extract 110 grams · CARAMEL 203 28 kg · Gypsum(CaSo4) 688 g · CaCL2 300 g · Sugar 400 kg · PelFloc 200 g",
+     "STARMALT (No Hops)": "Kettle additions on the sheet: CARAMEL 203 28 kg · Gypsum(CaSo4) 688 g · CaCL2 300 g · Sugar 400 kg · PelFloc 200 g",
+     "STAG": "Kettle additions on the sheet: Hop Extract 0.393 kg (small can) · Acid (HCl) - 50% 200 mls · CaCL2 1056 g · Sugar 125 kg · ZnSo4 5 g",
+     "GUINNESS BALANCER_Carib-Sacc": "Kettle additions on the sheet: Hop Extract 2.625 kg(5 large cans) · Acid - 50% 200 mls · Gypsum(CaSo4) 770 g · CaCL2 385 g · Sugar 150 kg · Pelfloc 200 g · ZnSo4 5 g",
+     "MALTA CARIB": "Kettle additions on the sheet: Hop Extract 276 g · B.A.P. 21.65 kg · Gypsum(CaSo4) 688 g · CaCL2 300 g · Sugar 300 kg · Table Salt 1000 g · PelFloc 200 g",
+     "CARLSBERG": "Kettle additions on the sheet: Hop Extract 0.524 kg(1 large can) · CaCL2 1200 g · Hop Oil 5 mls · ZnSo4 2.5 g",
+     "CARIB LAGER (2)": "Kettle additions on the sheet: Hop Extract 0.393 kg (small can) · Acid - 50% 250 mls · Gypsum(CaSo4) 700 g · CaCL2 525 g · Sugar 100 kg · ZnSo4 2.5 g",
+     "CARIB LAGER": "Kettle additions on the sheet: Hop Extract 0.393 kg (small can) · Acid - 50% 100 mls · Gypsum(CaSo4) 770 g · CaCL2 578 g · Sugar 100 kg · ZnSo4 5 g"
+    }
+   },
+   {
+    "name": "Steam on Kettle at (HLs)",
+    "label": "Steam on kettle at",
+    "type": "number",
+    "unit": "HLs",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "EC Temp at Boil (°C)",
+    "label": "EC temp (at boil)",
+    "type": "number",
+    "unit": "°C",
+    "col": "",
+    "std": "104.0",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Circulation Pump Pressure (PSI)",
+    "label": "Circulation pump pressure",
+    "type": "number",
+    "unit": "PSI",
+    "col": "",
+    "std": "20",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Kettle Temp Start (°C)",
+    "label": "Kettle temp (start)",
+    "type": "number",
+    "unit": "°C",
+    "col": "",
+    "std": "100",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Kettle Temp End (°C)",
+    "label": "Kettle temp (end)",
+    "type": "number",
+    "unit": "°C",
+    "col": "",
+    "std": "100",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "EC Pressure (PSI)",
+    "label": "EC pressure",
+    "type": "number",
+    "unit": "PSI",
+    "col": "",
+    "std": "50",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Incoming Steam Pressure (PSI)",
+    "label": "Incoming steam press.",
+    "type": "number",
+    "unit": "PSI",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "type": "grid",
+    "name": "Kettle additions",
+    "hint": "",
+    "fmt": "Kettle {row} – {col}",
+    "rows": [
+     {
+      "name": "Hop extract / hops",
+      "hint": ""
+     },
+     {
+      "name": "Hop pellets",
+      "hint": ""
+     },
+     {
+      "name": "Acid",
+      "hint": ""
+     },
+     {
+      "name": "Gypsum (CaSO₄)",
+      "hint": ""
+     },
+     {
+      "name": "CaCl₂",
+      "hint": ""
+     },
+     {
+      "name": "Sugar",
+      "hint": ""
+     },
+     {
+      "name": "Caramel / lactose / B.A.P.",
+      "hint": ""
+     },
+     {
+      "name": "ZnSO₄",
+      "hint": ""
+     },
+     {
+      "name": "Pelfloc / Deltafloc",
+      "hint": ""
+     },
+     {
+      "name": "Other",
+      "hint": ""
+     }
+    ],
+    "cols": [
+     {
+      "name": "Actual",
+      "type": "number"
+     },
+     {
+      "name": "Time",
+      "type": "time"
+     },
+     {
+      "name": "Check",
+      "type": "check"
+     }
+    ]
+   },
+   {
+    "type": "section",
+    "n": "5",
+    "name": "Boil",
+    "hint": "Page 1",
+    "cols": 4,
+    "note": "",
+    "noteB": {
+     "CARIB LAGER-SACC PROP": "INITIAL BOIL (45 mins) · FINAL BOIL (15 mins)",
+     "CARIB LAGER-SACC": "INITIAL BOIL (45 mins) · FINAL BOIL (15 mins)",
+     "CARIB LAGER-PROP1": "INITIAL BOIL (45 mins) · FINAL BOIL (15 mins)",
+     "GUINNESS BALANCER": "INITIAL BOIL (50 mins) · FINAL BOIL (10 mins)",
+     "STAG-PROP": "INITIAL BOIL (45 mins) · FINAL BOIL (15 mins)",
+     "STAG-SACC": "INITIAL BOIL (45 mins) · FINAL BOIL (15 mins)",
+     "GUINNESS BALANCER NEW": "INITIAL BOIL (45 mins) · FINAL BOIL (15 mins)",
+     "BAD DOG ALE - 50Hls 2018": "INITIAL BOIL (45 mins) · FINAL BOIL (15 mins)",
+     "BAD DOG ALE - Mar. 31st": "INITIAL BOIL (50 mins) · FINAL BOIL (10 mins)",
+     "BAD DOG ALE - 50Hls": "INITIAL BOIL (50 mins) · FINAL BOIL (10 mins)",
+     "HR-IPA - 50Hls 2022": "INITIAL BOIL (45 mins) · FINAL BOIL (15 mins)",
+     "HR-APA - 50Hls 2023": "INITIAL BOIL (45 mins) · FINAL BOIL (15 mins)",
+     "HR-APA - 50Hls 2024": "INITIAL BOIL (45 mins) · FINAL BOIL (15 mins)",
+     "HR-IPA - 50Hls 2021": "INITIAL BOIL (45 mins) · FINAL BOIL (15 mins)",
+     "HR-PILS - 50Hls 2022": "INITIAL BOIL (45 mins) · FINAL BOIL (15 mins)",
+     "Mackeson": "INITIAL BOIL (45 mins) · FINAL BOIL (30 mins)",
+     "VITAMALT new": "INITIAL BOIL (45 mins) · FINAL BOIL (15 mins)",
+     "VITAMALT": "INITIAL BOIL (50 mins) · FINAL BOIL (10 mins)",
+     "STARMALT (Hops) New": "INITIAL BOIL (45 mins) · FINAL BOIL (15 mins)",
+     "STARMALT (No Hops) new": "INITIAL BOIL (50 mins) · FINAL BOIL (10 mins)",
+     "STARMALT (half Hops) new": "INITIAL BOIL (50 mins) · FINAL BOIL (10 mins)",
+     "MAXIMALT (Hops)": "INITIAL BOIL (50 mins) · FINAL BOIL (10 mins)",
+     "MAXIMALT (No Hops)": "INITIAL BOIL (50 mins) · FINAL BOIL (10 mins)",
+     "MAXIMALT (Half Hops)": "INITIAL BOIL (50 mins) · FINAL BOIL (10 mins)",
+     "MAXIMALT (TRIAL)": "INITIAL BOIL (50 mins) · FINAL BOIL (10 mins)",
+     "STARMALT (Hops)": "INITIAL BOIL (50 mins) · FINAL BOIL (10 mins)",
+     "STARMALT (No Hops)": "INITIAL BOIL (50 mins) · FINAL BOIL (10 mins)",
+     "STAG": "INITIAL BOIL (50 mins) · FINAL BOIL (10 mins)",
+     "GUINNESS BALANCER_Carib-Sacc": "INITIAL BOIL (50 mins) · FINAL BOIL (10 mins)",
+     "MALTA CARIB": "INITIAL BOIL (45 mins) · FINAL BOIL (15 mins)",
+     "CARLSBERG": "INITIAL BOIL (50 mins) · FINAL BOIL (10 mins)",
+     "CARIB LAGER (2)": "INITIAL BOIL (50 mins) · FINAL BOIL (10 mins)",
+     "CARIB LAGER": "INITIAL BOIL (50 mins) · FINAL BOIL (10 mins)"
+    }
+   },
+   {
+    "name": "Initial Boil (mins)",
+    "label": "Initial boil, actual",
+    "type": "number",
+    "unit": "mins",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Final Boil (mins)",
+    "label": "Final boil, actual",
+    "type": "number",
+    "unit": "mins",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Boiling Ended at (°P)",
+    "label": "Boiling ended at",
+    "type": "number",
+    "unit": "°P",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Boil End Kettle Vol (HLs)",
+    "label": "Kettle vol.",
+    "type": "number",
+    "unit": "HLs",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Boil Evap Rate (%)",
+    "label": "Boil evap. rate",
+    "type": "number",
+    "unit": "%",
+    "col": "",
+    "std": "8 to 10",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Cutting Liquor (HLs)",
+    "label": "Cutting liquor",
+    "type": "number",
+    "unit": "HLs",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Kettle Up Gravity (°P)",
+    "label": "Kettle up gravity",
+    "type": "number",
+    "unit": "°P",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Kettle Up Volume (HLs)",
+    "label": "Kettle up volume",
+    "type": "number",
+    "unit": "HLs",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Kettle Gravity Mid-boil (°P)",
+    "label": "Kettle gravity (mid-boil)",
+    "type": "number",
+    "unit": "°P",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Kettle Volume Mid-boil (HLs)",
+    "label": "Kettle volume (mid-boil)",
+    "type": "number",
+    "unit": "HLs",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Kettle Out Gravity (°P)",
+    "label": "Kettle out gravity",
+    "type": "number",
+    "unit": "°P",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Kettle Out Volume (HLs)",
+    "label": "Kettle out volume",
+    "type": "number",
+    "unit": "HLs",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Wort Colour",
+    "label": "Wort Colour",
+    "type": "number",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Wort pH",
+    "label": "Wort pH",
+    "type": "number",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Pump to Whirlpool (mins)",
+    "label": "Pump to whirlpool",
+    "type": "number",
+    "unit": "mins",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Stand in Wort Kettle (mins)",
+    "label": "Stand in wort kettle",
+    "type": "number",
+    "unit": "mins",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "HLT",
+    "label": "H.L.T.",
+    "type": "number",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Page 1 Remarks",
+    "label": "Remarks",
+    "type": "long",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 4
+   },
+   {
+    "name": "Started by (Brewhouse Operator)",
+    "label": "Started by (Brewhouse Operator)",
+    "type": "text",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": true,
+    "hint": "",
+    "span": 2
+   },
+   {
+    "type": "section",
+    "n": "6",
+    "name": "Malt bags and non-conformance",
+    "hint": "Page 2",
     "cols": 4,
     "note": ""
+   },
+   {
+    "type": "grid",
+    "name": "Bag weights (kg)",
+    "hint": "",
+    "fmt": "Bag {row} – {col}",
+    "rows": [
+     {
+      "name": "1",
+      "hint": ""
+     },
+     {
+      "name": "2",
+      "hint": ""
+     },
+     {
+      "name": "3",
+      "hint": ""
+     },
+     {
+      "name": "4",
+      "hint": ""
+     },
+     {
+      "name": "5",
+      "hint": ""
+     },
+     {
+      "name": "6",
+      "hint": ""
+     },
+     {
+      "name": "7",
+      "hint": ""
+     },
+     {
+      "name": "8",
+      "hint": ""
+     },
+     {
+      "name": "9",
+      "hint": ""
+     },
+     {
+      "name": "10",
+      "hint": ""
+     },
+     {
+      "name": "11",
+      "hint": ""
+     },
+     {
+      "name": "12",
+      "hint": ""
+     },
+     {
+      "name": "13",
+      "hint": ""
+     },
+     {
+      "name": "14",
+      "hint": ""
+     },
+     {
+      "name": "15",
+      "hint": ""
+     },
+     {
+      "name": "Total",
+      "hint": ""
+     }
+    ],
+    "cols": [
+     {
+      "name": "Pilsen",
+      "type": "number"
+     },
+     {
+      "name": "Munich",
+      "type": "number"
+     },
+     {
+      "name": "Caramalt",
+      "type": "number"
+     },
+     {
+      "name": "Chocolate",
+      "type": "number"
+     }
+    ]
+   },
+   {
+    "name": "Malt Dust (lbs)",
+    "label": "Malt dust",
+    "type": "number",
+    "unit": "lbs",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
    },
    {
     "type": "grid",
@@ -2141,22 +3514,405 @@ window.CBG_FORMS = [
    },
    {
     "type": "section",
-    "n": "14",
-    "name": "Sign-off",
-    "hint": "Page 3",
+    "n": "7",
+    "name": "Whirlpool and wort cooling",
+    "hint": "Page 2",
     "cols": 4,
     "note": ""
    },
    {
-    "name": "Started by (Brewhouse Operator)",
-    "label": "Started by (Brewhouse Operator)",
+    "name": "Whirlpool Rest (mins)",
+    "label": "Whirlpool rest",
+    "type": "number",
+    "unit": "mins",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Cooling Time (mins)",
+    "label": "Start/end cooling",
+    "type": "number",
+    "unit": "mins",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Cooling DIP (inches)",
+    "label": "DIP",
+    "type": "number",
+    "unit": "inches",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Oxygen On",
+    "label": "Oxygen On",
+    "type": "time",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Oxygen Off",
+    "label": "Oxygen Off",
+    "type": "time",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Cooling Gravity (°P)",
+    "label": "Gravity",
+    "type": "number",
+    "unit": "°P",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Cooling Temp (°C)",
+    "label": "Temp",
+    "type": "number",
+    "unit": "°C",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "FV/DPV No",
+    "label": "FV/DPV No",
     "type": "text",
     "unit": "",
     "col": "",
     "std": "",
-    "req": true,
+    "req": false,
     "hint": "",
     "span": 1
+   },
+   {
+    "name": "FV Vol, Diesel Meter (HLs)",
+    "label": "Vol. (diesel meter)",
+    "type": "number",
+    "unit": "HLs",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "type": "grid",
+    "name": "Alcohol temp",
+    "hint": "",
+    "fmt": "Alcohol temp {row}",
+    "rows": [
+     {
+      "name": "Start",
+      "hint": ""
+     },
+     {
+      "name": "End",
+      "hint": ""
+     }
+    ],
+    "cols": [
+     {
+      "name": "Alcohol temp (°C)",
+      "type": "number",
+      "neg": true
+     }
+    ]
+   },
+   {
+    "type": "grid",
+    "name": "Wort cooling",
+    "hint": "",
+    "fmt": "Cooling {row} – {col}",
+    "rows": [
+     {
+      "name": "1",
+      "hint": ""
+     },
+     {
+      "name": "2",
+      "hint": ""
+     },
+     {
+      "name": "3",
+      "hint": ""
+     },
+     {
+      "name": "4",
+      "hint": ""
+     },
+     {
+      "name": "5",
+      "hint": ""
+     },
+     {
+      "name": "6",
+      "hint": ""
+     },
+     {
+      "name": "7",
+      "hint": ""
+     },
+     {
+      "name": "8",
+      "hint": ""
+     },
+     {
+      "name": "9",
+      "hint": ""
+     },
+     {
+      "name": "10",
+      "hint": ""
+     }
+    ],
+    "cols": [
+     {
+      "name": "Time",
+      "type": "time"
+     },
+     {
+      "name": "O₂ cylinder pressure (psi)",
+      "type": "number"
+     },
+     {
+      "name": "O₂ flowrate (lpm)",
+      "type": "number"
+     },
+     {
+      "name": "Water in (°C)",
+      "type": "number",
+      "neg": true
+     },
+     {
+      "name": "Water out (°C)",
+      "type": "number",
+      "neg": true
+     },
+     {
+      "name": "IMS in (°C)",
+      "type": "number",
+      "neg": true
+     },
+     {
+      "name": "IMS out (°C)",
+      "type": "number",
+      "neg": true
+     },
+     {
+      "name": "Wort in (°C)",
+      "type": "number"
+     },
+     {
+      "name": "Wort out (°C)",
+      "type": "number"
+     }
+    ]
+   },
+   {
+    "type": "section",
+    "n": "8",
+    "name": "Wort into FV / DPV and yeast pitching",
+    "hint": "Page 2",
+    "cols": 4,
+    "note": ""
+   },
+   {
+    "name": "Trub Compaction",
+    "label": "Trub Compaction",
+    "type": "choice",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1,
+    "options": [
+     "Good",
+     "Loose"
+    ]
+   },
+   {
+    "name": "Residual Wort",
+    "label": "Residual Wort",
+    "type": "choice",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1,
+    "options": [
+     "Yes",
+     "No"
+    ]
+   },
+   {
+    "name": "Wort Temp in FV/DPV (°C)",
+    "label": "Wort temp in FV/DPV",
+    "type": "number",
+    "unit": "°C",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Wort Flowrate (l/hr)",
+    "label": "Wort flowrate",
+    "type": "number",
+    "unit": "l/hr",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Wort Sample Taken",
+    "label": "Wort Sample Taken",
+    "type": "choice",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1,
+    "options": [
+     "Yes",
+     "No"
+    ]
+   },
+   {
+    "name": "Wort Micro Taken",
+    "label": "Wort Micro Taken",
+    "type": "choice",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1,
+    "options": [
+     "Yes",
+     "No"
+    ]
+   },
+   {
+    "name": "Volume Pitched (HLs)",
+    "label": "Volume pitched",
+    "type": "number",
+    "unit": "HLs",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Time Pitched",
+    "label": "Time Pitched",
+    "type": "time",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Pitched from YSV No",
+    "label": "Pitched from YSV No",
+    "type": "text",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Pitched from Brew No",
+    "label": "Pitched from Brew No",
+    "type": "text",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Packed Cell Volume (%)",
+    "label": "Packed cell volume",
+    "type": "number",
+    "unit": "%",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Dead Cell Count (%)",
+    "label": "Dead cell count",
+    "type": "number",
+    "unit": "%",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Cell Count at Pitching (x10⁶)",
+    "label": "Cell count at pitching",
+    "type": "number",
+    "unit": "x10⁶",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1
+   },
+   {
+    "name": "Yeast Micro Taken",
+    "label": "Yeast Micro Taken",
+    "type": "choice",
+    "unit": "",
+    "col": "",
+    "std": "",
+    "req": false,
+    "hint": "",
+    "span": 1,
+    "options": [
+     "Yes",
+     "No"
+    ]
    },
    {
     "name": "Completed by (Cold Stores Operator)",
@@ -2167,31 +3923,15 @@ window.CBG_FORMS = [
     "std": "",
     "req": false,
     "hint": "",
-    "span": 1
-   },
-   {
-    "name": "Attendant",
-    "label": "Attendant",
-    "type": "text",
-    "unit": "",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 1
-   },
-   {
-    "name": "Operator",
-    "label": "Operator",
-    "type": "text",
-    "unit": "",
-    "col": "",
-    "std": "",
-    "req": false,
-    "hint": "",
-    "span": 1
+    "span": 2
    }
-  ]
+  ],
+  "short": "Lager process",
+  "doc": "Lager Process Form Rev03",
+  "target": {
+   "file": "CBG Supply Chain Hub/01 Brewing & Fermentation/CBG_Lager_Process_2026.xlsx",
+   "table": "tblLagerProcess"
+  }
  },
  {
   "key": "hse",
@@ -2782,6 +4522,11 @@ window.CBG_CONFIG = {
       "Stag": { file: "01 Brewing & Fermentation/CBG_Brewhouse_Stag_2026.xlsx", table: "tblBrewStag" },
       "Star Malt": { file: "01 Brewing & Fermentation/CBG_Brewhouse_StarMalt_2026.xlsx", table: "tblBrewStarMalt" },
     } },
+    filtration: { file: "01 Brewing & Fermentation/CBG_Filtration_2026.xlsx", table: "tblFiltration", flowUrl: "" },
+    attemperation: { file: "01 Brewing & Fermentation/CBG_Wort_Attemperation_2026.xlsx", table: "tblWortAttemperation", flowUrl: "" },
+    racking: { file: "01 Brewing & Fermentation/CBG_Treatment_Racking_2026.xlsx", table: "tblRacking", flowUrl: "" },
+    fermentation: { file: "01 Brewing & Fermentation/CBG_Fermentation_Tracking_2026.xlsx", table: "tblFermentation", flowUrl: "" },
+    lagerprocess: { file: "01 Brewing & Fermentation/CBG_Lager_Process_2026.xlsx", table: "tblLagerProcess", flowUrl: "" },
     hse: { file: "02 HSE/CBG_HSE_Register_2026_DEMO.xlsx", table: "tblHSE", flowUrl: "" },
     facilities: { file: "03 Facilities/CBG_Utilities_Weekly_2026_DEMO.xlsx", table: "tblUtilities", flowUrl: "" },
     packaging: { file: "04 Packaging/CBG_Packaging_Line_Shift_2026_DEMO.xlsx", table: "tblPackaging", flowUrl: "" },
@@ -2801,7 +4546,7 @@ FORMS.forEach(f => {
   f.all = [];
   f.fields.forEach(x => {
     if (x.type === "section") return;
-    if (x.type === "grid") x.rows.forEach(r => x.cols.forEach(c => f.all.push({ name: x.fmt.replace("{row}", r.name).replace("{col}", c.name), type: c.type, options: c.options || null, req: false, hint: "", grid: x.name })));
+    if (x.type === "grid") x.rows.forEach(r => x.cols.forEach(c => f.all.push({ name: x.fmt.replace("{row}", r.name).replace("{col}", c.name), type: c.type, options: c.options || null, req: false, hint: "", grid: x.name, neg: !!c.neg })));
     else { f.all.push(x); (x.sub || []).forEach(sb => f.all.push(Object.assign({ req: false, hint: "" }, sb))); }
   });
 });
@@ -2832,7 +4577,7 @@ function defaults(form) {
   for (const f of form.all) {
     if (f.type === "date") {
       if (f.name === "Week Starting") { const d = new Date(now); d.setDate(d.getDate() - ((d.getDay() + 6) % 7) - 7); v[f.name] = isoDate(d); }
-      else v[f.name] = isoDate(now);
+      else v[f.name] = form.target && !f.req ? "" : isoDate(now);  /* newer sheets: only the main date starts as today */
     } else if (f.type === "time") v[f.name] = form.key === "hse" ? `${pad(hr)}:${pad(now.getMinutes())}` : "";
     else if (f.name === "Shift") v[f.name] = hr >= 6 && hr < 14 ? "Day" : hr >= 14 && hr < 22 ? "Evening" : "Night";
     else if (f.name === "Month") v[f.name] = MONTHS[now.getMonth()];
@@ -2923,6 +4668,11 @@ const ICON = {
   logistics: '<path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/><circle cx="7" cy="17.5" r="1.6"/><circle cx="17" cy="17.5" r="1.6"/>',
   operations: '<path d="M4 19V5M4 19h16"/><path d="M8 15l3-4 3 2 5-6"/>',
   qa: '<path d="M9 3h6"/><path d="M10 3v6L4.5 19a1.5 1.5 0 0 0 1.3 2h12.4a1.5 1.5 0 0 0 1.3-2L14 9V3"/><path d="M7 15h10"/>',
+  filtration: '<path d="M3 4h18l-7 8v6l-4 2v-8z"/>',
+  attemperation: '<path d="M14 14.8V5a2 2 0 0 0-4 0v9.8a4 4 0 1 0 4 0z"/><path d="M12 9v7"/>',
+  racking: '<rect x="2" y="7" width="7" height="13" rx="2"/><rect x="15" y="7" width="7" height="13" rx="2"/><path d="M9 11h6M13 9l2 2-2 2"/>',
+  fermentation: '<path d="M6 3h12v14a6 6 0 0 1-12 0z"/><circle cx="10" cy="12" r="1"/><circle cx="14" cy="9" r="1"/><circle cx="13" cy="15" r="1"/>',
+  lagerprocess: '<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V2h6v2M9 10h6M9 14h6M9 18h4"/>',
   entries: '<path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>'
 };
 const svg = k => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICON[k] || ICON.home}</svg>`;
@@ -2932,7 +4682,7 @@ const longDate = () => new Date().toLocaleDateString("en-GB", { weekday: "short"
 function todays() { return store.get("cbg.entries", []).filter(e => (e.submittedAt || "").startsWith(todayISO())); }
 /* where an entry goes: forms with brands (Brewing) pick the tracker from the Brand answer */
 function target(k, vals) {
-  const fc = CFG.forms[k] || {};
+  const fc = CFG.forms[k] || (FORMS.find(f => f.key === k) || {}).target || {};
   if (!fc.brands) return fc;
   const b = vals && vals.Brand && fc.brands[vals.Brand];
   return b ? Object.assign({ flowUrl: fc.flowUrl }, b) : { flowUrl: fc.flowUrl, file: "", table: "", brands: fc.brands };
@@ -2948,14 +4698,27 @@ function statusLine() {
   if (CFG.mode === "graph") return account ? "Live <span class='dot'></span> Signed in as " + esc(account.username) : "Live <span class='dot'></span> Not signed in: use Sign in at the top right";
   return "Live <span class='dot'></span> Entries are sent to SharePoint";
 }
+/* departments: a department with several forms gets its own page listing them */
+const DEPTS = [...new Set(FORMS.map(f => f.dept))];
+const slug = d => String(d).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+const deptForms = d => FORMS.filter(f => f.dept === d);
+const deptHref = d => { const fs = deptForms(d); return fs.length > 1 ? "#d-" + slug(d) : "#f-" + fs[0].key; };
+const deptIcon = d => { const fs = deptForms(d); return fs.length > 1 ? (/brew/i.test(d) ? "brewing" : fs[0].key) : fs[0].key; };
+const deptCrumb = d => deptForms(d).length > 1 ? { href: "#d-" + slug(d), label: d } : d;
+const formCard = (f, n, top) => `<a class="fcard" href="#f-${f.key}">
+        <span class="ico">${svg(f.key)}</span>
+        <span class="fc-txt"><span class="fc-d">${esc(top)}</span><b>${esc(f.title)}</b><span class="fc-s">${esc(f.desc)}</span></span>
+        ${n ? `<span class="pill g">${n} today</span>` : ""}
+      </a>`;
 /* rail, breadcrumb, tabs and the controls bar, like the operations dashboard */
 function chrome(page, crumbs, meta, chips, bar) {
   const link = (href, key, label, cur) => `<a href="${href}" ${cur ? 'aria-current="page"' : ""} title="${esc(label)}">${svg(key)}<span class="lbl">${esc(label)}</span></a>`;
+  const pf = FORMS.find(f => f.key === page), act = page.startsWith("d-") ? page.slice(2) : pf ? slug(pf.dept) : "";
   $("#rail").innerHTML = link("#home", "home", "Overview", page === "home") + '<span class="div"></span>' +
-    FORMS.map(f => link("#f-" + f.key, f.key, f.dept, page === f.key)).join("");
+    DEPTS.map(d => link(deptHref(d), deptIcon(d), d, act === slug(d))).join("");
   $("#tabs").innerHTML = `<a href="#home" ${page === "home" ? 'aria-current="page"' : ""}>Overview</a>` +
-    FORMS.map(f => `<a href="#f-${f.key}" ${page === f.key ? 'aria-current="page"' : ""}>${esc(f.dept)}</a>`).join("");
-  $("#eyebrow").innerHTML = `<a href="#home">Start</a>` + crumbs.map(c => `<span class="sep">›</span>${esc(c)}`).join("");
+    DEPTS.map(d => `<a href="${deptHref(d)}" ${act === slug(d) ? 'aria-current="page"' : ""}>${esc(d)}</a>`).join("");
+  $("#eyebrow").innerHTML = `<a href="#home">Start</a>` + crumbs.map(c => `<span class="sep">›</span>${c && c.href ? `<a href="${c.href}">${esc(c.label)}</a>` : esc(c)}`).join("");
   $("#pmeta").innerHTML = meta;
   $("#upd").innerHTML = statusLine();
   $("#fresh").innerHTML = chips;
@@ -2969,7 +4732,7 @@ const demoChip = () => ""; // the status line under the title already says Demo 
 function viewHome() {
   setSavebar("");
   const t = todays(), q = store.get("cbg.queue", []).length;
-  const depts = new Set(t.map(e => e.form)).size;
+  const deptOf = k => (FORMS.find(f => f.key === k) || {}).dept, depts = new Set(t.map(e => deptOf(e.form))).size, nDepts = new Set(FORMS.map(f => f.dept)).size;
   const byForm = k => t.filter(e => e.form === k).length;
   const last = t[0];
   chrome("home", ["Data entry"],
@@ -2979,17 +4742,29 @@ function viewHome() {
   $("#app").innerHTML = `
     <div class="sec">Today</div>
     <div class="trow">
-      <div class="tile ${t.length ? "good" : ""}"><div class="tl">Entries today</div><div class="tv">${t.length}</div><div class="ts">${last ? "Last at " + esc(last.submittedAt.slice(11, 16)) + " · " + depts + " of " + FORMS.length + " departments" : "None yet on this device"}</div></div>
+      <div class="tile ${t.length ? "good" : ""}"><div class="tl">Entries today</div><div class="tv">${t.length}</div><div class="ts">${last ? "Last at " + esc(last.submittedAt.slice(11, 16)) + " · " + depts + " of " + nDepts + " departments" : "None yet on this device"}</div></div>
       ${q ? `<a class="tile warn tlink" href="#queue"><div class="tl">Waiting to send</div><div class="tv">${q}</div><div class="ts">Sends when the connection returns · edit or delete below</div></a>` : `<div class="tile"><div class="tl">Waiting to send</div><div class="tv">0</div><div class="ts">Everything is sent</div></div>`}
     </div>
     ${q ? queuePanel() : ""}
     <div class="sec">Forms</div>
-    <div class="fgrid">${FORMS.map(f => `<a class="fcard" href="#f-${f.key}">
-        <span class="ico">${svg(f.key)}</span>
-        <span class="fc-txt"><span class="fc-d">${esc(f.dept)}</span><b>${esc(f.title)}</b><span class="fc-s">${esc(f.desc)}</span></span>
-        ${byForm(f.key) ? `<span class="pill g">${byForm(f.key)} today</span>` : ""}
-      </a>`).join("")}</div>`;
+    <div class="fgrid">${DEPTS.map(d => { const fs = deptForms(d);
+      if (fs.length === 1) return formCard(fs[0], byForm(fs[0].key), d);
+      const n = fs.reduce((a, f) => a + byForm(f.key), 0);
+      return `<a class="fcard" href="#d-${slug(d)}">
+        <span class="ico">${svg(deptIcon(d))}</span>
+        <span class="fc-txt"><span class="fc-d">${fs.length} forms</span><b>${esc(d)}</b><span class="fc-s">${esc(fs.map(f => f.title).join(" · "))}</span></span>
+        ${n ? `<span class="pill g">${n} today</span>` : ""}
+      </a>`; }).join("")}</div>`;
   wireQueue();
+}
+function viewDept(sl) {
+  const d = DEPTS.find(x => slug(x) === sl);
+  if (!d) return viewHome();
+  setSavebar("");
+  const t = todays(), fs = deptForms(d), byForm = k => t.filter(e => e.form === k).length;
+  chrome("d-" + sl, [d], `${fs.length} forms <span class="dot"></span> ${esc(longDate())}`, "",
+    nameCtl() + `<div class="note">Pick the sheet you are filling in. Each entry goes to that sheet's tracker as Pending until a data clerk checks it.</div>`);
+  $("#app").innerHTML = `<div class="sec">${esc(d)}</div><div class="fgrid">${fs.map(f => formCard(f, byForm(f.key), f.doc || d)).join("")}</div>`;
 }
 /* ---------- waiting to send: edit or delete ---------- */
 function qSummary(e) {
@@ -3042,16 +4817,17 @@ function cellInput(c, id, val, label) {
   const a = `id="${id}" aria-label="${esc(label)}"`;
   if (c.type === "check") return `<input type="checkbox" ${a} ${val === "Yes" ? "checked" : ""}>`;
   if (c.type === "time") return `<input type="time" ${a} value="${esc(val)}">`;
-  if (c.type === "number") return `<input type="number" inputmode="decimal" step="any" min="0" ${a} value="${esc(val)}">`;
+  if (c.type === "number") return `<input type="number" inputmode="decimal" step="any" ${c.neg ? "" : 'min="0"'} ${a} value="${esc(val)}">`;
   if (c.type === "choice") return `<select ${a}><option value=""></option>${c.options.map(o => `<option ${val === o ? "selected" : ""}>${esc(o)}</option>`).join("")}</select>`;
   return `<input type="text" ${a} value="${esc(val)}">`;
 }
 function sheetInput(f, id, val, aria) {
+  if (f.type === "choice" && f.options.length > 6) return `<select id="${id}" ${aria}><option value="">Choose…</option>${f.options.map(o => `<option ${val === o ? "selected" : ""}>${esc(o)}</option>`).join("")}</select>`;
   if (f.type === "choice") return `<div class="seg sm" role="radiogroup" aria-label="${esc(f.label || f.name)}">${f.options.map(o => `<label><input type="radio" name="${id}" value="${esc(o)}" ${val === o ? "checked" : ""} ${aria}><span>${esc(o)}</span></label>`).join("")}</div>`;
   if (f.type === "long") return `<textarea id="${id}" ${aria}>${esc(val)}</textarea>`;
   if (f.type === "date" || f.type === "time") return `<input id="${id}" type="${f.type}" value="${esc(val)}" ${aria}>`;
   if (f.type === "text") return `<input id="${id}" type="text" value="${esc(val)}" ${f.unitB ? `data-unitb="${esc(JSON.stringify(f.unitB))}" placeholder="${esc(pick(f.unitB) ? "e.g. " + pick(f.unitB) + "123" : "")}"` : f.unit ? `placeholder="${esc(f.unit)}-"` : ""} ${NAME_FIELDS.test(f.name) ? 'autocomplete="name"' : ""} ${aria}>`;
-  return `<span class="ub"><input id="${id}" type="number" inputmode="decimal" step="any" min="0" value="${esc(val)}" ${aria}>${f.unit ? `<em>${esc(f.unit)}</em>` : ""}</span>`;
+  return `<span class="ub"><input id="${id}" type="number" inputmode="decimal" step="any" ${f.neg ? "" : 'min="0"'} value="${esc(val)}" ${aria}>${f.unit ? `<em>${esc(f.unit)}</em>` : ""}</span>`;
 }
 const curBrand = () => (current && current.vals && current.vals.Brand) || "";
 const pick = (m, d) => (m && m[curBrand()]) || d || "";
@@ -3127,7 +4903,7 @@ function viewForm(key) {
   if (!form) return viewHome();
   if (!current || current.form.key !== key) current = { form, vals: Object.assign(defaults(form), store.get("cbg.draft." + key, {})), errors: {} };
   const fc = CFG.forms[key] || {};
-  chrome(key, [form.dept, form.title],
+  chrome(key, [deptCrumb(form.dept), form.title],
     `${esc(form.dept)} <span class="dot"></span> ${esc(form.desc)}`,
     demoChip() + `<span class="fb" id="fbChip"><i></i>${esc(fileName(key, current.vals))} <em>${esc(tableName(key, current.vals))}</em></span>`,
     nameCtl() + `<label class="msb"><span class="msk">Form</span><select id="jump">${FORMS.map(f => `<option value="${f.key}" ${f.key === key ? "selected" : ""}>${esc(f.dept)}: ${esc(f.title)}</option>`).join("")}</select></label>` +
@@ -3141,7 +4917,7 @@ function viewForm(key) {
   }
   renderForm();
   const ed = current.editId;
-  setSavebar(`<div class="savebar"><div class="in"><span class="sbtxt">${ed ? "Editing an entry that's waiting to send · " : ""}Saves to <b id="sbTable">${esc(tableName(key, current.vals) || "the tracker")}</b> as Pending</span><a class="obtn" href="#home">${ed ? "Discard changes" : "Cancel"}</a><button class="pbtn" id="saveBtn" type="button">${ed ? "Save changes" : "Save entry"}</button></div></div>`);
+  setSavebar(`<div class="savebar"><div class="in"><span class="sbtxt">${ed ? "Editing an entry that's waiting to send · " : ""}Saves to <b id="sbTable">${esc(tableName(key, current.vals) || "the tracker")}</b> as Pending</span><a class="obtn" href="${deptForms(form.dept).length > 1 ? "#d-" + slug(form.dept) : "#home"}">${ed ? "Discard changes" : "Cancel"}</a><button class="pbtn" id="saveBtn" type="button">${ed ? "Save changes" : "Save entry"}</button></div></div>`);
   $("#saveBtn").addEventListener("click", submit);
 }
 function renderForm() {
@@ -3242,7 +5018,7 @@ function validate() {
     if (r.hide.has(f.name)) continue;
     const v = String(vals[f.name] ?? "").trim(), required = f.req || r.req[f.name];
     if (required && !v) { errs[f.name] = f.type === "choice" ? "Choose one." : "Fill this in."; continue; }
-    if (v && f.type === "number" && !(isFinite(Number(v)) && Number(v) >= 0)) errs[f.name] = "Enter a number of 0 or more.";
+    if (v && f.type === "number" && !(isFinite(Number(v)) && (f.neg || Number(v) >= 0))) errs[f.name] = f.neg ? "Enter a number." : "Enter a number of 0 or more.";
     if (v && f.type === "choice" && (r.exclude[f.name] || []).includes(v)) errs[f.name] = "Choose a different option.";
   }
   return errs;
@@ -3283,7 +5059,7 @@ async function submit() {
 }
 function viewDone(entry, status, form) {
   setSavebar("");
-  chrome(form.key, [form.dept, form.title, "Saved"], `${esc(form.dept)} <span class="dot"></span> ${esc(longDate())}`, demoChip(), nameCtl());
+  chrome(form.key, [deptCrumb(form.dept), form.title, "Saved"], `${esc(form.dept)} <span class="dot"></span> ${esc(longDate())}`, demoChip(), nameCtl());
   const q = status === "Queued";
   $("#app").innerHTML = `
     <div class="panel done ${q ? "q" : ""}">
@@ -3293,7 +5069,7 @@ function viewDone(entry, status, form) {
         status === "Demo" ? "In live mode this would now be a Pending row in the " + esc(form.dept) + " tracker." :
         "Added to the " + esc(form.dept) + " tracker as Pending. A data clerk will check it."}</p>
       <span class="rid">${esc(entry.id)}</span>
-      <div class="btns"><a class="pbtn" href="#f-${form.key}" id="again">Record another</a><a class="obtn" href="#home">Overview</a></div>
+      <div class="btns"><a class="pbtn" href="#f-${form.key}" id="again">Record another</a>${deptForms(form.dept).length > 1 ? `<a class="obtn" href="#d-${slug(form.dept)}">${esc(form.dept)}</a>` : ""}<a class="obtn" href="#home">Overview</a></div>
     </div>`;
   $("#again").addEventListener("click", e => { if (location.hash === "#f-" + form.key) { e.preventDefault(); route(); } });
   $("#again").focus();
@@ -3398,6 +5174,7 @@ async function graphAddRow(fc, entry) {
 function route() {
   const h = location.hash.replace("#", "");
   if (h.startsWith("f-")) viewForm(h.slice(2));
+  else if (h.startsWith("d-")) { current = null; viewDept(h.slice(2)); }
   else { current = null; viewHome(); }
   if (!h.startsWith("f-")) window.scrollTo(0, 0);
 }
